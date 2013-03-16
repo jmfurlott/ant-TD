@@ -46,6 +46,13 @@ public class WorldRenderer {
 		//...
 		//otherwise end
 		
+		Character character = world.getCharacter();
+		Rectangle rect = character.getBounds();
+		float x1 = character.getPosition().x + rect.x;
+		float y1 = character.getPosition().y + rect.y;
+		debugRenderer.setColor(new Color(1,0,0,1));
+		debugRenderer.rect(x1,  y1, rect.width, rect.height);
+		
 		debugRenderer.end();
 	}
 	
