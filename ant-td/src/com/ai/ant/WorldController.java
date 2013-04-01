@@ -114,9 +114,17 @@ public class WorldController {
 			float cameraWidth = renderer.getCameraWidth();
 			float cameraHeight = renderer.getCameraHeight();
 			
-			Gdx.app.log("input", "charNewPosX: " + (int) 50*Gdx.input.getX()/(ppuX*cameraWidth) + " charNewPosY: " + (int) 50*Gdx.input.getY()/(ppuY*cameraHeight));
-			character.getPosition().y =50 - (int) 50*Gdx.input.getY()/(ppuY*cameraHeight);
-			character.getPosition().x = (int) 50*Gdx.input.getX()/(ppuX*cameraWidth);
+			/* Notes:
+			 * in order to find what position you are on the map when you click down look at the character.getPosition()..lines 
+			 * If the 50x50 map gets changed around this will break so be careful.  I have it being rounded to the closest square so that
+			 * we can remain within uniform units -> this will help with all that path finding
+			 */
+			
+			
+			
+			Gdx.app.log("input", "charNewPosX: " + Math.round( 50*Gdx.input.getX()/(ppuX*cameraWidth)) + " charNewPosY: " + Math.round(50*Gdx.input.getY()/(ppuY*cameraHeight)));
+			character.getPosition().y =50 - Math.round( 50*Gdx.input.getY()/(ppuY*cameraHeight));
+			character.getPosition().x = (int) Math.round(50*Gdx.input.getX()/(ppuX*cameraWidth));
 		}
 	}
 	
