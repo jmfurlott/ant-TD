@@ -123,8 +123,8 @@ public class WorldController {
 			
 			
 			Gdx.app.log("input", "charNewPosX: " + Math.round( 50*Gdx.input.getX()/(ppuX*cameraWidth)) + " charNewPosY: " + Math.round(50*Gdx.input.getY()/(ppuY*cameraHeight)));
-			character.getPosition().y =50 - Math.round( 50*Gdx.input.getY()/(ppuY*cameraHeight));
-			character.getPosition().x = (int) Math.round(50*Gdx.input.getX()/(ppuX*cameraWidth));
+			character.getPosition().y =50 - Math.round( 50*Gdx.input.getY()/(ppuY*cameraHeight) - 0.5f);
+			character.getPosition().x = (int) Math.round(50*Gdx.input.getX()/(ppuX*cameraWidth) - 0.5f);
 		}
 	}
 	
