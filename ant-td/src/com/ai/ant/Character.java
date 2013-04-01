@@ -9,7 +9,7 @@ public class Character {
 		IDLE, WALKING; //and maybe more
 	}
 	
-	public static final float SPEED = 4f;
+	public static final float SPEED = 5.0f;
 	static final float SIZE = 1.0f; //compared to our uniform size
 	
 	Vector2 position = new Vector2();

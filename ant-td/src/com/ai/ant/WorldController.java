@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.ai.ant.Character.State;
-import com.ai.ant.WorldController.Keys;
+import com.badlogic.gdx.Gdx;
 
 public class WorldController {
 	//all input control is here
@@ -15,6 +15,7 @@ public class WorldController {
 	
 	
 	private World world;
+	private WorldRenderer renderer;
 	private Character character;
 	
 	static Map<Keys, Boolean> keys = new HashMap<WorldController.Keys, Boolean>();
@@ -25,9 +26,10 @@ public class WorldController {
 		keys.put(Keys.DOWN, false);
 	};
 	
-	public WorldController(World world) {
+	public WorldController(World world, WorldRenderer renderer) {
 		this.world = world;
 		this.character = world.getCharacter();
+		this.renderer = renderer.getRenderer();
 	}
 	
 	//pressed controls
@@ -99,7 +101,26 @@ public class WorldController {
 			character.getAcceleration().y = 0;
 			character.getVelocity().y = 0;
 		}
+		
+		//mouse/touch
+		if(Gdx.input.isTouched()) {
+			Gdx.app.log("input", "Touched at X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY());
+			Gdx.app.log("input", "ppux: " + renderer.getScreenWidth() + " ppuy: " + renderer.getScreenHeight());
+			//Vector3 touchPosition = new Vector3();
+			//touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+			character.setState(State.WALKING);
+			float ppuX = renderer.getScreenWidth();
+			float ppuY = renderer.getScreenHeight();
+			float cameraWidth = renderer.getCameraWidth();
+			float cameraHeight = renderer.getCameraHeight();
+			
+			Gdx.app.log("input", "charNewPosX: " + (int) 50*Gdx.input.getX()/(ppuX*cameraWidth) + " charNewPosY: " + (int) 50*Gdx.input.getY()/(ppuY*cameraHeight));
+			character.getPosition().y =50 - (int) 50*Gdx.input.getY()/(ppuY*cameraHeight);
+			character.getPosition().x = (int) 50*Gdx.input.getX()/(ppuX*cameraWidth);
+		}
 	}
+	
+
 	
 	
 }

@@ -63,5 +63,24 @@ public class WorldRenderer {
 		ppuY = (float) height/ CAMERA_HEIGHT;
 	}
 	
+	public WorldRenderer getRenderer() {
+		return this;
+	}
+	
+	public float getScreenWidth() {
+		return ppuX;
+	}
+	
+	public float getScreenHeight() {
+		return ppuY;
+	}
+	
+	public float getCameraWidth() {
+		return CAMERA_WIDTH;
+		
+	}
+	public float getCameraHeight() {
+		return CAMERA_HEIGHT;
+	}
 	
 }
