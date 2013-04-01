@@ -6,6 +6,16 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 
+
+
+/*
+ * Block x = 0:6 (on the left side are left for the menu derek)
+ * Actual game play will be from x = 6:49
+ * 
+ */
+
+
+
 public class WorldRenderer {
 
 	private static final float CAMERA_WIDTH = 10f;
@@ -37,7 +47,11 @@ public class WorldRenderer {
 			Rectangle rect = block.getBounds();
 			float x1 = block.getPosition().x + rect.x;
 			float y1 = block.getPosition().y + rect.y;
-			debugRenderer.setColor(new Color(0,0,0,1));
+			if (x1 > 6) {
+				debugRenderer.setColor(new Color(0,0,0,1));
+			} else if (x1 <= 6) {
+				debugRenderer.setColor(new Color(1,1,0,1));
+			}
 			debugRenderer.rect(x1, y1, rect.width, rect.height);
 		}
 		
