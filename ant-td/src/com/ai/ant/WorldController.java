@@ -121,7 +121,7 @@ public class WorldController {
 			Vector2 goal = new Vector2(48,48);
 			
 			//step size...how fast it can move
-			float STEPSIZE = 0.00001f;
+			float STEPSIZE = 0.0001f;
 					
 			character.setState(State.WALKING);
 
