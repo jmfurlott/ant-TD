@@ -5,12 +5,13 @@ import java.util.Map;
 
 import com.ai.ant.Character.State;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 
 public class WorldController {
 	//all input control is here
 	
 	enum Keys {
-		LEFT, RIGHT, UP, DOWN
+		LEFT, RIGHT, UP, DOWN, A
 	}
 	
 	
@@ -24,6 +25,7 @@ public class WorldController {
 		keys.put(Keys.RIGHT, false);
 		keys.put(Keys.UP, false);
 		keys.put(Keys.DOWN, false);
+		keys.put(Keys.A, false);
 	};
 	
 	public WorldController(World world, WorldRenderer renderer) {
@@ -45,6 +47,9 @@ public class WorldController {
 	public void downPressed() {
 		keys.get(keys.put(Keys.DOWN, true));
 	}
+	public void aPressed() {
+		keys.get(keys.put(Keys.A, true));
+	}
 	
 	
 	//released controls
@@ -59,6 +64,9 @@ public class WorldController {
 	}
 	public void downReleased() {
 		keys.get(keys.put(Keys.DOWN, false));
+	}
+	public void aReleased() {
+		keys.get(keys.put(Keys.A, false));
 	}
 	
 	
@@ -101,6 +109,63 @@ public class WorldController {
 			character.getAcceleration().y = 0;
 			character.getVelocity().y = 0;
 		}
+		
+		
+		//path finding based on pressing A - just some testing
+		//going to have the current figure go to some specified point
+		boolean madeFlag = false;
+		if(keys.get(Keys.A)) {
+			Gdx.app.log("input", "Key A has been pressed");
+			
+			//define the position I want to reach
+			Vector2 goal = new Vector2(48,48);
+			
+			//step size...how fast it can move
+			float STEPSIZE = 0.00001f;
+					
+			character.setState(State.WALKING);
+
+			
+			while(!madeFlag) {
+				//begin steps to getting to the location
+				//need to calculate how far away we are away from 
+				float currentX = character.getPosition().x;
+				float currentY = character.getPosition().y;
+				
+				Gdx.app.log("input", "Currentx: " + currentX + " Currenty: " + currentY);
+				
+				float diffX = Math.abs(goal.x - currentX);
+				float diffY = Math.abs(currentY - goal.y);
+				
+				if(diffX > 0.5f && diffY > 0.5f) {
+				
+					
+					
+					if(currentX < goal.x) {
+						character.getPosition().x = character.getPosition().x + STEPSIZE;
+					} else {
+						character.getPosition().x = character.getPosition().x - STEPSIZE;
+					}
+					
+					if(currentY < goal.y) {
+						character.getPosition().y = character.getPosition().y - STEPSIZE;
+					} else {
+						character.getPosition().y = character.getPosition().y + STEPSIZE;
+					}
+					
+					
+					
+				} else {
+					madeFlag = true;
+				}
+				
+				
+				
+			}
+		
+		}
+		
+		
 		
 		//mouse/touch
 		if(Gdx.input.isTouched()) {
