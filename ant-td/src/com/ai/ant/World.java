@@ -11,6 +11,8 @@ public class World {
 	//would define any other sprite here!!!!
 	//all ants
 	Character character;
+	Character wall;
+	
 	
 	public Array<Block> getBlocks() {
 		return blocks;
@@ -30,10 +32,15 @@ public class World {
 		}
 		
 		character = new Character(new Vector2(25,25));
+		wall = new Character(new Vector2(25, 15));
 	}
 	
 	public Character getCharacter() {
 		return character;
+	}
+	
+	public Character getWall() {
+		return wall;
 	}
 	
 	

@@ -1,9 +1,10 @@
 package com.ai.ant;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-public class Character {
+public class Character extends Sprite{
 
 	public enum State {
 		IDLE, WALKING; //and maybe more
