@@ -4,14 +4,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-public class Character extends Sprite{
+public class Character {
 
 	public enum State {
 		IDLE, WALKING; //and maybe more
 	}
 	
 	public static final float SPEED = 5.0f;
-	static final float SIZE = 1.0f; //compared to our uniform size
+	static final float SIZE = 0.1f; //compared to our uniform size
 	
 	Vector2 position = new Vector2();
 	Vector2 acceleration = new Vector2();
