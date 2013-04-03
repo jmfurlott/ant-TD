@@ -42,7 +42,7 @@ public abstract class Tower {
 	
 	public Mob getTarget(){
 		/* TODO: implement AI needed for targeting the farthest mob in the range of the tower.
-		 * scans mobs in ranage and assigns the mob that is nearest to the base.
+		 * scans mobs in range and assigns the mob that is nearest to the base.
 		 * "nearest to base" - mob that is the most progressed along the path it was assigned.
 		 */
 		return null;
@@ -57,6 +57,7 @@ public abstract class Tower {
 	
 	private void shoot(){
 		//fires or pulses its effects in an area around this tower;
+		//check collision detection.
 		System.out.println("FIRE!!!");
 	}
 	
@@ -108,9 +109,9 @@ public abstract class Tower {
 		this.fireRate = fireRate;
 	}
 	public int getCost() {
-		return level;
+		return cost;
 	}
-	public void setCost(int cst) {
+	public void setCost(int cost) {
 		this.cost= cost;
 	}
 }
