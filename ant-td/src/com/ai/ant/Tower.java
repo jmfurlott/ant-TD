@@ -12,47 +12,77 @@ public abstract class Tower {
 	protected int range;
 	protected String name;
 	protected int level;
-	protected double fireRate;
+	protected int fireRate;  
+	/*
+	 * fireRate delay(second)
+	 * 1		.1
+	 * 2		.2
+	 * 3		.3
+	 * .		 .
+	 * .		 .
+	 * 
+	 */
 	protected int damage;
 	protected int cost;
-	private Mob target;
-	//TODO: AI targeting
+	protected Mob currentTarget;
+	protected World world;
+	protected ArrayList<Mob> targetList;
 	
-	public Tower(Vector2 position){
+	public Tower(Vector2 position, World world){
+		this.world = world;
 		this.position = position;
 		this.rect = new Rectangle(); //default rectangle?
 		effect = null;
-		target = null;
+		targetList = new ArrayList<Mob>();
+		currentTarget = null;
 	}
 	
 	//making this abstract to gain control of damage scaling across each type of tower
 	abstract void levelUp();
 	
-	public void TowerAI(){
+	public void update(){
+		towerAI();
+	}
+	
+	public void towerAI(){
 		boolean active = true;
 		while(active){
-			if(target!=null){
+			getTarget();
+			if(currentTarget!=null){
 				fire();
-			}
-			else{
-				getTarget();
-			}
+			}			
 		}
 	}
 	
-	public Mob getTarget(){
-		/* TODO: implement AI needed for targeting the farthest mob in the range of the tower.
-		 * scans mobs in range and assigns the mob that is nearest to the base.
-		 * "nearest to base" - mob that is the most progressed along the path it was assigned.
-		 */
-		return null;
+	public void getTarget(){
+		double r;
+		 targetList.clear();
+		 for(Mob pmob: world.mobList){
+			 double aSqu = (pmob.position.x - position.x)* (pmob.position.x - position.x);
+			 double bSqu = (pmob.position.y - position.y)* (pmob.position.y - position.y);
+			 r =  Math.sqrt(aSqu+bSqu);// r = squrt(a^2 + b^2)
+		  	 if(r < range){ //if the mob is in range
+		      targetList.add(pmob); //add it to the list of mobs I'm interested in
+		  	 }
+		  }
+		  
+		 //update currentTarget based on distanceToEnd. which is the path remaining using A* for a given mob.
+		  for(Mob pmob: targetList){ 
+		  	  if(pmob.distanceToEnd < currentTarget.distanceToEnd){
+		       currentTarget = pmob;
+		     }  
+		  }
+		 
 	}
 	
 	public void fire(){
-		if(target!=null){
+		if(currentTarget!=null){
 			shoot();
+			//use time stamp.
 		}
-		else{}
+		else{
+			getTarget();
+		}
 	}
 	
 	private void shoot(){

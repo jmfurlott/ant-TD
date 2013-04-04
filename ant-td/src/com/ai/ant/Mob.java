@@ -12,12 +12,26 @@ public class Mob {
 	protected int currency; //coin given based on level 1 of mob upon destruction
 	protected int point; 	//points given based on level 1 of mob upon destruction
 	protected int level; 	//currency/points rewarded scale based on level
-		
+	protected float distanceToEnd;
+	protected World world;
 	
-	public Mob(Vector2 position){
+	public Mob(Vector2 position, World world){
 		this.position = position;
 		rect = new Rectangle(); //default rectangle
+		this.world = world;
+		//world.getMobList().add(this); //add the mob to the world list.
 	}
+	
+	public void BuildPath(){
+		//A* here?
+	}
+	
+	public void mobDeath(){
+		//world.mobList.remove(this);
+		//world.getPlayer(target).getCurrency() += currency;
+		//world.getPlayer(target).getPoints() += points;
+	}
+	
 	
 	/*
 	 **************************
