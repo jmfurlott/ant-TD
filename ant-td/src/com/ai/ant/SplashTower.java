@@ -7,8 +7,8 @@ import com.badlogic.gdx.math.Vector2;
 public class SplashTower extends Tower {
 	private final int maxLevel;
 	
-	public SplashTower(Vector2 position) {
-		super(position);
+	public SplashTower(Vector2 position, World world) {
+		super(position, world);
 		effect = new ArrayList<Effect>(); 
 		//effect.add(new AOE()); //TODO: add aoe effect (some area where damage is done to each mob in that area.)
 		maxLevel = 3;

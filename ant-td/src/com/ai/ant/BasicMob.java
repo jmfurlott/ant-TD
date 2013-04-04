@@ -4,8 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public class BasicMob extends Mob{
 
-	public BasicMob(Vector2 position, int target, int level) {
-		super(position);
+	public BasicMob(Vector2 position, int target, int level, World world) {
+		super(position, world);
 		speed = 1;
 		health = 4;
 		this.target = target;	//represents which player this mob is attacking, needed for pathing and conversion tower
