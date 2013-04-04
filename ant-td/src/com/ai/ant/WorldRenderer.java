@@ -73,7 +73,7 @@ public class WorldRenderer {
 	
 	
 	public void loadTextures() {
-		soldierAnt = new Texture(Gdx.files.internal("soldierAnt.png"));
+		soldierAnt = new Texture(Gdx.files.internal("QueenAnt.png"));
 		grass = new Texture(Gdx.files.internal("grassTexture.png"));
 		basicTower = new Texture(Gdx.files.internal("stunFreezeHill.png"));
 		basicBullet = new Texture(Gdx.files.internal("basicBullet.png"));

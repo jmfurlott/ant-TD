@@ -14,7 +14,7 @@ public class WorldController {
 	//all input control is here
 	
 	enum Keys {
-		LEFT, RIGHT, UP, DOWN, A
+		LEFT, RIGHT, UP, DOWN, A, SPACE
 	}
 	
 	
@@ -57,6 +57,10 @@ public class WorldController {
 	public void aPressed() {
 		keys.get(keys.put(Keys.A, true));
 	}
+	public void spacePressed()
+	{
+		keys.get(keys.put(Keys.SPACE, true));
+	}
 	
 	
 	//released controls
@@ -74,6 +78,10 @@ public class WorldController {
 	}
 	public void aReleased() {
 		keys.get(keys.put(Keys.A, false));
+	}
+	public void spaceReleased()
+	{
+		keys.get(keys.put(Keys.SPACE, false));
 	}
 	
 	
@@ -95,6 +103,13 @@ public class WorldController {
 	}
 	
 	public void processInput() {
+		
+		
+		//Screen debugging
+		//if (keys.get(Keys.SPACE))
+		//{
+		//	Gdx.app.log("intro", "space has been entered");
+		//}
 		
 		//horizontal first
 		if(keys.get(Keys.LEFT)) {
