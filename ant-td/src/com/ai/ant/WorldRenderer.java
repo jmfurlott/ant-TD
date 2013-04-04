@@ -38,6 +38,8 @@ public class WorldRenderer {
 	SpriteBatch batch = new SpriteBatch();
 	private Texture soldierAnt;
 	private Texture grass;
+	private Texture basicTower;
+	private Texture basicBullet;
 	
 	public WorldRenderer(World world) {
 		this.world = world;
@@ -53,6 +55,8 @@ public class WorldRenderer {
 
 		batch.begin();
 		drawBlocks();
+		drawTowers();
+		drawBullets();
 		loadCharacter();	
 		batch.end();
 		drawDebug();
@@ -71,6 +75,9 @@ public class WorldRenderer {
 	public void loadTextures() {
 		soldierAnt = new Texture(Gdx.files.internal("soldierAnt.png"));
 		grass = new Texture(Gdx.files.internal("grassTexture.png"));
+		basicTower = new Texture(Gdx.files.internal("stunFreezeHill.png"));
+		basicBullet = new Texture(Gdx.files.internal("basicBullet.png"));
+		
 	}
 	
 	public void loadCharacter() {
@@ -84,12 +91,23 @@ public class WorldRenderer {
 	}
 	
 	public void drawBlocks() {
-		for(Block block : world.getBlocks()) {
-			
+		for(Block block : world.getBlocks()) {	
 			batch.draw(grass, block.getPosition().x * ppuX, block.getPosition().y * ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
 		}
-		
-
+	}
+	
+	public void drawTowers() {
+		for(Tower tower : world.getTowers()) {
+			//System.out.println("x: "+ (tower.getPosition().x*ppuX) +" y:"+ (tower.getPosition().y*ppuY));
+			//batch.draw(basicTower, tower.getPosition().x * ppuX, tower.getPosition().y* ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
+			batch.draw(basicTower, tower.getPosition().x, tower.getPosition().y, Tower.SIZE * 25, Tower.SIZE * 25);			
+		}
+	}
+	
+	public void drawBullets() {
+		for(Bullet bullet: world.getBullets()) {
+			batch.draw(basicBullet, bullet.getPosition().x+5, bullet.getPosition().y+5, Bullet.SIZE*5, Bullet.SIZE*5);
+		}
 	}
 	
 	public void drawDebug() {

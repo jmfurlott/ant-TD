@@ -1,5 +1,6 @@
 package com.ai.ant;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,6 +22,8 @@ public class WorldController {
 	private WorldRenderer renderer;
 	private Character character;
 	private Character wall; //collision
+	ArrayList<Bullet> tempBullet = new ArrayList<Bullet>();
+	
 	
 	static Map<Keys, Boolean> keys = new HashMap<WorldController.Keys, Boolean>();
 	static {
@@ -74,9 +77,21 @@ public class WorldController {
 	}
 	
 	
+	
+	
 	public void update(float delta) {
 		processInput();
 		character.update(delta);
+		
+		
+		
+		for(Bullet bullet: world.bulletList) {
+			bullet.update(delta);
+		}
+		
+		for(Tower tower: world.getTowers()){
+			tower.update();
+		}
 	}
 	
 	public void processInput() {
