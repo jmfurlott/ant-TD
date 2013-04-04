@@ -1,7 +1,11 @@
 package com.ai.ant;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
@@ -31,15 +35,65 @@ public class WorldRenderer {
 	private float ppuY;
 	
 	ShapeRenderer debugRenderer = new ShapeRenderer();
+	SpriteBatch batch = new SpriteBatch();
+	private Texture soldierAnt;
+	private Texture grass;
 	
 	public WorldRenderer(World world) {
 		this.world = world;
 		this.cam = new OrthographicCamera(50,50);
 		this.cam.position.set(25, 25, 0);
 		this.cam.update();
+		batch = new SpriteBatch();
+		loadTextures();
 	}
 	
 	public void render() {
+
+
+		batch.begin();
+		drawBlocks();
+		loadCharacter();	
+		batch.end();
+		drawDebug();
+		
+		
+	}
+	
+	public void setSize(int w, int h) {
+		this.width = w;
+		this.height = h;
+		ppuX = (float) width/ CAMERA_WIDTH;
+		ppuY = (float) height/ CAMERA_HEIGHT;
+	}
+	
+	
+	public void loadTextures() {
+		soldierAnt = new Texture(Gdx.files.internal("soldierAnt.png"));
+		grass = new Texture(Gdx.files.internal("grassTexture.png"));
+	}
+	
+	public void loadCharacter() {
+		Character character = world.getCharacter();
+		Rectangle rect = character.getBounds();
+		float x1 = character.getPosition().x + rect.x;
+		float y1 = character.getPosition().y + rect.y;
+		
+		batch.draw(soldierAnt, x1 , y1 , character.SIZE * ppuX, character.SIZE *ppuY);
+		//batch.draw(soldierAnt, character.getPosition().x * ppuX  , character.getPosition().y * ppuY, character.SIZE * ppuX, character.SIZE * ppuY);
+	}
+	
+	public void drawBlocks() {
+		for(Block block : world.getBlocks()) {
+			
+			batch.draw(grass, block.getPosition().x * ppuX, block.getPosition().y * ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
+		}
+		
+
+	}
+	
+	public void drawDebug() {
+		
 		debugRenderer.setProjectionMatrix(cam.combined);
 		debugRenderer.begin(ShapeType.Rectangle);
 		
@@ -54,28 +108,27 @@ public class WorldRenderer {
 			}
 			debugRenderer.rect(x1, y1, rect.width, rect.height);
 		}
-		
-		
-		//blocks are now rendered so continue forward with the sprites
-		//...
-		//otherwise end
-		
+	
+	
 		Character character = world.getCharacter();
 		Rectangle rect = character.getBounds();
 		float x1 = character.getPosition().x + rect.x;
 		float y1 = character.getPosition().y + rect.y;
+		
 		debugRenderer.setColor(new Color(1,0,0,1));
 		debugRenderer.rect(x1,  y1, rect.width, rect.height);
 		
+		Character wall = world.getWall();
+		Rectangle rect1 = character.getBounds();
+		float xwall = wall.getPosition().x + rect1.x;
+		float ywall = wall.getPosition().y + rect1.y;
+		debugRenderer.setColor(new Color(1,0,0,1));
+		debugRenderer.rect(xwall,  ywall, rect1.width, rect1.height);
 		debugRenderer.end();
+
 	}
 	
-	public void setSize(int w, int h) {
-		this.width = w;
-		this.height = h;
-		ppuX = (float) width/ CAMERA_WIDTH;
-		ppuY = (float) height/ CAMERA_HEIGHT;
-	}
+	
 	
 	public WorldRenderer getRenderer() {
 		return this;

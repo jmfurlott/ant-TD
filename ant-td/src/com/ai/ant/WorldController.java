@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.ai.ant.Character.State;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class WorldController {
@@ -18,6 +20,7 @@ public class WorldController {
 	private World world;
 	private WorldRenderer renderer;
 	private Character character;
+	private Character wall; //collision
 	
 	static Map<Keys, Boolean> keys = new HashMap<WorldController.Keys, Boolean>();
 	static {
@@ -31,6 +34,7 @@ public class WorldController {
 	public WorldController(World world, WorldRenderer renderer) {
 		this.world = world;
 		this.character = world.getCharacter();
+		this.wall = world.getWall();
 		this.renderer = renderer.getRenderer();
 	}
 	
@@ -79,8 +83,12 @@ public class WorldController {
 		
 		//horizontal first
 		if(keys.get(Keys.LEFT)) {
-			character.setState(State.WALKING);
-			character.getVelocity().x = -Character.SPEED;
+			
+			//testing collision
+			if(!checkForCollision(character.getBounds(), wall.getBounds(), false, true)) {
+				character.setState(State.WALKING);
+				character.getVelocity().x = -Character.SPEED;
+			}
 		}
 		if(keys.get(Keys.RIGHT)) {
 			character.setState(State.WALKING);
@@ -194,6 +202,38 @@ public class WorldController {
 	}
 	
 
+	
+	public boolean checkForCollision(Rectangle r1, Rectangle r2, boolean up, boolean left) {
+		
+		//let r1 always be your current figure 
+		//let r2 be the object nearby
+		//up and left are the cardinal positions...ONE and ONLY ONE can be true. 
+		//if left = true, check left. if false check right rest would be null etc
+		
+		
+		Intersector intersector = new Intersector();
+		Rectangle temp = r1;
+		
+		if(up == true) {
+			temp.y = temp.y + 1.0f;
+		} else if (up == false) {
+			temp.y = temp.y - 1.0f;
+		} else if (left == true) {
+			temp.x = temp.x - 1.0f;
+		} else if (left == false ) {
+			temp.x = temp.x + 1.0f;
+		} else {
+			return false; //error and do nothing
+		}
+		
+		
+		boolean allowed =  intersector.intersectRectangles(temp, r2);
+		
+		Gdx.app.log("Collision", "movement allowed: " + allowed);
+		return allowed;
+		
+		
+	}
 	
 	
 }
