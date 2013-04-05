@@ -13,7 +13,7 @@ public class spawnTower extends Tower{
 //		level = 1;
 //		range = 10; //this is just a temp. value
 //		fireRate = 1; //attacks per second
-		delay = 10000;
+		delay = 5000;
 	}
 
 	void levelUp() {

@@ -37,7 +37,7 @@ public abstract class Tower {
 		firedTime = 0;
 		activeTime = 0;
 		active = true;
-		delay = 500;
+		delay = 1000;
 	}
 
 	// making this abstract to gain control of damage scaling across each type
@@ -55,16 +55,14 @@ public abstract class Tower {
 		if (currentTarget != null) {
 			fire();
 		}
-
 	}
 
 	public void getTarget() {
+		currentTarget = null;
 			double r;
 			for (Mob pmob : world.mobList) {
-				double aSqu = (pmob.position.x - position.x)
-						* (pmob.position.x - position.x);
-				double bSqu = (pmob.position.y - position.y)
-						* (pmob.position.y - position.y);
+				double aSqu = (pmob.position.x - position.x)* (pmob.position.x - position.x);
+				double bSqu = (pmob.position.y - position.y)* (pmob.position.y - position.y);
 				r = Math.sqrt(aSqu + bSqu);// r = squrt(a^2 + b^2)
 				pmob.distanceToEnd = (float) r; // TODO: make this what its supposed
 												// to be.
@@ -82,7 +80,6 @@ public abstract class Tower {
 				if (currentTarget != null) {
 					if (pmob.distanceToEnd < currentTarget.distanceToEnd) {
 						currentTarget = pmob;
-	
 					}
 				} else {
 					currentTarget = pmob;

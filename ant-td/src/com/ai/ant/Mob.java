@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Mob {
 	protected int speed;
-	public static final float SPEED = 1.0f;
+	public static final float SPEED = 10f;
 	//?do we want both? one static the other is just a scaler?
 	
 	protected Vector2 position;
@@ -32,8 +32,10 @@ public class Mob {
 		
 		this.bounds.width = SIZE;
 		this.bounds.height = SIZE;
-		direction.x = (end.x - position.x)/5;
-		direction.y = (end.y - position.y)/5;
+		double angle = Math.atan2(end.y - position.y, end.x- position.x);
+		direction.x = (float) Math.cos(angle);
+		direction.y = (float) Math.sin(angle);
+		
 	}
 	
 	public void BuildPath(){
@@ -48,7 +50,6 @@ public class Mob {
 	
 	public void update(float delta){
 		
-		
 		if(position.equals(end)){
 			//TODO: do effect
 			//System.out.println("bullet at the end");
@@ -57,7 +58,8 @@ public class Mob {
 		else{
 			Vector2 temp1 = new Vector2(end.x-2, end.y-2);
 			Vector2 temp2 = new Vector2(end.x+2, end.y+2);
-			position.add((direction.tmp().mul(delta)));
+			//ball.add(ballSpeed * ballDirection.x * deltaTime, ballSpeed * ballDirection.y * deltaTime);
+			position.add(SPEED*direction.x*delta,SPEED*direction.y*delta);
 			if(position.x >= temp1.x && position.x <temp2.x  && position.y >= temp1.y && position.y <temp2.y){
 				position = end;	
 			}

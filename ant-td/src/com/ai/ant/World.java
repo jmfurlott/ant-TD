@@ -41,9 +41,10 @@ public class World {
 	public void createWorld() {
 		//temp towers for testing
 
-		Tower bt1 = new BasicTower(new Vector2(200, 100),this);
-		placeTower(bt1);
-		
+		Tower bt0 = new BasicTower(new Vector2(200, 100),this);
+		placeTower(bt0);
+		Tower bt1 = new BasicTower(new Vector2(200, 125),this);
+		placeTower(bt1);		
 		Tower bt2 = new BasicTower(new Vector2(200, 150),this);
 		placeTower(bt2);
 		Tower bt3 = new BasicTower(new Vector2(200, 175),this);
@@ -55,12 +56,15 @@ public class World {
 		placeTower(st1);
 		spawnTower st2 = new spawnTower(new Vector2(125,20), this);
 		placeTower(st2);
-		spawnTower st3 = new spawnTower(new Vector2(75,30), this);
+		spawnTower st3 = new spawnTower(new Vector2(125,225), this);
 		placeTower(st3);
 		spawnTower st4 = new spawnTower(new Vector2(150,40), this);
 		placeTower(st4);
 		spawnTower st5 = new spawnTower(new Vector2(175,50), this);
 		placeTower(st5);
+		spawnTower st6 = new spawnTower(new Vector2(250,50), this);
+		placeTower(st6);
+		
 		
 		
 		for(int i = 0; i < 50; i++) {
