@@ -36,12 +36,17 @@ public class IntroScreenRenderer {
 	
 	public void render()
 	{
+
 		batch.begin();
 		loadLogo();
 		batch.draw(logoTexture, 3*ppuX, 2*ppuY, 300, 300);
 		Gdx.app.log("into", "rendering");
 
 		batch.end();
+
+			
+
+		
 	}
 	
 	public IntroScreenRenderer getRenderer()

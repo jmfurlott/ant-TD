@@ -1,5 +1,6 @@
 package com.ai.ant;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -12,9 +13,15 @@ public class MenuScreen implements Screen, InputProcessor  {
 	private IntroScreenRenderer renderer;
 	private IntroScreenController controller;
 	
+	private Game g;
+	
 	private int gameplay;
 	
 	private int width, height;
+	
+	public MenuScreen(Game g) {
+		this.g = g;
+	}
 	
 	@Override
 	public boolean keyDown(int keycode) {
@@ -80,7 +87,12 @@ public class MenuScreen implements Screen, InputProcessor  {
 		
 		//for when we have sprites
 		controller.update(delta);
+		
 		renderer.render();
+		if(Gdx.input.justTouched())
+            g.setScreen(new GameScreen());
+
+		
 	}
 
 	@Override
