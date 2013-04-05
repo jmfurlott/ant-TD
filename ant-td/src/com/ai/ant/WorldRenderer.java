@@ -1,5 +1,7 @@
 package com.ai.ant;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -105,8 +107,18 @@ public class WorldRenderer {
 	}
 	
 	public void drawBullets() {
-		for(Bullet bullet: world.getBullets()) {
-			batch.draw(basicBullet, bullet.getPosition().x+5, bullet.getPosition().y+5, Bullet.SIZE*5, Bullet.SIZE*5);
+		ArrayList<Bullet> temp = new ArrayList<Bullet>();
+		for(Bullet bullet: world.getBullets()){
+			if(!bullet.active){
+				temp.add(bullet);
+			}
+			else{
+				batch.draw(basicBullet, bullet.getPosition().x+10, bullet.getPosition().y+10, Bullet.SIZE*5, Bullet.SIZE*5);
+			}
+		}
+		
+		for(Bullet bullet: temp){
+				world.bulletList.remove(bullet);
 		}
 	}
 	

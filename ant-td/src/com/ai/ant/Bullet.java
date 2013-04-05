@@ -12,6 +12,7 @@ public class Bullet {
 	protected World world;
 	protected int speed;
 	Vector2 direction = new Vector2();
+	boolean active = true;
 	
 	public Bullet(Vector2 position, Vector2 end, World world){
 		this.world = world;
@@ -33,7 +34,7 @@ public class Bullet {
 		if(position.equals(end)){
 			//TODO: do effect
 			//System.out.println("bullet at the end");
-			world.removeBullet(this);
+			active = false;
 		}
 		else{
 			Vector2 temp1 = new Vector2(end.x-2, end.y-2);
@@ -44,9 +45,10 @@ public class Bullet {
 			}
 			
 			if(position.equals(end)){
+				active = false;
 				//TODO: do effect
 				//System.out.println("bullet at the end"); 
-				//removeBullet();
+				//world.removeBullet(this);
 			}
 			System.out.println("Bullet.position: x: " +position.x+ "y:"+position.y);
 		}

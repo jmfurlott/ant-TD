@@ -73,9 +73,10 @@ public class World {
 	
 	public void removeBullet(Bullet bullet){
 		if(bulletList.contains(bullet)){
+			//bulletList.remove(bullet);
 			//this is broken atm. the arrayList that the bullet is trying to be removed from is changing when i call .remove(bullet)
 			//i need to find a way to remove the bullet from the list.
-			//bulletList.remove(0);
+			bulletList.remove(bullet);
 		}
 	}
 	

@@ -91,10 +91,14 @@ public class WorldController {
 		processInput();
 		character.update(delta);
 		
-		
-		
-		for(Bullet bullet: world.bulletList) {
-			bullet.update(delta);
+		ArrayList<Bullet> temp = new ArrayList<Bullet>();
+		temp = world.bulletList;
+		for(Bullet bullet: temp) {
+			
+			if(bullet.active)
+				bullet.update(delta);
+			else
+				world.bulletList.remove(0);
 		}
 		
 		for(Tower tower: world.getTowers()){
