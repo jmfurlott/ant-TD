@@ -13,7 +13,7 @@ public class AntTDGame implements ApplicationListener {
 		@Override
 		public void create() {
 
-			
+			Gdx.app.log("intro", "should never get here");
 		}
 		
 		@Override
