@@ -30,30 +30,37 @@ public class World {
 		return bulletList;
 	}
 	
+	public ArrayList<Mob> getMobs(){
+		return mobList;
+	}
+	
 	public World() {
 		createWorld();
 	}
 	
 	public void createWorld() {
 		//temp towers for testing
-		Tower tempTower1 = new BasicTower(new Vector2(50, 50),this);
-		placeTower(tempTower1);
-		Tower tempTower2 = new BasicTower(new Vector2(100, 50),this);
-		placeTower(tempTower2);
-		Tower tempTower3 = new BasicTower(new Vector2(150, 50),this);
-		placeTower(tempTower3);
-		Tower tempTower4 = new BasicTower(new Vector2(200, 200),this);
-		placeTower(tempTower4);
-		Tower tempTower5 = new BasicTower(new Vector2(50, 200),this);
-		placeTower(tempTower5);
-		Tower tempTower6 = new BasicTower(new Vector2(100, 200),this);
-		placeTower(tempTower6);
-		Tower tempTower7 = new BasicTower(new Vector2(150, 200),this);
-		placeTower(tempTower7);
-		Tower tempTower8 = new BasicTower(new Vector2(200, 50),this);
-		placeTower(tempTower8);
+
+		Tower bt1 = new BasicTower(new Vector2(200, 100),this);
+		placeTower(bt1);
 		
-		
+		Tower bt2 = new BasicTower(new Vector2(200, 150),this);
+		placeTower(bt2);
+		Tower bt3 = new BasicTower(new Vector2(200, 175),this);
+		placeTower(bt3);
+		Tower bt4 = new BasicTower(new Vector2(200, 200),this);
+		placeTower(bt4);
+
+		spawnTower st1 = new spawnTower(new Vector2(100,10), this);
+		placeTower(st1);
+		spawnTower st2 = new spawnTower(new Vector2(125,20), this);
+		placeTower(st2);
+		spawnTower st3 = new spawnTower(new Vector2(75,30), this);
+		placeTower(st3);
+		spawnTower st4 = new spawnTower(new Vector2(150,40), this);
+		placeTower(st4);
+		spawnTower st5 = new spawnTower(new Vector2(175,50), this);
+		placeTower(st5);
 		
 		
 		for(int i = 0; i < 50; i++) {
@@ -67,18 +74,15 @@ public class World {
 		wall = new Character(new Vector2(25, 15));
 	}
 	
+	public void placeMob(Mob mob){
+		mobList.add(mob);
+	}
+	
+	
 	public void placeTower(Tower tower){
 		towerList.add(tower);
 	}
 	
-	public void removeBullet(Bullet bullet){
-		if(bulletList.contains(bullet)){
-			//bulletList.remove(bullet);
-			//this is broken atm. the arrayList that the bullet is trying to be removed from is changing when i call .remove(bullet)
-			//i need to find a way to remove the bullet from the list.
-			bulletList.remove(bullet);
-		}
-	}
 	
 	public Character getCharacter() {
 		return character;

@@ -50,7 +50,7 @@ public class Bullet {
 				//System.out.println("bullet at the end"); 
 				//world.removeBullet(this);
 			}
-			System.out.println("Bullet.position: x: " +position.x+ "y:"+position.y);
+			//System.out.println("Bullet.position: x: " +position.x+ "y:"+position.y);
 		}
 	}
 }

@@ -94,15 +94,14 @@ public class WorldController {
 		ArrayList<Bullet> temp = new ArrayList<Bullet>();
 		temp = world.bulletList;
 		for(Bullet bullet: temp) {
-			
-			if(bullet.active)
-				bullet.update(delta);
-			else
-				world.bulletList.remove(0);
+			bullet.update(delta);
 		}
 		
 		for(Tower tower: world.getTowers()){
 			tower.update();
+		}
+		for(Mob mob: world.getMobs()){
+			mob.update(delta);
 		}
 	}
 	

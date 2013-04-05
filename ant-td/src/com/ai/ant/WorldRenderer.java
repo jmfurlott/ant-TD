@@ -38,10 +38,12 @@ public class WorldRenderer {
 	
 	ShapeRenderer debugRenderer = new ShapeRenderer();
 	SpriteBatch batch = new SpriteBatch();
+	private Texture queenAnt;
 	private Texture soldierAnt;
 	private Texture grass;
 	private Texture basicTower;
 	private Texture basicBullet;
+	private Texture spawnTower;
 	
 	public WorldRenderer(World world) {
 		this.world = world;
@@ -58,6 +60,7 @@ public class WorldRenderer {
 		batch.begin();
 		drawBlocks();
 		drawTowers();
+		drawMobs();
 		drawBullets();
 		loadCharacter();	
 		batch.end();
@@ -75,10 +78,19 @@ public class WorldRenderer {
 	
 	
 	public void loadTextures() {
-		soldierAnt = new Texture(Gdx.files.internal("QueenAnt.png"));
+		queenAnt = new Texture(Gdx.files.internal("QueenAnt.png"));
+		
+		spawnTower = new Texture(Gdx.files.internal("hill_spawning.png"));
+		soldierAnt = new Texture(Gdx.files.internal("soldierAnt.png"));
+		
+		
 		grass = new Texture(Gdx.files.internal("grassTexture.png"));
+		
+		
 		basicTower = new Texture(Gdx.files.internal("stunFreezeHill.png"));
 		basicBullet = new Texture(Gdx.files.internal("basicBullet.png"));
+		
+		
 		
 	}
 	
@@ -88,7 +100,7 @@ public class WorldRenderer {
 		float x1 = character.getPosition().x + rect.x;
 		float y1 = character.getPosition().y + rect.y;
 		
-		batch.draw(soldierAnt, x1 , y1 , character.SIZE * ppuX, character.SIZE *ppuY);
+		batch.draw(queenAnt, x1 , y1 , character.SIZE * ppuX, character.SIZE *ppuY);
 		//batch.draw(soldierAnt, character.getPosition().x * ppuX  , character.getPosition().y * ppuY, character.SIZE * ppuX, character.SIZE * ppuY);
 	}
 	
@@ -102,9 +114,30 @@ public class WorldRenderer {
 		for(Tower tower : world.getTowers()) {
 			//System.out.println("x: "+ (tower.getPosition().x*ppuX) +" y:"+ (tower.getPosition().y*ppuY));
 			//batch.draw(basicTower, tower.getPosition().x * ppuX, tower.getPosition().y* ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
-			batch.draw(basicTower, tower.getPosition().x, tower.getPosition().y, Tower.SIZE * 25, Tower.SIZE * 25);			
+			if(tower instanceof BasicTower)
+				batch.draw(basicTower, tower.getPosition().x, tower.getPosition().y, Tower.SIZE * 25, Tower.SIZE * 25);
+			else if(tower instanceof spawnTower)
+				batch.draw(spawnTower, tower.getPosition().x, tower.getPosition().y, Tower.SIZE * 25, Tower.SIZE * 25);
+				
 		}
 	}
+	
+	public void drawMobs() {
+		ArrayList<Mob> temp = new ArrayList<Mob>();
+		for(Mob mob :world.getMobs()){
+			if(!mob.active){
+				temp.add(mob);
+			}
+			else{
+				batch.draw(soldierAnt, mob.getPosition().x, mob.getPosition().y, Mob.SIZE*20, Mob.SIZE*20);
+			}
+		}
+		for(Mob mob: temp){
+				world.mobList.remove(mob);
+		}
+	}
+	
+	
 	
 	public void drawBullets() {
 		ArrayList<Bullet> temp = new ArrayList<Bullet>();
@@ -116,7 +149,6 @@ public class WorldRenderer {
 				batch.draw(basicBullet, bullet.getPosition().x+10, bullet.getPosition().y+10, Bullet.SIZE*5, Bullet.SIZE*5);
 			}
 		}
-		
 		for(Bullet bullet: temp){
 				world.bulletList.remove(bullet);
 		}

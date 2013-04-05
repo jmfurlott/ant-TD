@@ -28,4 +28,11 @@ public class SplashTower extends Tower {
 			//effect.getEffect().increaseAoE(.25); //increases the range of the splash;
 		}
 	}
+
+	@Override
+	void shoot() {
+		Bullet bullet = new Bullet(new Vector2(this.getPosition().x,this.getPosition().y), new Vector2(currentTarget.getPosition().x,currentTarget.getPosition().y), world);
+		world.bulletList.add(bullet);
+		System.out.println("FIRE!!!");
+	}
 }
