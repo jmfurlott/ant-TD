@@ -115,9 +115,9 @@ public class WorldRenderer {
 			//System.out.println("x: "+ (tower.getPosition().x*ppuX) +" y:"+ (tower.getPosition().y*ppuY));
 			//batch.draw(basicTower, tower.getPosition().x * ppuX, tower.getPosition().y* ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
 			if(tower instanceof BasicTower)
-				batch.draw(basicTower, tower.getPosition().x, tower.getPosition().y, Tower.SIZE * 25, Tower.SIZE * 25);
+				batch.draw(basicTower, tower.getPosition().x, tower.getPosition().y, Tower.SIZE*25 , Tower.SIZE*25 );
 			else if(tower instanceof spawnTower)
-				batch.draw(spawnTower, tower.getPosition().x, tower.getPosition().y, Tower.SIZE * 25, Tower.SIZE * 25);
+				batch.draw(spawnTower, tower.getPosition().x, tower.getPosition().y, Tower.SIZE*25 , Tower.SIZE*25 );
 				
 		}
 	}
