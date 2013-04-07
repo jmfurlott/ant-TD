@@ -11,13 +11,9 @@ public class AntTD extends Game {
 	public void create() {
 		
 		MenuScreen menu = new MenuScreen(this);
-		//GameScreen game = new GameScreen();	
-
-		
 		setScreen(menu);
-
 		
-		Gdx.app.log("intro", "end of create");
+		Gdx.app.log("intro", "End of create, should not get here :/");
 	}
 	
 }
