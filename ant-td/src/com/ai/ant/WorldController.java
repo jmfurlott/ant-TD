@@ -24,6 +24,7 @@ public class WorldController {
 	private Character wall; //collision
 	private Menu menu;
 	int selection;
+	int side; //0 means left side clickable, 1 means right side clickable
 	
 	ArrayList<Bullet> tempBullet = new ArrayList<Bullet>();
 	
@@ -43,6 +44,7 @@ public class WorldController {
 		this.wall = world.getWall();
 		this.menu = world.getMenu();
 		this.renderer = renderer.getRenderer();
+		side = 0;
 	}
 	
 	//pressed controls
@@ -216,32 +218,19 @@ public class WorldController {
 		if(Gdx.input.isTouched()) {
 			Vector2 click = calculatePosition(Gdx.input.getX(), Gdx.input.getY());
 			
-
 			
 			
-			if (click.x < 9) {
+			
+			if (click.x < 9 && side == 0) {
 				//menu stuff
 				Gdx.app.log("input", "Menu click");
 				Button clicked;
-				if(selection == 0) {
-					clicked = menu.selectButton(click);
-					if(clicked != null) {
-						Gdx.app.log("input", "Found a button");
-						selection = 1;
-						try {
-							Thread.sleep(500);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						
-					} else {
-						Gdx.app.log("input", "Didn't find anything");
-					}
-				} else if(selection == 1) {
-					menu.buttons.add(new Button(click, 1, 1));
-					Gdx.app.log("input", "Made new button");
-					selection = 0;
+				
+				clicked = menu.selectButton(click);
+				if(clicked != null) {
+					Gdx.app.log("input", "Found a button");
+					selection = 1;
+					side = 1;
 					try {
 						Thread.sleep(500);
 					} catch (InterruptedException e) {
@@ -249,7 +238,28 @@ public class WorldController {
 						e.printStackTrace();
 					}
 					
-				} 
+				} else if(clicked == null) {
+					Gdx.app.log("input", "Didn't find anything");
+						
+					
+				}
+			} else if(click.x > 9 && selection == 1 && side == 1) {
+				//debugging don't actually want to create a new button
+				//menu.buttons.add(new Button(click, 1, 1));
+				
+				//MAKE NEW TOWER OF CERTAIN TYPE
+				//plotNewTower(int value) and add it to the arraylist of towers
+				
+				Gdx.app.log("input", "Made new button");
+				selection = 0;
+				side = 0;
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 				
 			} else {
 			//Gdx.app.log("input", "Touched at X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY());
@@ -273,10 +283,10 @@ public class WorldController {
 			//Gdx.app.log("input", "charNewPosX: " + Math.round( 50*Gdx.input.getX()/(ppuX*cameraWidth)) + " charNewPosY: " + Math.round(50*Gdx.input.getY()/(ppuY*cameraHeight)));
 			character.getPosition().y =50 - Math.round( 50*Gdx.input.getY()/(ppuY*cameraHeight) - 0.5f);
 			character.getPosition().x = (int) Math.round(50*Gdx.input.getX()/(ppuX*cameraWidth) - 0.5f);
-		}
 		
-	}
-
+		
+			}
+		}
 	}
 	
 
