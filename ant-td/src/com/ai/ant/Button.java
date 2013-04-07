@@ -7,6 +7,9 @@ public class Button {
 
 	private boolean isSelected;
 	private Vector2 position = new Vector2();
+	private boolean exists = false;
+	private int type; //type of the tower that will be mapped
+		
 	
 	//let 1.0f be unit size and try not to use smaller sizes
 	//private float width;
@@ -19,6 +22,15 @@ public class Button {
 		this.bounds.width = width;
 		this.bounds.height = height;
 		isSelected = false; //false on default
+		exists = true;
+	}
+	
+	public Vector2 getPosition() {
+		return position;
+	}
+	
+	public boolean exists() {
+		return exists;
 	}
 	
 	

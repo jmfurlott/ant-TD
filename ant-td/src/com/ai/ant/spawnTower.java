@@ -41,6 +41,6 @@ public class spawnTower extends Tower{
 	void shoot(){
 		BasicMob bMob = new BasicMob(new Vector2(this.position.x,this.position.y), 1, 1,world);
 		world.mobList.add(bMob);
-		System.out.println("mobReleased");
+		//System.out.println("mobReleased");
 	}
 }

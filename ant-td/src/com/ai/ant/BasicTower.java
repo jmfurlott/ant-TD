@@ -28,6 +28,6 @@ public class BasicTower extends Tower{
 	void shoot(){
 		Bullet bullet = new Bullet(new Vector2(this.getPosition().x,this.getPosition().y), new Vector2(currentTarget.getPosition().x,currentTarget.getPosition().y), world);
 		world.bulletList.add(bullet);
-		System.out.println("FIRE!!!");
+		//System.out.println("FIRE!!!");
 	}
 }
