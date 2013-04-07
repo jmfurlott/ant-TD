@@ -44,6 +44,7 @@ public class WorldRenderer {
 	private Texture basicTower;
 	private Texture basicBullet;
 	private Texture spawnTower;
+	private Texture menuBackground;
 	
 	public WorldRenderer(World world) {
 		this.world = world;
@@ -90,6 +91,8 @@ public class WorldRenderer {
 		
 		basicTower = new Texture(Gdx.files.internal("stunFreezeHill.png"));
 		basicBullet = new Texture(Gdx.files.internal("basicBullet.png"));
+		
+		menuBackground= new Texture(Gdx.files.internal("woodMenuBackground.png"));
 		
 		
 		
@@ -157,6 +160,8 @@ public class WorldRenderer {
 	
 	
 	public void drawMenu() {
+		batch.draw(menuBackground, -38,0);
+		
 		Menu menu = world.getMenu();
 		for(Button button : menu.getButtons()) {
 			//draw sprites
