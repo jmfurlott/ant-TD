@@ -162,6 +162,7 @@ public class WorldRenderer {
 	public void drawMenu() {
 		batch.draw(menuBackground, -38,0);
 		
+		batch.draw(basicTower, 48, 25, 25, 25);
 		Menu menu = world.getMenu();
 		for(Button button : menu.getButtons()) {
 			//draw sprites
