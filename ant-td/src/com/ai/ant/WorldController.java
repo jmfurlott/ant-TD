@@ -216,7 +216,7 @@ public class WorldController {
 		
 		//mouse/touch
 		if(Gdx.input.isTouched()) {
-			Vector2 click = calculatePosition(Gdx.input.getX(), Gdx.input.getY());
+			Vector2 click = calculatePosition(Gdx.input.getX(),Gdx.input.getY());
 			
 			
 			
@@ -246,6 +246,9 @@ public class WorldController {
 			} else if(click.x > 9 && selection == 1 && side == 1) {
 				//debugging don't actually want to create a new button
 				//menu.buttons.add(new Button(click, 1, 1));
+				
+				Tower tower = new BasicTower(new Vector2(Gdx.input.getX(), 480 -Gdx.input.getY()), world);
+				world.placeTower(tower);
 				
 				//MAKE NEW TOWER OF CERTAIN TYPE
 				//plotNewTower(int value) and add it to the arraylist of towers

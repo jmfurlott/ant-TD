@@ -66,7 +66,7 @@ public class WorldRenderer {
 		loadCharacter();	
 		drawMenu();
 		batch.end();
-		drawDebug();
+		//drawDebug();
 		
 		
 	}
