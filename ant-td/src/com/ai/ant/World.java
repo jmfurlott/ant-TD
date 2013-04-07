@@ -16,6 +16,7 @@ public class World {
 	//all ants
 	Character character;
 	Character wall;
+	Menu menu;
 	
 	
 	public Array<Block> getBlocks() {
@@ -40,7 +41,8 @@ public class World {
 	
 	public void createWorld() {
 		//temp towers for testing
-
+		menu = new Menu();
+		
 		Tower bt0 = new BasicTower(new Vector2(200, 100),this);
 		placeTower(bt0);
 		Tower bt1 = new BasicTower(new Vector2(200, 125),this);
@@ -96,5 +98,8 @@ public class World {
 		return wall;
 	}
 	
+	public Menu getMenu() {
+		return menu;
+	}
 	
 }

@@ -11,6 +11,7 @@ public class Menu {
 	
 	public Menu() {
 		//make new buttons
+
 		buttons = new ArrayList<Button>();
 		
 		buttons.add(new Button(new Vector2(4,4), 1.0f, 1.0f));
@@ -42,5 +43,8 @@ public class Menu {
 		return this;
 	}
 	
+	public ArrayList<Button> getButtons() {
+		return buttons;
+	}
 	
 }

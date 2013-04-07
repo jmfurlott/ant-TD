@@ -22,6 +22,9 @@ public class WorldController {
 	private WorldRenderer renderer;
 	private Character character;
 	private Character wall; //collision
+	private Menu menu;
+	int selection;
+	
 	ArrayList<Bullet> tempBullet = new ArrayList<Bullet>();
 	
 	
@@ -38,6 +41,7 @@ public class WorldController {
 		this.world = world;
 		this.character = world.getCharacter();
 		this.wall = world.getWall();
+		this.menu = world.getMenu();
 		this.renderer = renderer.getRenderer();
 	}
 	
@@ -210,8 +214,46 @@ public class WorldController {
 		
 		//mouse/touch
 		if(Gdx.input.isTouched()) {
-			Gdx.app.log("input", "Touched at X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY());
-			Gdx.app.log("input", "ppux: " + renderer.getScreenWidth() + " ppuy: " + renderer.getScreenHeight());
+			Vector2 click = calculatePosition(Gdx.input.getX(), Gdx.input.getY());
+			
+
+			
+			
+			if (click.x < 9) {
+				//menu stuff
+				Gdx.app.log("input", "Menu click");
+				Button clicked;
+				if(selection == 0) {
+					clicked = menu.selectButton(click);
+					if(clicked != null) {
+						Gdx.app.log("input", "Found a button");
+						selection = 1;
+						try {
+							Thread.sleep(500);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+					} else {
+						Gdx.app.log("input", "Didn't find anything");
+					}
+				} else if(selection == 1) {
+					menu.buttons.add(new Button(click, 1, 1));
+					Gdx.app.log("input", "Made new button");
+					selection = 0;
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				} 
+				
+			} else {
+			//Gdx.app.log("input", "Touched at X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY());
+			//Gdx.app.log("input", "ppux: " + renderer.getScreenWidth() + " ppuy: " + renderer.getScreenHeight());
 			//Vector3 touchPosition = new Vector3();
 			//touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			character.setState(State.WALKING);
@@ -228,10 +270,13 @@ public class WorldController {
 			
 			
 			
-			Gdx.app.log("input", "charNewPosX: " + Math.round( 50*Gdx.input.getX()/(ppuX*cameraWidth)) + " charNewPosY: " + Math.round(50*Gdx.input.getY()/(ppuY*cameraHeight)));
+			//Gdx.app.log("input", "charNewPosX: " + Math.round( 50*Gdx.input.getX()/(ppuX*cameraWidth)) + " charNewPosY: " + Math.round(50*Gdx.input.getY()/(ppuY*cameraHeight)));
 			character.getPosition().y =50 - Math.round( 50*Gdx.input.getY()/(ppuY*cameraHeight) - 0.5f);
 			character.getPosition().x = (int) Math.round(50*Gdx.input.getX()/(ppuX*cameraWidth) - 0.5f);
 		}
+		
+	}
+
 	}
 	
 
@@ -268,5 +313,25 @@ public class WorldController {
 		
 	}
 	
+	public Vector2 calculatePosition(int xPixel, int yPixel) {
+		Vector2 position = new Vector2();
+		
+		float ppuX = renderer.getScreenWidth();
+		float ppuY = renderer.getScreenHeight();
+		float cameraWidth = renderer.getCameraWidth();
+		float cameraHeight = renderer.getCameraHeight();
+		
+		
+		int posX = (int) Math.round(50*Gdx.input.getX()/(ppuX*cameraWidth) - 0.5f);
+		int posY = 50 - Math.round( 50*Gdx.input.getY()/(ppuY*cameraHeight) - 0.5f);
+		
+		position.set(posX, posY);
+		
+		Gdx.app.log("input", "x saved: " + posX + " y saved: " + posY);
+		
+		return position;
+		
+	}
+
 	
 }

@@ -63,6 +63,7 @@ public class WorldRenderer {
 		drawMobs();
 		drawBullets();
 		loadCharacter();	
+		drawMenu();
 		batch.end();
 		drawDebug();
 		
@@ -153,6 +154,16 @@ public class WorldRenderer {
 				world.bulletList.remove(bullet);
 		}
 	}
+	
+	
+	public void drawMenu() {
+		Menu menu = world.getMenu();
+		for(Button button : menu.getButtons()) {
+			//draw sprites
+		}
+	}
+	
+	
 	
 	public void drawDebug() {
 		
