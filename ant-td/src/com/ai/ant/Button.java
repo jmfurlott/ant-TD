@@ -23,6 +23,16 @@ public class Button {
 		this.bounds.height = height;
 		isSelected = false; //false on default
 		exists = true;
+		this.type = -1;
+	}
+	
+	public Button(Vector2 position, float width, float height, int towerType) {
+		this.position = position;
+		this.bounds.width = width;
+		this.bounds.height = height;
+		isSelected = false; //false on default
+		exists = true;
+		this.type = towerType;
 	}
 	
 	public Vector2 getPosition() {
@@ -31,6 +41,10 @@ public class Button {
 	
 	public boolean exists() {
 		return exists;
+	}
+	
+	public int getTowerType() {
+		return type;
 	}
 	
 	

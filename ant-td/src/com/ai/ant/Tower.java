@@ -19,6 +19,7 @@ public abstract class Tower {
 	protected Mob currentTarget;
 	protected World world;
 	protected ArrayList<Mob> targetList;
+	protected int type;
 
 	protected boolean active;
 	protected long firedTime;

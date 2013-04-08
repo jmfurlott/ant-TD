@@ -1,12 +1,13 @@
 package com.ai.ant;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -41,10 +42,11 @@ public class WorldRenderer {
 	private Texture queenAnt;
 	private Texture soldierAnt;
 	private Texture grass;
-	private Texture basicTower;
+	private Texture basicTower, slowTower, stunTower, splashTower, conversionTower, spawnTower, puddle;
 	private Texture basicBullet;
-	private Texture spawnTower;
 	private Texture menuBackground;
+	
+	Map<Integer, Texture> towerMapTexture = new HashMap<Integer, Texture>();
 	
 	public WorldRenderer(World world) {
 		this.world = world;
@@ -53,6 +55,8 @@ public class WorldRenderer {
 		this.cam.update();
 		batch = new SpriteBatch();
 		loadTextures();
+		buildTextureMap();
+		
 	}
 	
 	public void render() {
@@ -66,7 +70,7 @@ public class WorldRenderer {
 		loadCharacter();	
 		drawMenu();
 		batch.end();
-		//drawDebug();
+		drawDebug();
 		
 		
 	}
@@ -81,15 +85,17 @@ public class WorldRenderer {
 	
 	public void loadTextures() {
 		queenAnt = new Texture(Gdx.files.internal("QueenAnt.png"));
-		
 		spawnTower = new Texture(Gdx.files.internal("hill_spawning.png"));
 		soldierAnt = new Texture(Gdx.files.internal("soldierAnt.png"));
-		
-		
 		grass = new Texture(Gdx.files.internal("grassTexture.png"));
 		
 		
-		basicTower = new Texture(Gdx.files.internal("stunFreezeHill.png"));
+		basicTower = new Texture(Gdx.files.internal("stunFreezeHill.png")); //wrong
+		slowTower = new Texture(Gdx.files.internal("stunFreezeHill.png"));
+		splashTower = new Texture(Gdx.files.internal("stunFreezeHill.png")); //wrong
+		conversionTower = new Texture(Gdx.files.internal("conversionHill.png"));
+		puddle = new Texture(Gdx.files.internal("puddle.png"));
+		
 		basicBullet = new Texture(Gdx.files.internal("basicBullet.png"));
 		
 		menuBackground= new Texture(Gdx.files.internal("woodMenuBackground.png"));
@@ -162,10 +168,11 @@ public class WorldRenderer {
 	public void drawMenu() {
 		batch.draw(menuBackground, -38,0);
 		
-		batch.draw(basicTower, 48, 25, 25, 25);
+		//batch.draw(basicTower, 48, 25, 25, 25);
+		
 		Menu menu = world.getMenu();
 		for(Button button : menu.getButtons()) {
-			//draw sprites
+			batch.draw(towerMapTexture.get(button.getTowerType()), button.getPosition().x*(640/50), button.getPosition().y*(480/50), 25, 25);
 		}
 	}
 	
@@ -209,6 +216,36 @@ public class WorldRenderer {
 	
 	
 	
+	
+	//configure hashmap to know which textures to map to
+	
+	/*
+	   0. null
+	   1. Normal Tower- simply attacks ants
+	   2. Slow Tower - movement speed debuff
+	   3. Stun Tower - prevents all movement, or other actions
+	   4. Splash Tower-
+	   5. Conversion Tower- converts to attack opponent
+	   6. Spawn Tower - mob factory
+	   7. Puddle
+	 */
+	
+	public void buildTextureMap() {
+		
+		//towerMapTexture.put(0, quit);
+		towerMapTexture.put(1, basicTower);
+		towerMapTexture.put(2, slowTower); //no class made for this yet
+		towerMapTexture.put(3, stunTower); //no class for this yet
+		towerMapTexture.put(4, splashTower);  
+		towerMapTexture.put(5, conversionTower); //no class for this yet
+		towerMapTexture.put(6, spawnTower);
+		towerMapTexture.put(7, puddle); //no class for this yet 
+		
+		
+	}
+	
+	
+	
 	public WorldRenderer getRenderer() {
 		return this;
 	}
@@ -229,4 +266,7 @@ public class WorldRenderer {
 		return CAMERA_HEIGHT;
 	}
 	
+	public Map<Integer, Texture> getTextureMap() {
+		return towerMapTexture;
+	}
 }

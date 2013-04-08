@@ -14,8 +14,8 @@ public class Menu {
 
 		buttons = new ArrayList<Button>();
 		
-		buttons.add(new Button(new Vector2(4,4), 1.0f, 1.0f));
-		
+		buttons.add(new Button(new Vector2(4,4), 1.0f, 1.0f, 1)); //make this pixel coords
+		buttons.add(new Button(new Vector2(4,8), 1.0f, 1.0f, 7));
 		
 	}
 	
