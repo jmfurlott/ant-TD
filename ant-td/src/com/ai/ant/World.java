@@ -42,7 +42,10 @@ public class World {
 	public void createWorld() {
 		//temp towers for testing
 		menu = new Menu();
-		
+		for(int i = 100; i < 250; i+=10){
+			Tower bt0 = new BasicTower(new Vector2(i, 160),this);
+			placeTower(bt0);
+		}
 		Tower bt0 = new BasicTower(new Vector2(200, 100),this);
 		placeTower(bt0);
 		Tower bt1 = new BasicTower(new Vector2(200, 125),this);
