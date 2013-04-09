@@ -27,6 +27,7 @@ public class WorldController {
 
 	ArrayList<Bullet> tempBullet = new ArrayList<Bullet>();
 
+	Button clicked;
 	static Map<Keys, Boolean> keys = new HashMap<WorldController.Keys, Boolean>();
 	static {
 		keys.put(Keys.LEFT, false);
@@ -43,6 +44,7 @@ public class WorldController {
 		this.menu = world.getMenu();
 		this.renderer = renderer.getRenderer();
 		side = 0;
+		clicked = null;
 	}
 
 	// pressed controls
@@ -215,6 +217,7 @@ public class WorldController {
 		}
 
 		// mouse/touch
+		
 		if (Gdx.input.isTouched()) {
 			Vector2 click = calculatePosition(Gdx.input.getX(),
 					Gdx.input.getY());
@@ -222,7 +225,6 @@ public class WorldController {
 			if (click.x < 9 && side == 0) {
 				// menu stuff
 				Gdx.app.log("input", "Menu click");
-				Button clicked;
 
 				clicked = menu.selectButton(click);
 				if (clicked != null) {
@@ -244,10 +246,11 @@ public class WorldController {
 				// debugging don't actually want to create a new button
 				// menu.buttons.add(new Button(click, 1, 1));
 
-				Tower tower = new BasicTower(new Vector2(Gdx.input.getX(),
-						480 - Gdx.input.getY()), world);
-				world.placeTower(tower);
+				addTowerToMap(clicked);
+				
 
+				clicked = null;
+				
 				// MAKE NEW TOWER OF CERTAIN TYPE
 				// plotNewTower(int value) and add it to the arraylist of towers
 
@@ -375,4 +378,24 @@ public class WorldController {
 
 	}
 
+	
+	public void addTowerToMap(Button clicked) {
+		
+		//when the rest of the towers are functioning
+		//just add the rest of the if loops for the approrpriate towers
+		
+		
+		int type = clicked.getTowerType();
+		
+		if(type == 1) {
+			Tower tower = new BasicTower(new Vector2(Gdx.input.getX(),
+					480 - Gdx.input.getY()), world);
+			world.placeTower(tower);
+		} else if (type == 6) {
+			Tower tower = new spawnTower(new Vector2(Gdx.input.getX(),
+					480 - Gdx.input.getY()), world);
+			world.placeTower(tower);
+		}
+	}
+	
 }
