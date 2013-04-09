@@ -90,7 +90,7 @@ public class MenuScreen implements Screen, InputProcessor  {
 		
 		renderer.render();
 		if(Gdx.input.justTouched())
-            g.setScreen(new GameScreen());
+            g.setScreen(new GameScreen(g));
 
 		
 	}

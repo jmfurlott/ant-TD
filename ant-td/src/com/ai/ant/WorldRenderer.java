@@ -45,6 +45,7 @@ public class WorldRenderer {
 	private Texture basicTower, slowTower, stunTower, splashTower, conversionTower, spawnTower, puddle;
 	private Texture basicBullet;
 	private Texture menuBackground;
+	private Texture quitButton;
 	
 	Map<Integer, Texture> towerMapTexture = new HashMap<Integer, Texture>();
 	
@@ -98,9 +99,7 @@ public class WorldRenderer {
 		basicBullet = new Texture(Gdx.files.internal("basicBullet.png"));
 		
 		menuBackground= new Texture(Gdx.files.internal("woodMenuBackground.png"));
-		//towerMapTexture.put(3, stunTower); //no class for this yet
-		
-		
+		quitButton= new Texture(Gdx.files.internal("quit.png"));	
 		
 	}
 	
@@ -232,7 +231,7 @@ public class WorldRenderer {
 	
 	public void buildTextureMap() {
 		
-		//towerMapTexture.put(0, quit);
+		towerMapTexture.put(0, quitButton);
 		towerMapTexture.put(1, basicTower);
 		towerMapTexture.put(2, slowTower); //no class made for this yet
 		towerMapTexture.put(3, stunTower); //no class for this yet

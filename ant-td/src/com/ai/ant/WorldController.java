@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.ai.ant.Character.State;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
@@ -24,6 +25,7 @@ public class WorldController {
 	private Menu menu;
 	int selection;
 	int side; // 0 means left side clickable, 1 means right side clickable
+	Game g;
 
 	ArrayList<Bullet> tempBullet = new ArrayList<Bullet>();
 
@@ -37,7 +39,7 @@ public class WorldController {
 		keys.put(Keys.A, false);
 	};
 
-	public WorldController(World world, WorldRenderer renderer) {
+	public WorldController(World world, WorldRenderer renderer, Game g) {
 		this.world = world;
 		this.character = world.getCharacter();
 		this.wall = world.getWall();
@@ -45,6 +47,7 @@ public class WorldController {
 		this.renderer = renderer.getRenderer();
 		side = 0;
 		clicked = null;
+		this.g = g;
 	}
 
 	// pressed controls
@@ -311,7 +314,7 @@ public class WorldController {
 							&& (tempPos.y > (tempTowerPos.y - bs))
 							&& (tempPos.x < (tempTowerPos.x + bs))
 							&& (tempPos.y < (tempTowerPos.y + bs))) {
-						Gdx.app.log("Collision", "Collided!!!");
+						//Gdx.app.log("Collision", "Collided!!!");
 						Vector2 newPos = tempPos.add(new Vector2(bs, 0));
 						Mob replacement = new Mob(newPos, world);
 						world.mobList.remove(i);
@@ -395,6 +398,10 @@ public class WorldController {
 			Tower tower = new spawnTower(new Vector2(Gdx.input.getX(),
 					480 - Gdx.input.getY()), world);
 			world.placeTower(tower);
+		} else if (type == 0)
+		{
+			Gdx.app.log("quit", "Trying to quit");
+			g.setScreen(new EndGameScreen());
 		}
 	}
 	

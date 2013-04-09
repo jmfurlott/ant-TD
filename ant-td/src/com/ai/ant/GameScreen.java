@@ -1,5 +1,6 @@
 package com.ai.ant;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
@@ -14,6 +15,11 @@ public class GameScreen implements Screen, InputProcessor {
 	private WorldController controller;
 	
 	private int width, height;
+	private Game g;
+	
+	public GameScreen(Game g) {
+		this.g = g;
+	}
 	
 	@Override
 	public void resize(int width, int height) {
@@ -52,7 +58,7 @@ public class GameScreen implements Screen, InputProcessor {
 	public void show() {
 		world = new World();
 		renderer = new WorldRenderer(world);
-		controller = new WorldController(world, renderer);
+		controller = new WorldController(world, renderer, g);
 		Gdx.input.setInputProcessor(this);
 	
 	}
@@ -145,8 +151,5 @@ public class GameScreen implements Screen, InputProcessor {
 	}
 	
 	// input stuff..mouse click here maybe?
-	
-	
-	
 	
 }
