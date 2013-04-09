@@ -70,9 +70,8 @@ public class WorldRenderer {
 		loadCharacter();	
 		drawMenu();
 		batch.end();
-		drawDebug();
-		
-		
+		//drawDebug();
+
 	}
 	
 	public void setSize(int w, int h) {
@@ -89,16 +88,17 @@ public class WorldRenderer {
 		soldierAnt = new Texture(Gdx.files.internal("soldierAnt.png"));
 		grass = new Texture(Gdx.files.internal("grassTexture.png"));
 		
-		
+		//TODO put correct images in for each tower
 		basicTower = new Texture(Gdx.files.internal("stunFreezeHill.png")); //wrong
 		slowTower = new Texture(Gdx.files.internal("stunFreezeHill.png"));
+		stunTower = new Texture(Gdx.files.internal("stunFreezeHill.png")); //wrong currently
 		splashTower = new Texture(Gdx.files.internal("stunFreezeHill.png")); //wrong
 		conversionTower = new Texture(Gdx.files.internal("conversionHill.png"));
 		puddle = new Texture(Gdx.files.internal("puddle.png"));
-		
 		basicBullet = new Texture(Gdx.files.internal("basicBullet.png"));
 		
 		menuBackground= new Texture(Gdx.files.internal("woodMenuBackground.png"));
+		//towerMapTexture.put(3, stunTower); //no class for this yet
 		
 		
 		
@@ -172,7 +172,7 @@ public class WorldRenderer {
 		
 		Menu menu = world.getMenu();
 		for(Button button : menu.getButtons()) {
-			batch.draw(towerMapTexture.get(button.getTowerType()), button.getPosition().x*(640/50), button.getPosition().y*(480/50), 25, 25);
+			batch.draw(towerMapTexture.get(button.getTowerType()), button.getPosition().x*(640/50), button.getPosition().y*(480/50)-10, 30, 30);
 		}
 	}
 	
