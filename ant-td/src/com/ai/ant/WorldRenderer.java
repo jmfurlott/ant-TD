@@ -43,13 +43,14 @@ public class WorldRenderer {
 	private Texture soldierAnt;
 	private Texture grass;
 	
-	//Towers and bullets
+	//towers bullets
 	private Texture spawnTower;
-	private Texture basicTower;
-	private Texture basicBullet;
-	private Texture splashTower;
-	private Texture splashBullet;
-	private Texture slowTower, stunTower, conversionTower, puddle;
+	private Texture basicTower, basicBullet;
+	private Texture splashTower, splashBullet;
+	private Texture slowTower, slowBullet;
+	private Texture stunTower, stunBullet;
+	private Texture conversionTower, conversionBullet;
+	private Texture waterPuddle, mudPuddle;
 	
 
 	private Texture menuBackground;
@@ -65,11 +66,9 @@ public class WorldRenderer {
 		batch = new SpriteBatch();
 		loadTextures();
 		buildTextureMap();
-		
 	}
 	
 	public void render() {
-
 		batch.begin();
 		drawBlocks();
 		drawTowers();
@@ -79,7 +78,6 @@ public class WorldRenderer {
 		drawMenu();
 		batch.end();
 		//drawDebug();
-
 	}
 	
 	public void setSize(int w, int h) {
@@ -97,18 +95,24 @@ public class WorldRenderer {
 		
 		//Towers and bullets
 		spawnTower = new Texture(Gdx.files.internal("hill_spawning.png"));
-		//basic
-		basicTower = new Texture(Gdx.files.internal("stunFreezeHill.png")); //wrong
+
+		basicTower = new Texture(Gdx.files.internal("stunFreezeHill.png")); //TODO
 		basicBullet = new Texture(Gdx.files.internal("basicBullet.png"));	
 		
-		splashTower = new Texture(Gdx.files.internal("splashTower.png"));
-		splashBullet = new Texture(Gdx.files.internal("splashBullet.png"));
+		splashTower = new Texture(Gdx.files.internal("splashTower.png")); //TODO
+		splashBullet = new Texture(Gdx.files.internal("splashBullet.png"));//TODO
 		
-		slowTower = new Texture(Gdx.files.internal("stunFreezeHill.png"));
-		stunTower = new Texture(Gdx.files.internal("stunFreezeHill.png")); //wrong currently
+		slowTower = new Texture(Gdx.files.internal("stunFreezeHill.png")); //TODO
+		slowBullet = new Texture(Gdx.files.internal("basicBullet.png"));
+		
+		stunTower = new Texture(Gdx.files.internal("stunFreezeHill.png")); //TODO
+		stunBullet = new Texture(Gdx.files.internal("basicBullet.png")); //TODO
 		
 		conversionTower = new Texture(Gdx.files.internal("conversionHill.png"));
-		puddle = new Texture(Gdx.files.internal("puddle.png"));
+		conversionBullet = new Texture(Gdx.files.internal("basicBullet.png")); //TODO
+		
+		waterPuddle = new Texture(Gdx.files.internal("waterPuddle.png"));
+		mudPuddle = new Texture(Gdx.files.internal("mudPuddle.png"));
 		
 		//TODO put correct images in for each tower
 
@@ -139,10 +143,15 @@ public class WorldRenderer {
 		for(Tower tower : world.getTowers()) {
 			if(tower instanceof BasicTower)
 				batch.draw(basicTower, tower.getPosition().x, tower.getPosition().y, Tower.SIZE*25 , Tower.SIZE*25);
-			else if(tower instanceof spawnTower)
+			else if(tower instanceof SpawnTower)
 				batch.draw(spawnTower, tower.getPosition().x, tower.getPosition().y, Tower.SIZE*25 , Tower.SIZE*25);
 			else if(tower instanceof SplashTower)
 				batch.draw(splashTower, tower.getPosition().x, tower.getPosition().y, Tower.SIZE*25 , Tower.SIZE*25);
+			else if(tower instanceof SlowTower)
+				batch.draw(slowTower, tower.getPosition().x, tower.getPosition().y, Tower.SIZE*25 , Tower.SIZE*25);
+			else if(tower instanceof ConversionTower)
+				batch.draw(conversionTower, tower.getPosition().x, tower.getPosition().y, Tower.SIZE*25 , Tower.SIZE*25);
+		
 		}
 	}
 	
@@ -176,11 +185,16 @@ public class WorldRenderer {
 			if(!bullet.active){
 				temp.add(bullet);
 			}
-			else{
+			else{/*TODO: fix images for bullets*/
 				if(bullet.tower instanceof BasicTower)
 					batch.draw(basicBullet, bullet.getPosition().x+10, bullet.getPosition().y+10, Bullet.SIZE*5, Bullet.SIZE*5);
-				if(bullet.tower instanceof SplashTower)
-/*TODO:FIX IMAGE*/	batch.draw(basicBullet, bullet.getPosition().x+10, bullet.getPosition().y+10, Bullet.SIZE*5, Bullet.SIZE*5);
+				else if(bullet.tower instanceof SplashTower)
+					batch.draw(basicBullet, bullet.getPosition().x+10, bullet.getPosition().y+10, Bullet.SIZE*5, Bullet.SIZE*5);
+				else if(bullet.tower instanceof SlowTower)
+					batch.draw(basicBullet, bullet.getPosition().x+10, bullet.getPosition().y+10, Bullet.SIZE*5, Bullet.SIZE*5);
+				else if(bullet.tower instanceof ConversionTower)
+					batch.draw(basicBullet, bullet.getPosition().x+10, bullet.getPosition().y+10, Bullet.SIZE*5, Bullet.SIZE*5);
+			
 			}
 		}
 		for(Bullet bullet: temp){
@@ -251,7 +265,7 @@ public class WorldRenderer {
 	   4. Splash Tower-
 	   5. Conversion Tower- converts to attack opponent
 	   6. Spawn Tower - mob factory
-	   7. Puddle
+	   7. waterPuddle
 	 */
 	
 	public void buildTextureMap() {
@@ -263,7 +277,7 @@ public class WorldRenderer {
 		towerMapTexture.put(4, splashTower);  
 		towerMapTexture.put(5, conversionTower); //no class for this yet
 		towerMapTexture.put(6, spawnTower);
-		towerMapTexture.put(7, puddle); //no class for this yet 
+		towerMapTexture.put(7, waterPuddle); //no class for this yet 
 		
 		
 	}

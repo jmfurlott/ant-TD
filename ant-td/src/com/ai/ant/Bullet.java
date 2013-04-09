@@ -42,14 +42,35 @@ public class Bullet {
 			position = end;	
 		}
 		if(position.equals(end)){
-			if(!(tower instanceof SplashTower)) 
-				singleDamage();
-			else
+			if(tower instanceof BasicTower) 
+				basicDamage();
+			else if(tower instanceof SplashTower){
 				splashDamage();
+			}
+			else if(tower instanceof SlowTower){
+				slowDamage();
+			}
+			else if(tower instanceof ConversionTower){
+				conversion();
+			}	
 		}
 	}
 	
-	public void singleDamage(){
+	public void conversion(){
+		active = false;
+		if(target!=null){
+			if(target.target == 1){
+				target.target = 0;
+			}
+//			if(target.target == 0){
+//				target.target = 1;
+//			}
+			target.setIncomingDamage(target.getIncomingDamage()-tower.getDamage());
+		}
+	}
+	
+	
+	public void basicDamage(){
 		active = false;
 		if(target!=null){
 			target.setHealth(target.getHealth() - tower.getDamage());
@@ -60,17 +81,39 @@ public class Bullet {
 	public void splashDamage(){
 		target.setIncomingDamage(target.getIncomingDamage()-tower.getDamage());
 		active = false;
-		for (Mob pmob : world.mobList) {
-			if(pmob.active){
+		for (Mob pmob : world.mobList){
+			if(pmob.active && pmob.target == tower.owner){
 				if(tower.currentTarget!=null){
 					double aSqu = (pmob.position.x - tower.currentTarget.position.x)* (pmob.position.x - tower.currentTarget.position.x);
 					double bSqu = (pmob.position.y - tower.currentTarget.position.y)* (pmob.position.y - tower.currentTarget.position.y);
-					double r = Math.sqrt(aSqu + bSqu);
+					double r = Math.sqrt(aSqu + bSqu);					
 					if (r < tower.splashRange) {
 						pmob.setHealth(pmob.getHealth()-tower.damage);
 					}
 				}
 			}
 		}
-	}	
+	}
+	public void slowDamage(){
+		target.setIncomingDamage(target.getIncomingDamage()-tower.getDamage());
+		active = false;
+		for (Mob pmob : world.mobList){
+			if(pmob.active && pmob.target == tower.owner){
+				if(tower.currentTarget!=null){
+					double aSqu = (pmob.position.x - tower.currentTarget.position.x)* (pmob.position.x - tower.currentTarget.position.x);
+					double bSqu = (pmob.position.y - tower.currentTarget.position.y)* (pmob.position.y - tower.currentTarget.position.y);
+					double r = Math.sqrt(aSqu + bSqu);					
+					if (r < tower.splashRange) {
+						pmob.setHealth(pmob.getHealth()-tower.damage);
+						if(pmob.speedScale == 1){//TODO:&& !pmob.isStuned)
+							if(tower.slowAmount>0)
+								pmob.setSlowStartTime(System.currentTimeMillis());
+								pmob.speedScale -= tower.slowAmount;
+						}
+					}
+				}
+			}
+		}
+	}
+	
 }

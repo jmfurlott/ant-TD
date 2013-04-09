@@ -20,6 +20,7 @@ public abstract class Tower {
 	protected ArrayList<Mob> targetList;
 	protected int owner;
 	protected int splashRange;
+	protected double slowAmount;
 	protected int type;
 
 	protected boolean active;
@@ -61,22 +62,20 @@ public abstract class Tower {
 
 	public void getTarget() {
 		currentTarget = null;
-		double r;
 		for (Mob pmob : world.mobList) {
-			if((pmob.getHealth() - pmob.getIncomingDamage()) > 0){
-				double aSqu = (pmob.position.x - position.x)* (pmob.position.x - position.x);
-				double bSqu = (pmob.position.y - position.y)* (pmob.position.y - position.y);
-				r = Math.sqrt(aSqu + bSqu);// r = squrt(a^2 + b^2)
-				pmob.distanceToEnd = (float) r; 
-				if (r < range) { // if the mob is in range
-					if(pmob.deathFlag){}//mob is dead don't evaluate it again
-					else if (currentTarget != null) {
-						if (pmob.distanceToEnd < currentTarget.distanceToEnd) {
+			if(pmob.target==owner){
+				if((pmob.getHealth() - pmob.getIncomingDamage()) > 0){
+					double distanceFromTowerMag = (pmob.position.x - position.x)* (pmob.position.x - position.x) + (pmob.position.y - position.y)* (pmob.position.y - position.y);
+					if (distanceFromTowerMag < (range*range)) { // if the mob is in range
+						if(pmob.deathFlag){}//mob is dead don't evaluate it again
+						else if (currentTarget != null) {
+							if (pmob.distanceToEnd < currentTarget.distanceToEnd) {
+								currentTarget = pmob;
+							}
+						} 
+						else {
 							currentTarget = pmob;
 						}
-					} 
-					else {
-						currentTarget = pmob;
 					}
 				}
 			}

@@ -107,7 +107,9 @@ public class WorldController {
 		ArrayList<Bullet> temp = new ArrayList<Bullet>();
 		temp = world.bulletList;
 
-		//negotiateCollision();
+		//spawning new mobs in the collision method breaks the scoring /targeting system
+		//~mike
+		negotiateCollision();
 		for (Bullet bullet : temp) {
 			bullet.update(delta);
 		}
@@ -234,6 +236,8 @@ public class WorldController {
 					Gdx.app.log("input", "Found a button");
 					selection = 1;
 					side = 1;
+					//this is a single threaded processes thead.sleep just breaks the code
+					//~mike
 //					try {
 //						Thread.sleep(500);
 //					} catch (InterruptedException e) {
@@ -249,10 +253,11 @@ public class WorldController {
 				// debugging don't actually want to create a new button
 				// menu.buttons.add(new Button(click, 1, 1));
 
-
-				Tower tower = new BasicTower(new Vector2(Gdx.input.getX(),
-						480 - Gdx.input.getY()), world,1);
-				world.placeTower(tower);
+				//Why is this here??
+				//~mike
+//				Tower tower = new BasicTower(new Vector2(Gdx.input.getX(),
+//						480 - Gdx.input.getY()), world,1);
+//				world.placeTower(tower);
 
 				addTowerToMap(clicked);
 				
@@ -264,6 +269,9 @@ public class WorldController {
 				Gdx.app.log("input", "Made new button");
 				selection = 0;
 				side = 0;
+				
+				//this is a single threaded processes thead.sleep just breaks the code
+				//~mike
 //				try {
 //					Thread.sleep(500);
 //				} catch (InterruptedException e) {
@@ -320,9 +328,7 @@ public class WorldController {
 							&& (tempPos.y < (tempTowerPos.y + bs))) {
 						//Gdx.app.log("Collision", "Collided!!!");
 						Vector2 newPos = tempPos.add(new Vector2(bs, 0));
-						Mob replacement = new Mob(newPos, world);
-						world.mobList.remove(i);
-						world.mobList.add(replacement);
+						world.mobList.get(i).position = newPos;
 						break;
 						// i--;//rerun to see if new position messes with any
 						// towers - CAUSED ARRAY INDEX ERROR
@@ -387,23 +393,45 @@ public class WorldController {
 
 	
 	public void addTowerToMap(Button clicked) {
-		
 		//when the rest of the towers are functioning
 		//just add the rest of the if loops for the appropriate towers
-		
-		
-		int type = clicked.getTowerType();
-		
+		int type = clicked.getTowerType();		
 		if(type == 1) {
-			Tower tower = new BasicTower(new Vector2(Gdx.input.getX(),
-					480 - Gdx.input.getY()), world,1);
+			System.out.println("placing BasicTower");
+			Tower tower = new BasicTower(new Vector2(Gdx.input.getX(), 480 - Gdx.input.getY()), world,1);
 			world.placeTower(tower);
-		} else if (type == 6) {
-			Tower tower = new spawnTower(new Vector2(Gdx.input.getX(),
-					480 - Gdx.input.getY()), world, 0, 1, 1);
+		} 
+		else if (type == 2) {
+			System.out.println("placing SlowTower");
+			Tower tower = new SlowTower(new Vector2(Gdx.input.getX(), 480 - Gdx.input.getY()), world, 1);
 			world.placeTower(tower);
-		} else if (type == 0)
-		{
+		}
+//		else if (type == 3) {
+//			System.out.println("placing StunTower");
+//			Tower tower = new StunTower(new Vector2(Gdx.input.getX(), 480 - Gdx.input.getY()), world, 1);
+//			world.placeTower(tower);
+//		}
+		else if (type == 4) {
+			System.out.println("placing SplashTower");
+			Tower tower = new SplashTower(new Vector2(Gdx.input.getX(), 480 - Gdx.input.getY()), world, 1);
+			world.placeTower(tower);
+		}
+		else if (type == 5) {
+		System.out.println("placing ConversionTower");
+			Tower tower = new ConversionTower(new Vector2(Gdx.input.getX(), 480 - Gdx.input.getY()), world, 1);
+			world.placeTower(tower);
+		}
+		else if (type == 6) {
+			System.out.println("placing SpawnTower");
+			Tower tower = new SpawnTower(new Vector2(Gdx.input.getX(), 480 - Gdx.input.getY()), world, 0, 1, 1);
+			world.placeTower(tower);
+		} 
+//		else if (type == 7) {
+//		System.out.println("placing BasicTower");
+//			Tower tower = new WaterPuddle(new Vector2(Gdx.input.getX(), 480 - Gdx.input.getY()), world, 1);
+//			world.placeTower(tower);
+//		}		
+		else if (type == 0){
 			Gdx.app.log("quit", "Trying to quit");
 			g.setScreen(new EndGameScreen());
 		}

@@ -4,43 +4,45 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class Mob {
-	protected int speed;
-	public static final float SPEED = 10f;
-	//?do we want both? one static the other is just a scaler?
-	
+	protected World world;
 	protected Vector2 position;
+	Vector2 end;
+	protected double distanceToEnd;
+	
 	protected Rectangle bounds = new Rectangle();
 	static final float SIZE = 1f;
 	protected int health;
 	protected int target; 	//represents which player this mob is attacking, needed for pathing and conversion tower
-							//end is based on the current target of the mob. I'm just hard coding this for now to test the tower targeting system.
-	Vector2 end = new Vector2(200,300);
 	protected int currency; //coin given based on level 1 of mob upon destruction
 	protected int points; 	//points given based on level 1 of mob upon destruction
 	protected int level; 	//currency/points rewarded scale based on level
-	protected float distanceToEnd;
+	protected static final float SPEED = 10f; 	//normal speed value
+	protected float speedScale = 1;   //modified when slowed
+	protected float slowStartTime;
+	protected long slowEndTime;
 	
-	protected World world;
 	Vector2 direction = new Vector2();
-	protected int incomingDamage =0;
-	protected double angle;
+	protected int incomingDamage = 0; //used in targeting system
 	
-	protected boolean deathFlag = false; //did the mob die to tower damage??
-	
-	protected boolean active = true;	//has mob reached the end of its path??
+	protected double angle; //used for time based movement
+	protected boolean deathFlag = false;  //is the mob dead?
+	protected boolean active = true;	 //has mob reached the end of its path?
 	
 	public Mob(Vector2 position, World world){
 		this.position = position;
-	
 		this.world = world;
 		this.position = position;
-		
 		this.bounds.width = SIZE;
 		this.bounds.height = SIZE;
+		if(target==1){ //enemy
+			end = new Vector2(200,300);
+		}
+		else{ //friendly
+			end = new Vector2(250,300);
+		}
 		angle = Math.atan2(end.y - position.y, end.x- position.x);
 		direction.x = (float) Math.cos(angle);
 		direction.y = (float) Math.sin(angle);
-		
 	}
 	
 	public void BuildPath(){
@@ -57,35 +59,40 @@ public class Mob {
 		world.mobList.remove(this);
 	}
 	
+	public void setSlowStartTime(float slowStartTime){
+		this.slowStartTime = slowStartTime;
+	}
 	
 	public void update(float delta){
 		if(active){
+			slowEndTime = System.currentTimeMillis();			
+			if(speedScale<1 && slowEndTime > slowStartTime){
+				speedScale = 1;
+			}
+			if(target==1){
+				end = new Vector2(200,300);
+			}
+			else
+				end = new Vector2(250,300);
+			
 			if(health<=0){
 				deathFlag = true;
 				active=false;
-				System.out.println("death");
 			}
-//			else if(position.equals(end)){
-//				System.out.println("mob at the end1");
-//				active = false;
-//			}
 			else{
+				double aSqu = (end.x - position.x)* (end.x - position.x);
+				double bSqu = (end.y - position.y)* (end.y - position.y);
+				distanceToEnd = aSqu + bSqu;
 				angle = Math.atan2(end.y - position.y, end.x- position.x);
 				direction.x = (float) Math.cos(angle);
 				direction.y = (float) Math.sin(angle);
 				Vector2 temp1 = new Vector2(end.x-2, end.y-2);
 				Vector2 temp2 = new Vector2(end.x+2, end.y+2);
-				position.add(SPEED*direction.x*delta,SPEED*direction.y*delta);
+				position.add(SPEED*speedScale*direction.x*delta,SPEED*speedScale*direction.y*delta);
 				if(position.x >= temp1.x && position.x <temp2.x  && position.y >= temp1.y && position.y <temp2.y){
 					position = end;	
 				}
 				if(position.equals(end)){
-					if(health <=0){
-						System.out.println("flag");
-						deathFlag = true;
-						active = false;
-					}
-					System.out.println("Broken Mob Health: "+health);
 					active = false;
 				}
 			}
@@ -98,11 +105,11 @@ public class Mob {
 	 ************************** 
 	 */
 	
-	public int getSpeed() {
-		return speed;
+	public float getSpeedScale() {
+		return speedScale;
 	}
-	public void setSpeed(int speed) {
-		this.speed = speed;
+	public void setSpeed(float speedScale) {
+		this.speedScale = speedScale;
 	}
 	public Vector2 getPosition() {
 		return position;

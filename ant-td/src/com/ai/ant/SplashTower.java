@@ -12,10 +12,10 @@ public class SplashTower extends Tower {
 		super(position, world, owner);
 
 		maxLevel = 3; 
-		damage = 1;
+		damage = 2;
 		level = 1;
 		range = 100; //this is just a temp. value
-		splashRange = 30;
+		splashRange = 20;
 		fireRate = 1; //attacks per second
 		type = 4;
 	}
