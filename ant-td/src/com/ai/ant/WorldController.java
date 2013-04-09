@@ -382,7 +382,7 @@ public class WorldController {
 	public void addTowerToMap(Button clicked) {
 		
 		//when the rest of the towers are functioning
-		//just add the rest of the if loops for the approrpriate towers
+		//just add the rest of the if loops for the appropriate towers
 		
 		
 		int type = clicked.getTowerType();
