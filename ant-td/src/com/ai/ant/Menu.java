@@ -14,8 +14,13 @@ public class Menu {
 
 		buttons = new ArrayList<Button>();
 		
-		buttons.add(new Button(new Vector2(4,4), 1.0f, 1.0f, 1)); //make this pixel coords
-		buttons.add(new Button(new Vector2(4,8), 1.0f, 1.0f, 7));
+		buttons.add(new Button(new Vector2(4,4), 2.0f, 2.0f, 1)); //make this pixel coords
+		buttons.add(new Button(new Vector2(4,8), 2.0f, 2.0f, 2));
+		buttons.add(new Button(new Vector2(4,12), 2.0f, 2.0f, 3));
+		buttons.add(new Button(new Vector2(4,16), 2.0f, 2.0f, 4));
+		buttons.add(new Button(new Vector2(4,20), 2.0f, 2.0f, 5));
+		buttons.add(new Button(new Vector2(4,24), 2.0f, 2.0f, 6));
+		buttons.add(new Button(new Vector2(4,28), 2.0f, 2.0f, 7));
 		
 	}
 	
@@ -25,14 +30,11 @@ public class Menu {
 		
 		for(int i = 0; i < buttons.size(); i++) {
 			//only works for 1x1 buttons right now
-			if(position.x == buttons.get(i).getPosition().x && position.y == buttons.get(i).getPosition().y) {
+			if((Math.abs((position.x - buttons.get(i).getPosition().x)) <= 1) && (Math.abs(position.y- buttons.get(i).getPosition().y) <= 1)) {
 				selection = buttons.get(i);
 				break;
 			}
 		}
-		
-		
-		
 		
 		return selection;
 		

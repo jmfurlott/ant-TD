@@ -47,6 +47,11 @@ public class Button {
 		return type;
 	}
 	
+	public Rectangle getBounds()
+	{
+		return bounds;
+	}
+	
 	
 	
 	
