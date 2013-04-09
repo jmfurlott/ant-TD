@@ -62,22 +62,14 @@ public class Bullet {
 			if(target.target == 1){
 				target.target = 0;
 			}
-//			if(target.target == 0){
-//				target.target = 1;
-//			}
 			target.setIncomingDamage(target.getIncomingDamage()-tower.getDamage());
 		}
 	}
-	
-	
 	public void basicDamage(){
 		active = false;
-		if(target!=null){
-			target.setHealth(target.getHealth() - tower.getDamage());
-			target.setIncomingDamage(target.getIncomingDamage()-tower.getDamage());
-		}
+		target.setHealth(target.getHealth() - tower.getDamage());
+		target.setIncomingDamage(target.getIncomingDamage()-tower.getDamage());
 	}
-	
 	public void splashDamage(){
 		target.setIncomingDamage(target.getIncomingDamage()-tower.getDamage());
 		active = false;

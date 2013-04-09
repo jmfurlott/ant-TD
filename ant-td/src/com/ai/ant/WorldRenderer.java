@@ -172,7 +172,6 @@ public class WorldRenderer {
 			if(mob.deathFlag){
 				mob.mobDeath();
 			}
-			System.out.println("drawMob: remove: mob.health:" +mob.getHealth()+" flag: "+mob.deathFlag);
 			mob.removeMob();
 		}
 	}
