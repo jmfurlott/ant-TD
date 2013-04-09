@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.ai.ant.Character.State;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
@@ -24,9 +25,11 @@ public class WorldController {
 	private Menu menu;
 	int selection;
 	int side; // 0 means left side clickable, 1 means right side clickable
+	Game g;
 
 	ArrayList<Bullet> tempBullet = new ArrayList<Bullet>();
 
+	Button clicked;
 	static Map<Keys, Boolean> keys = new HashMap<WorldController.Keys, Boolean>();
 	static {
 		keys.put(Keys.LEFT, false);
@@ -36,13 +39,15 @@ public class WorldController {
 		keys.put(Keys.A, false);
 	};
 
-	public WorldController(World world, WorldRenderer renderer) {
+	public WorldController(World world, WorldRenderer renderer, Game g) {
 		this.world = world;
 		this.character = world.getCharacter();
 		this.wall = world.getWall();
 		this.menu = world.getMenu();
 		this.renderer = renderer.getRenderer();
 		side = 0;
+		clicked = null;
+		this.g = g;
 	}
 
 	// pressed controls
@@ -215,6 +220,7 @@ public class WorldController {
 		}
 
 		// mouse/touch
+		
 		if (Gdx.input.isTouched()) {
 			Vector2 click = calculatePosition(Gdx.input.getX(),
 					Gdx.input.getY());
@@ -222,7 +228,6 @@ public class WorldController {
 			if (click.x < 9 && side == 0) {
 				// menu stuff
 				Gdx.app.log("input", "Menu click");
-				Button clicked;
 
 				clicked = menu.selectButton(click);
 				if (clicked != null) {
@@ -244,10 +249,17 @@ public class WorldController {
 				// debugging don't actually want to create a new button
 				// menu.buttons.add(new Button(click, 1, 1));
 
+<<<<<<< HEAD
 				Tower tower = new BasicTower(new Vector2(Gdx.input.getX(),
 						480 - Gdx.input.getY()), world,1);
 				world.placeTower(tower);
+=======
+				addTowerToMap(clicked);
+				
+>>>>>>> d991ea2c8c7a304cad111c732c0dd8c584aeb39a
 
+				clicked = null;
+				
 				// MAKE NEW TOWER OF CERTAIN TYPE
 				// plotNewTower(int value) and add it to the arraylist of towers
 
@@ -308,7 +320,7 @@ public class WorldController {
 							&& (tempPos.y > (tempTowerPos.y - bs))
 							&& (tempPos.x < (tempTowerPos.x + bs))
 							&& (tempPos.y < (tempTowerPos.y + bs))) {
-						Gdx.app.log("Collision", "Collided!!!");
+						//Gdx.app.log("Collision", "Collided!!!");
 						Vector2 newPos = tempPos.add(new Vector2(bs, 0));
 						Mob replacement = new Mob(newPos, world);
 						world.mobList.remove(i);
@@ -375,4 +387,28 @@ public class WorldController {
 
 	}
 
+	
+	public void addTowerToMap(Button clicked) {
+		
+		//when the rest of the towers are functioning
+		//just add the rest of the if loops for the appropriate towers
+		
+		
+		int type = clicked.getTowerType();
+		
+		if(type == 1) {
+			Tower tower = new BasicTower(new Vector2(Gdx.input.getX(),
+					480 - Gdx.input.getY()), world);
+			world.placeTower(tower);
+		} else if (type == 6) {
+			Tower tower = new spawnTower(new Vector2(Gdx.input.getX(),
+					480 - Gdx.input.getY()), world);
+			world.placeTower(tower);
+		} else if (type == 0)
+		{
+			Gdx.app.log("quit", "Trying to quit");
+			g.setScreen(new EndGameScreen());
+		}
+	}
+	
 }

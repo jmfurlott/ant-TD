@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-public class IntroScreenRenderer {
+public class EndGameScreenRenderer {
 	private static final float CAMERA_WIDTH = 10f;
 	private static final float CAMERA_HEIGHT = 10f; //unit control
 
@@ -18,15 +18,14 @@ public class IntroScreenRenderer {
 	private float ppuX;
 	private float ppuY;
 	
-	private IntroScreen intro;
 	
 	ShapeRenderer debugRenderer = new ShapeRenderer();
 	SpriteBatch batch = new SpriteBatch();
 	private Texture logoTexture;
 
-	public IntroScreenRenderer(IntroScreen intro)
+	public EndGameScreenRenderer()
 	{
-		this.intro = intro;
+		//this.endGame = endGame;
 		this.cam = new OrthographicCamera(50,50);
 		this.cam.position.set(25, 25, 0);
 		this.cam.update();
@@ -40,30 +39,26 @@ public class IntroScreenRenderer {
 		float p = (float) Gdx.graphics.getWidth();
 		
 		batch.begin();
-		loadLogo();
+		//loadLogo();
 		batch.draw(logoTexture, 0, 0, 640, 480);
 		//Gdx.app.log("into", "rendering");
 
 		batch.end();
-
-			
-
-		
 	}
 	
-	public IntroScreenRenderer getRenderer()
+	public EndGameScreenRenderer getRenderer()
 	{
 		return this;
 	}
 	
 	
-	public void loadLogo() {
-		Character logo = intro.getLogo();
-		batch.draw(logoTexture, logo.getPosition().x * ppuX, logo.getPosition().y * ppuY, logo.SIZE * ppuX, logo.SIZE * ppuY);
-	}
+//	public void loadLogo() {
+//		Character logo = endGame.getLogo();
+//		batch.draw(logoTexture, logo.getPosition().x * ppuX, logo.getPosition().y * ppuY, logo.SIZE * ppuX, logo.SIZE * ppuY);
+//	}
 	
 	public void loadTextures() {
-		logoTexture = new Texture(Gdx.files.internal("Title1.png"));
+		logoTexture = new Texture(Gdx.files.internal("GameOverScreen.png"));
 		Gdx.app.log("into", "loaded texture");
 
 	}
@@ -76,3 +71,4 @@ public class IntroScreenRenderer {
 		ppuY = (float) height/ CAMERA_HEIGHT;
 	}
 }
+

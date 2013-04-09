@@ -1,12 +1,13 @@
 package com.ai.ant;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -41,6 +42,7 @@ public class WorldRenderer {
 	private Texture queenAnt;
 	private Texture soldierAnt;
 	private Texture grass;
+<<<<<<< HEAD
 	
 	//Towers and bullets
 	private Texture spawnTower;
@@ -50,7 +52,14 @@ public class WorldRenderer {
 	private Texture splashBullet;
 	
 	
+=======
+	private Texture basicTower, slowTower, stunTower, splashTower, conversionTower, spawnTower, puddle;
+	private Texture basicBullet;
+>>>>>>> d991ea2c8c7a304cad111c732c0dd8c584aeb39a
 	private Texture menuBackground;
+	private Texture quitButton;
+	
+	Map<Integer, Texture> towerMapTexture = new HashMap<Integer, Texture>();
 	
 	public WorldRenderer(World world) {
 		this.world = world;
@@ -59,6 +68,8 @@ public class WorldRenderer {
 		this.cam.update();
 		batch = new SpriteBatch();
 		loadTextures();
+		buildTextureMap();
+		
 	}
 	
 	public void render() {
@@ -72,7 +83,11 @@ public class WorldRenderer {
 		drawMenu();
 		batch.end();
 		//drawDebug();
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> d991ea2c8c7a304cad111c732c0dd8c584aeb39a
 	}
 	
 	public void setSize(int w, int h) {
@@ -86,6 +101,7 @@ public class WorldRenderer {
 	public void loadTextures() {
 		//ants
 		queenAnt = new Texture(Gdx.files.internal("QueenAnt.png"));
+<<<<<<< HEAD
 		soldierAnt = new Texture(Gdx.files.internal("soldierAnt.png"));
 		
 		//Towers and bullets
@@ -94,10 +110,28 @@ public class WorldRenderer {
 		basicBullet = new Texture(Gdx.files.internal("basicBullet.png"));	
 		splashTower = new Texture(Gdx.files.internal("splashTower.png"));
 		splashBullet = new Texture(Gdx.files.internal("splashBullet.png"));
+=======
+		spawnTower = new Texture(Gdx.files.internal("hill_spawning.png"));
+		soldierAnt = new Texture(Gdx.files.internal("soldierAnt.png"));
+		grass = new Texture(Gdx.files.internal("grassTexture.png"));
+		
+		//TODO put correct images in for each tower
+		basicTower = new Texture(Gdx.files.internal("stunFreezeHill.png")); //wrong
+		slowTower = new Texture(Gdx.files.internal("stunFreezeHill.png"));
+		stunTower = new Texture(Gdx.files.internal("stunFreezeHill.png")); //wrong currently
+		splashTower = new Texture(Gdx.files.internal("stunFreezeHill.png")); //wrong
+		conversionTower = new Texture(Gdx.files.internal("conversionHill.png"));
+		puddle = new Texture(Gdx.files.internal("puddle.png"));
+		basicBullet = new Texture(Gdx.files.internal("basicBullet.png"));
+>>>>>>> d991ea2c8c7a304cad111c732c0dd8c584aeb39a
 		
 		//menu and background
 		grass = new Texture(Gdx.files.internal("grassTexture.png"));
 		menuBackground= new Texture(Gdx.files.internal("woodMenuBackground.png"));
+<<<<<<< HEAD
+=======
+		quitButton= new Texture(Gdx.files.internal("quit.png"));	
+>>>>>>> d991ea2c8c7a304cad111c732c0dd8c584aeb39a
 		
 	}
 	
@@ -172,10 +206,11 @@ public class WorldRenderer {
 	public void drawMenu() {
 		batch.draw(menuBackground, -38,0);
 		
-		batch.draw(basicTower, 48, 25, 25, 25);
+		//batch.draw(basicTower, 48, 25, 25, 25);
+		
 		Menu menu = world.getMenu();
 		for(Button button : menu.getButtons()) {
-			//draw sprites
+			batch.draw(towerMapTexture.get(button.getTowerType()), button.getPosition().x*(640/50), button.getPosition().y*(480/50)-10, 30, 30);
 		}
 	}
 	
@@ -219,6 +254,36 @@ public class WorldRenderer {
 	
 	
 	
+	
+	//configure hashmap to know which textures to map to
+	
+	/*
+	   0. null
+	   1. Normal Tower- simply attacks ants
+	   2. Slow Tower - movement speed debuff
+	   3. Stun Tower - prevents all movement, or other actions
+	   4. Splash Tower-
+	   5. Conversion Tower- converts to attack opponent
+	   6. Spawn Tower - mob factory
+	   7. Puddle
+	 */
+	
+	public void buildTextureMap() {
+		
+		towerMapTexture.put(0, quitButton);
+		towerMapTexture.put(1, basicTower);
+		towerMapTexture.put(2, slowTower); //no class made for this yet
+		towerMapTexture.put(3, stunTower); //no class for this yet
+		towerMapTexture.put(4, splashTower);  
+		towerMapTexture.put(5, conversionTower); //no class for this yet
+		towerMapTexture.put(6, spawnTower);
+		towerMapTexture.put(7, puddle); //no class for this yet 
+		
+		
+	}
+	
+	
+	
 	public WorldRenderer getRenderer() {
 		return this;
 	}
@@ -239,4 +304,7 @@ public class WorldRenderer {
 		return CAMERA_HEIGHT;
 	}
 	
+	public Map<Integer, Texture> getTextureMap() {
+		return towerMapTexture;
+	}
 }

@@ -13,6 +13,7 @@ public class BasicTower extends Tower{
 		level = 1;
 		range = 100; //this is just a temp. value
 		fireRate = 1; //attacks per second
+		type = 1;
 	}
 
 	void levelUp() {

@@ -18,6 +18,7 @@ public class SplashTower extends Tower {
 		range = 100; //this is just a temp. value
 		splashRange = 30;
 		fireRate = 1; //attacks per second
+		type = 4;
 	}
 
 	void levelUp(){
