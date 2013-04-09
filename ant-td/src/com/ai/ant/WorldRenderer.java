@@ -42,7 +42,6 @@ public class WorldRenderer {
 	private Texture queenAnt;
 	private Texture soldierAnt;
 	private Texture grass;
-<<<<<<< HEAD
 	
 	//Towers and bullets
 	private Texture spawnTower;
@@ -50,12 +49,9 @@ public class WorldRenderer {
 	private Texture basicBullet;
 	private Texture splashTower;
 	private Texture splashBullet;
+	private Texture slowTower, stunTower, conversionTower, puddle;
 	
-	
-=======
-	private Texture basicTower, slowTower, stunTower, splashTower, conversionTower, spawnTower, puddle;
-	private Texture basicBullet;
->>>>>>> d991ea2c8c7a304cad111c732c0dd8c584aeb39a
+
 	private Texture menuBackground;
 	private Texture quitButton;
 	
@@ -83,11 +79,7 @@ public class WorldRenderer {
 		drawMenu();
 		batch.end();
 		//drawDebug();
-<<<<<<< HEAD
-		
-=======
 
->>>>>>> d991ea2c8c7a304cad111c732c0dd8c584aeb39a
 	}
 	
 	public void setSize(int w, int h) {
@@ -101,37 +93,29 @@ public class WorldRenderer {
 	public void loadTextures() {
 		//ants
 		queenAnt = new Texture(Gdx.files.internal("QueenAnt.png"));
-<<<<<<< HEAD
 		soldierAnt = new Texture(Gdx.files.internal("soldierAnt.png"));
 		
 		//Towers and bullets
 		spawnTower = new Texture(Gdx.files.internal("hill_spawning.png"));
-		basicTower = new Texture(Gdx.files.internal("stunFreezeHill.png"));
+		//basic
+		basicTower = new Texture(Gdx.files.internal("stunFreezeHill.png")); //wrong
 		basicBullet = new Texture(Gdx.files.internal("basicBullet.png"));	
+		
 		splashTower = new Texture(Gdx.files.internal("splashTower.png"));
 		splashBullet = new Texture(Gdx.files.internal("splashBullet.png"));
-=======
-		spawnTower = new Texture(Gdx.files.internal("hill_spawning.png"));
-		soldierAnt = new Texture(Gdx.files.internal("soldierAnt.png"));
-		grass = new Texture(Gdx.files.internal("grassTexture.png"));
 		
-		//TODO put correct images in for each tower
-		basicTower = new Texture(Gdx.files.internal("stunFreezeHill.png")); //wrong
 		slowTower = new Texture(Gdx.files.internal("stunFreezeHill.png"));
 		stunTower = new Texture(Gdx.files.internal("stunFreezeHill.png")); //wrong currently
-		splashTower = new Texture(Gdx.files.internal("stunFreezeHill.png")); //wrong
+		
 		conversionTower = new Texture(Gdx.files.internal("conversionHill.png"));
 		puddle = new Texture(Gdx.files.internal("puddle.png"));
-		basicBullet = new Texture(Gdx.files.internal("basicBullet.png"));
->>>>>>> d991ea2c8c7a304cad111c732c0dd8c584aeb39a
 		
+		//TODO put correct images in for each tower
+
 		//menu and background
 		grass = new Texture(Gdx.files.internal("grassTexture.png"));
 		menuBackground= new Texture(Gdx.files.internal("woodMenuBackground.png"));
-<<<<<<< HEAD
-=======
 		quitButton= new Texture(Gdx.files.internal("quit.png"));	
->>>>>>> d991ea2c8c7a304cad111c732c0dd8c584aeb39a
 		
 	}
 	

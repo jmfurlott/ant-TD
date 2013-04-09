@@ -249,15 +249,13 @@ public class WorldController {
 				// debugging don't actually want to create a new button
 				// menu.buttons.add(new Button(click, 1, 1));
 
-<<<<<<< HEAD
+
 				Tower tower = new BasicTower(new Vector2(Gdx.input.getX(),
 						480 - Gdx.input.getY()), world,1);
 				world.placeTower(tower);
-=======
+
 				addTowerToMap(clicked);
 				
->>>>>>> d991ea2c8c7a304cad111c732c0dd8c584aeb39a
-
 				clicked = null;
 				
 				// MAKE NEW TOWER OF CERTAIN TYPE
@@ -398,11 +396,11 @@ public class WorldController {
 		
 		if(type == 1) {
 			Tower tower = new BasicTower(new Vector2(Gdx.input.getX(),
-					480 - Gdx.input.getY()), world);
+					480 - Gdx.input.getY()), world,1);
 			world.placeTower(tower);
 		} else if (type == 6) {
 			Tower tower = new spawnTower(new Vector2(Gdx.input.getX(),
-					480 - Gdx.input.getY()), world);
+					480 - Gdx.input.getY()), world, 0, 1, 1);
 			world.placeTower(tower);
 		} else if (type == 0)
 		{

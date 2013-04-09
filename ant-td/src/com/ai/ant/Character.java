@@ -1,4 +1,4 @@
-package com.ai.ant;
+package com.ai.ant; 
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;

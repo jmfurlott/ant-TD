@@ -10,9 +10,8 @@ public class SplashTower extends Tower {
 	
 	public SplashTower(Vector2 position, World world, int owner) {
 		super(position, world, owner);
-		effect = new ArrayList<Effect>(); 
-		//effect.add(new AOE()); //TODO: add aoe effect (some area where damage is done to each mob in that area.)
-		maxLevel = 3;
+
+		maxLevel = 3; 
 		damage = 1;
 		level = 1;
 		range = 100; //this is just a temp. value

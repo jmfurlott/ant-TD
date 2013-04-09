@@ -13,7 +13,7 @@ public class Block {
 	Vector2 position = new Vector2();
 	Rectangle bounds = new Rectangle();
 	
-	public Block(Vector2 pos) {
+	public Block(Vector2 pos) { 
 		this.position = pos;
 		this.bounds.width = SIZE;
 		this.bounds.height = SIZE;

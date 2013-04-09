@@ -8,7 +8,6 @@ public abstract class Tower {
 
 	protected Vector2 position;
 	protected Rectangle bounds = new Rectangle();
-	protected ArrayList<Effect> effect;
 	protected int range;
 	protected String name;
 	protected int level;
@@ -19,15 +18,10 @@ public abstract class Tower {
 	protected Mob currentTarget;
 	protected World world;
 	protected ArrayList<Mob> targetList;
-<<<<<<< HEAD
 	protected int owner;
 	protected int splashRange;
-	
-	
-=======
 	protected int type;
 
->>>>>>> d991ea2c8c7a304cad111c732c0dd8c584aeb39a
 	protected boolean active;
 	protected long firedTime;
 	protected long activeTime;
@@ -39,7 +33,6 @@ public abstract class Tower {
 		this.position = position;
 		this.bounds.width = SIZE;
 		this.bounds.height = SIZE;
-		effect = null;
 		targetList = new ArrayList<Mob>();
 		currentTarget = null;
 		range = 1000;
@@ -139,14 +132,6 @@ public abstract class Tower {
 
 	public void setBounds(Rectangle bounds) {
 		this.bounds = bounds;
-	}
-
-	public ArrayList<Effect> getEffect() {
-		return effect;
-	}
-
-	public void setEffect(ArrayList<Effect> effect) {
-		this.effect = effect;
 	}
 
 	public int getRange() {

@@ -14,7 +14,7 @@ public class World {
 	ArrayList<Bullet> bulletList = new ArrayList<Bullet>();
 	//would define any other sprite here!!!!
 	//all ants
-	Character character;
+	Character character; 
 	Character wall;
 	Menu menu;
 	
