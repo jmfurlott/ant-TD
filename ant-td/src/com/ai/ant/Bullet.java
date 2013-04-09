@@ -35,23 +35,17 @@ public class Bullet {
 	}
 	
 	public void update(float delta){
-		if(position.equals(end)){
-			System.out.println("bullet at the end1");
-			active = false;
+		Vector2 temp1 = new Vector2(end.x-2, end.y-2);
+		Vector2 temp2 = new Vector2(end.x+2, end.y+2);
+		position.add(SPEED*direction.x*delta,SPEED*direction.y*delta);
+		if(position.x >= temp1.x && position.x <temp2.x  && position.y >= temp1.y && position.y <temp2.y){
+			position = end;	
 		}
-		else{
-			Vector2 temp1 = new Vector2(end.x-2, end.y-2);
-			Vector2 temp2 = new Vector2(end.x+2, end.y+2);
-			position.add(SPEED*direction.x*delta,SPEED*direction.y*delta);
-			if(position.x >= temp1.x && position.x <temp2.x  && position.y >= temp1.y && position.y <temp2.y){
-				position = end;	
-			}
-			if(position.equals(end)){
-				if(!(tower instanceof SplashTower)) 
-					singleDamage();
-				else
-					splashDamage();
-			}
+		if(position.equals(end)){
+			if(!(tower instanceof SplashTower)) 
+				singleDamage();
+			else
+				splashDamage();
 		}
 	}
 	
@@ -67,12 +61,14 @@ public class Bullet {
 		target.setIncomingDamage(target.getIncomingDamage()-tower.getDamage());
 		active = false;
 		for (Mob pmob : world.mobList) {
-			if(tower.currentTarget!=null){
-				double aSqu = (pmob.position.x - tower.currentTarget.position.x)* (pmob.position.x - tower.currentTarget.position.x);
-				double bSqu = (pmob.position.y - tower.currentTarget.position.y)* (pmob.position.y - tower.currentTarget.position.y);
-				double r = Math.sqrt(aSqu + bSqu);
-				if (r < tower.splashRange) {
-					pmob.setHealth(pmob.getHealth()-tower.damage);
+			if(pmob.active){
+				if(tower.currentTarget!=null){
+					double aSqu = (pmob.position.x - tower.currentTarget.position.x)* (pmob.position.x - tower.currentTarget.position.x);
+					double bSqu = (pmob.position.y - tower.currentTarget.position.y)* (pmob.position.y - tower.currentTarget.position.y);
+					double r = Math.sqrt(aSqu + bSqu);
+					if (r < tower.splashRange) {
+						pmob.setHealth(pmob.getHealth()-tower.damage);
+					}
 				}
 			}
 		}

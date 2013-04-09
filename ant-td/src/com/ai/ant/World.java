@@ -51,35 +51,35 @@ public class World {
 //		}
 		
 		
-		Tower bt0 = new BasicTower(new Vector2(200, 100),this,1);
-		placeTower(bt0);
-		Tower bt1 = new BasicTower(new Vector2(200, 125),this,1);
-		placeTower(bt1);		
-		Tower bt2 = new BasicTower(new Vector2(200, 150),this,1);
-		placeTower(bt2);
-		Tower bt3 = new BasicTower(new Vector2(200, 175),this,1);
-		placeTower(bt3);
-		Tower bt4 = new BasicTower(new Vector2(200, 200),this,1);
-		placeTower(bt4);
-		Tower bt5 = new BasicTower(new Vector2(205, 100),this,1);
-		placeTower(bt5);
-		Tower bt6 = new BasicTower(new Vector2(205, 125),this,1);
-		placeTower(bt6);		
-		Tower bt7 = new BasicTower(new Vector2(205, 150),this,1);
-		placeTower(bt7);
-		Tower bt8 = new BasicTower(new Vector2(205, 175),this,1);
-		placeTower(bt8);
-		Tower bt9 = new BasicTower(new Vector2(205, 200),this,1);
-		placeTower(bt9);
+//		Tower bt0 = new BasicTower(new Vector2(200, 100),this,1);
+//		placeTower(bt0);
+//		Tower bt1 = new BasicTower(new Vector2(200, 125),this,1);
+//		placeTower(bt1);		
+//		Tower bt2 = new BasicTower(new Vector2(200, 150),this,1);
+//		placeTower(bt2);
+//		Tower bt3 = new BasicTower(new Vector2(200, 175),this,1);
+//		placeTower(bt3);
+//		Tower bt4 = new BasicTower(new Vector2(200, 200),this,1);
+//		placeTower(bt4);
+//		Tower bt5 = new BasicTower(new Vector2(205, 100),this,1);
+//		placeTower(bt5);
+//		Tower bt6 = new BasicTower(new Vector2(205, 125),this,1);
+//		placeTower(bt6);		
+//		Tower bt7 = new BasicTower(new Vector2(205, 150),this,1);
+//		placeTower(bt7);
+//		Tower bt8 = new BasicTower(new Vector2(205, 175),this,1);
+//		placeTower(bt8);
+//		Tower bt9 = new BasicTower(new Vector2(205, 200),this,1);
+//		placeTower(bt9);
 
 		SplashTower sp1 = new SplashTower(new Vector2(150, 180),this,1);
 		placeTower(sp1);
 		SplashTower sp2 = new SplashTower(new Vector2(110, 130),this,1);
 		placeTower(sp2);
-//		SplashTower sp3 = new SplashTower(new Vector2(150, 160),this,1);
-//		placeTower(sp3);
-//		SplashTower sp4 = new SplashTower(new Vector2(150, 140),this,1);
-//		placeTower(sp4);
+		SplashTower sp3 = new SplashTower(new Vector2(150, 160),this,1);
+		placeTower(sp3);
+		SplashTower sp4 = new SplashTower(new Vector2(150, 140),this,1);
+		placeTower(sp4);
 	
 		
 		
@@ -96,18 +96,31 @@ public class World {
 		spawnTower st6 = new spawnTower(new Vector2(110,10), this,0,1,1);
 		placeTower(st6);
 		
-		spawnTower st7 = new spawnTower(new Vector2(180,20), this,0,2,1);
+		spawnTower st7 = new spawnTower(new Vector2(180,20), this,0,1,1);
 		placeTower(st7);
-		spawnTower st8 = new spawnTower(new Vector2(182,20), this,0,2,1);
+		spawnTower st8 = new spawnTower(new Vector2(182,20), this,0,1,1);
 		placeTower(st8);
-		spawnTower st9 = new spawnTower(new Vector2(184,20), this,0,2,1);
+		spawnTower st9 = new spawnTower(new Vector2(184,20), this,0,1,1);
 		placeTower(st9);
-		spawnTower st10 = new spawnTower(new Vector2(186,20), this,0,2,1);
+		spawnTower st10 = new spawnTower(new Vector2(186,20), this,0,1,1);
 		placeTower(st10);
-		spawnTower st11 = new spawnTower(new Vector2(188,20), this,0,2,1);
+		spawnTower st11 = new spawnTower(new Vector2(188,20), this,0,1,1);
 		placeTower(st11);
-		spawnTower st12 = new spawnTower(new Vector2(190,20), this,0,2,1);
+		spawnTower st12 = new spawnTower(new Vector2(190,20), this,0,1,1);
 		placeTower(st12);
+		
+		spawnTower st13 = new spawnTower(new Vector2(140,20), this,0,1,1);
+		placeTower(st13);
+		spawnTower st14 = new spawnTower(new Vector2(142,20), this,0,1,1);
+		placeTower(st14);
+		spawnTower st15 = new spawnTower(new Vector2(144,20), this,0,1,1);
+		placeTower(st15);
+		spawnTower st16 = new spawnTower(new Vector2(146,20), this,0,1,1);
+		placeTower(st16);
+		spawnTower st17 = new spawnTower(new Vector2(148,20), this,0,1,1);
+		placeTower(st17);
+		spawnTower st18 = new spawnTower(new Vector2(200,20), this,0,1,1);
+		placeTower(st18);
 		
 		
 		

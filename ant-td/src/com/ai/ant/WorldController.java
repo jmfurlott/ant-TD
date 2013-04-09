@@ -107,7 +107,7 @@ public class WorldController {
 		ArrayList<Bullet> temp = new ArrayList<Bullet>();
 		temp = world.bulletList;
 
-		negotiateCollision();
+		//negotiateCollision();
 		for (Bullet bullet : temp) {
 			bullet.update(delta);
 		}

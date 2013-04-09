@@ -14,7 +14,7 @@ public class Mob {
 	protected int health;
 	protected int target; 	//represents which player this mob is attacking, needed for pathing and conversion tower
 							//end is based on the current target of the mob. I'm just hard coding this for now to test the tower targeting system.
-	Vector2 end = new Vector2(150,200);
+	Vector2 end = new Vector2(200,300);
 	protected int currency; //coin given based on level 1 of mob upon destruction
 	protected int points; 	//points given based on level 1 of mob upon destruction
 	protected int level; 	//currency/points rewarded scale based on level
@@ -51,38 +51,43 @@ public class Mob {
 		world.getPlayer(target).addCurrency(currency);
 		world.getPlayer(target).addPoints(points);
 		System.out.println("Player1 Currency: "+world.getPlayer(target).currency + " Points: "+ world.getPlayer(target).getPoints());
-		}
+	}
+	
+	public void removeMob(){
+		world.mobList.remove(this);
+	}
+	
 	
 	public void update(float delta){
-		if(health<=0)
-			deathFlag = true;
-		if(health>0){
-			deathFlag = false;
-		}
-		
-		
-		if(position.equals(end)){
-			//TODO: do effect
-			//System.out.println("bullet at the end");
-			active = false;
-		}
-		else{
-			angle = Math.atan2(end.y - position.y, end.x- position.x);
-			direction.x = (float) Math.cos(angle);
-			direction.y = (float) Math.sin(angle);
-			Vector2 temp1 = new Vector2(end.x-2, end.y-2);
-			Vector2 temp2 = new Vector2(end.x+2, end.y+2);
-			position.add(SPEED*direction.x*delta,SPEED*direction.y*delta);
-			if(position.x >= temp1.x && position.x <temp2.x  && position.y >= temp1.y && position.y <temp2.y){
-				position = end;	
+		if(active){
+			if(health<=0){
+				deathFlag = true;
+				active=false;
+				System.out.println("death");
 			}
-			if(position.equals(end)){
-				
-				System.out.println("Broken Mob Health: "+health);
-				active = false;
-				//TODO: do effect
-				//System.out.println("bullet at the end"); 
-				//world.removeBullet(this);
+//			else if(position.equals(end)){
+//				System.out.println("mob at the end1");
+//				active = false;
+//			}
+			else{
+				angle = Math.atan2(end.y - position.y, end.x- position.x);
+				direction.x = (float) Math.cos(angle);
+				direction.y = (float) Math.sin(angle);
+				Vector2 temp1 = new Vector2(end.x-2, end.y-2);
+				Vector2 temp2 = new Vector2(end.x+2, end.y+2);
+				position.add(SPEED*direction.x*delta,SPEED*direction.y*delta);
+				if(position.x >= temp1.x && position.x <temp2.x  && position.y >= temp1.y && position.y <temp2.y){
+					position = end;	
+				}
+				if(position.equals(end)){
+					if(health <=0){
+						System.out.println("flag");
+						deathFlag = true;
+						active = false;
+					}
+					System.out.println("Broken Mob Health: "+health);
+					active = false;
+				}
 			}
 		}
 	}

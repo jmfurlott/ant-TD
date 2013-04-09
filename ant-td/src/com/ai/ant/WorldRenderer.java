@@ -149,6 +149,7 @@ public class WorldRenderer {
 	public void drawMobs() {
 		ArrayList<Mob> temp = new ArrayList<Mob>();
 		for(Mob mob :world.getMobs()){
+			if(mob.health <=0){mob.deathFlag=true;}
 			if(!mob.active  || mob.deathFlag){
 				temp.add(mob);
 			}
@@ -162,7 +163,8 @@ public class WorldRenderer {
 			if(mob.deathFlag){
 				mob.mobDeath();
 			}
-			world.mobList.remove(mob);
+			System.out.println("drawMob: remove: mob.health:" +mob.getHealth()+" flag: "+mob.deathFlag);
+			mob.removeMob();
 		}
 	}
 	
