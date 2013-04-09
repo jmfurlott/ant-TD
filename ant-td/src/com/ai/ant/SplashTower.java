@@ -7,14 +7,16 @@ import com.badlogic.gdx.math.Vector2;
 public class SplashTower extends Tower {
 	private final int maxLevel;
 	
-	public SplashTower(Vector2 position, World world) {
-		super(position, world);
+	
+	public SplashTower(Vector2 position, World world, int owner) {
+		super(position, world, owner);
 		effect = new ArrayList<Effect>(); 
 		//effect.add(new AOE()); //TODO: add aoe effect (some area where damage is done to each mob in that area.)
 		maxLevel = 3;
-		damage = 2;
+		damage = 1;
 		level = 1;
-		range = 10; //this is just a temp. value
+		range = 100; //this is just a temp. value
+		splashRange = 30;
 		fireRate = 1; //attacks per second
 	}
 
@@ -25,15 +27,16 @@ public class SplashTower extends Tower {
 			damage += 2;
 			range +=5;
 			fireRate += .25;
-			//effect.getEffect().increaseAoE(.25); //increases the range of the splash;
 		}
 	}
 	
 	
 	@Override
 	void shoot() {
-		Bullet bullet = new Bullet(new Vector2(this.getPosition().x,this.getPosition().y), new Vector2(currentTarget.getPosition().x,currentTarget.getPosition().y), world);
-		world.bulletList.add(bullet);
-		//System.out.println("FIRE!!!");
+		if(currentTarget!=null){
+			currentTarget.setIncomingDamage(currentTarget.getIncomingDamage()+damage);			
+			Bullet bullet = new Bullet(new Vector2(this.getPosition().x,this.getPosition().y), new Vector2(currentTarget.getPosition().x,currentTarget.getPosition().y), world,currentTarget,this);
+			world.bulletList.add(bullet);
+		}
 	}
 }

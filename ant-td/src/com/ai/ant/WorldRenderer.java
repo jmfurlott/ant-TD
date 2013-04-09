@@ -41,9 +41,15 @@ public class WorldRenderer {
 	private Texture queenAnt;
 	private Texture soldierAnt;
 	private Texture grass;
+	
+	//Towers and bullets
+	private Texture spawnTower;
 	private Texture basicTower;
 	private Texture basicBullet;
-	private Texture spawnTower;
+	private Texture splashTower;
+	private Texture splashBullet;
+	
+	
 	private Texture menuBackground;
 	
 	public WorldRenderer(World world) {
@@ -57,17 +63,15 @@ public class WorldRenderer {
 	
 	public void render() {
 
-
 		batch.begin();
 		drawBlocks();
 		drawTowers();
-		drawMobs();
 		drawBullets();
+		drawMobs();
 		loadCharacter();	
 		drawMenu();
 		batch.end();
 		//drawDebug();
-		
 		
 	}
 	
@@ -80,21 +84,20 @@ public class WorldRenderer {
 	
 	
 	public void loadTextures() {
+		//ants
 		queenAnt = new Texture(Gdx.files.internal("QueenAnt.png"));
-		
-		spawnTower = new Texture(Gdx.files.internal("hill_spawning.png"));
 		soldierAnt = new Texture(Gdx.files.internal("soldierAnt.png"));
 		
-		
-		grass = new Texture(Gdx.files.internal("grassTexture.png"));
-		
-		
+		//Towers and bullets
+		spawnTower = new Texture(Gdx.files.internal("hill_spawning.png"));
 		basicTower = new Texture(Gdx.files.internal("stunFreezeHill.png"));
-		basicBullet = new Texture(Gdx.files.internal("basicBullet.png"));
+		basicBullet = new Texture(Gdx.files.internal("basicBullet.png"));	
+		splashTower = new Texture(Gdx.files.internal("splashTower.png"));
+		splashBullet = new Texture(Gdx.files.internal("splashBullet.png"));
 		
+		//menu and background
+		grass = new Texture(Gdx.files.internal("grassTexture.png"));
 		menuBackground= new Texture(Gdx.files.internal("woodMenuBackground.png"));
-		
-		
 		
 	}
 	
@@ -116,28 +119,32 @@ public class WorldRenderer {
 	
 	public void drawTowers() {
 		for(Tower tower : world.getTowers()) {
-			//System.out.println("x: "+ (tower.getPosition().x*ppuX) +" y:"+ (tower.getPosition().y*ppuY));
-			//batch.draw(basicTower, tower.getPosition().x * ppuX, tower.getPosition().y* ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
 			if(tower instanceof BasicTower)
-				batch.draw(basicTower, tower.getPosition().x, tower.getPosition().y, Tower.SIZE*25 , Tower.SIZE*25 );
+				batch.draw(basicTower, tower.getPosition().x, tower.getPosition().y, Tower.SIZE*25 , Tower.SIZE*25);
 			else if(tower instanceof spawnTower)
-				batch.draw(spawnTower, tower.getPosition().x, tower.getPosition().y, Tower.SIZE*25 , Tower.SIZE*25 );
-				
+				batch.draw(spawnTower, tower.getPosition().x, tower.getPosition().y, Tower.SIZE*25 , Tower.SIZE*25);
+			else if(tower instanceof SplashTower)
+				batch.draw(splashTower, tower.getPosition().x, tower.getPosition().y, Tower.SIZE*25 , Tower.SIZE*25);
 		}
 	}
 	
 	public void drawMobs() {
 		ArrayList<Mob> temp = new ArrayList<Mob>();
 		for(Mob mob :world.getMobs()){
-			if(!mob.active){
+			if(!mob.active  || mob.deathFlag){
 				temp.add(mob);
 			}
 			else{
-				batch.draw(soldierAnt, mob.getPosition().x, mob.getPosition().y, Mob.SIZE*20, Mob.SIZE*20);
+				if(mob instanceof BasicMob){
+					batch.draw(soldierAnt, mob.getPosition().x, mob.getPosition().y, Mob.SIZE*20, Mob.SIZE*20);
+				}
 			}
 		}
 		for(Mob mob: temp){
-				world.mobList.remove(mob);
+			if(mob.deathFlag){
+				mob.mobDeath();
+			}
+			world.mobList.remove(mob);
 		}
 	}
 	
@@ -150,7 +157,10 @@ public class WorldRenderer {
 				temp.add(bullet);
 			}
 			else{
-				batch.draw(basicBullet, bullet.getPosition().x+10, bullet.getPosition().y+10, Bullet.SIZE*5, Bullet.SIZE*5);
+				if(bullet.tower instanceof BasicTower)
+					batch.draw(basicBullet, bullet.getPosition().x+10, bullet.getPosition().y+10, Bullet.SIZE*5, Bullet.SIZE*5);
+				if(bullet.tower instanceof SplashTower)
+/*TODO:FIX IMAGE*/	batch.draw(basicBullet, bullet.getPosition().x+10, bullet.getPosition().y+10, Bullet.SIZE*5, Bullet.SIZE*5);
 			}
 		}
 		for(Bullet bullet: temp){

@@ -229,12 +229,12 @@ public class WorldController {
 					Gdx.app.log("input", "Found a button");
 					selection = 1;
 					side = 1;
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+//					try {
+//						Thread.sleep(500);
+//					} catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
 
 				} else if (clicked == null) {
 					Gdx.app.log("input", "Didn't find anything");
@@ -245,7 +245,7 @@ public class WorldController {
 				// menu.buttons.add(new Button(click, 1, 1));
 
 				Tower tower = new BasicTower(new Vector2(Gdx.input.getX(),
-						480 - Gdx.input.getY()), world);
+						480 - Gdx.input.getY()), world,1);
 				world.placeTower(tower);
 
 				// MAKE NEW TOWER OF CERTAIN TYPE
@@ -254,12 +254,12 @@ public class WorldController {
 				Gdx.app.log("input", "Made new button");
 				selection = 0;
 				side = 0;
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+//				try {
+//					Thread.sleep(500);
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
 
 			} else {
 				// Gdx.app.log("input", "Touched at X: " + Gdx.input.getX() +

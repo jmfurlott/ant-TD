@@ -13,16 +13,21 @@ public class Mob {
 	static final float SIZE = 1f;
 	protected int health;
 	protected int target; 	//represents which player this mob is attacking, needed for pathing and conversion tower
-	//end is based on the current target of the mob. I'm just hard coding this for now to test the tower targeting system.
+							//end is based on the current target of the mob. I'm just hard coding this for now to test the tower targeting system.
 	Vector2 end = new Vector2(150,200);
 	protected int currency; //coin given based on level 1 of mob upon destruction
-	protected int point; 	//points given based on level 1 of mob upon destruction
+	protected int points; 	//points given based on level 1 of mob upon destruction
 	protected int level; 	//currency/points rewarded scale based on level
 	protected float distanceToEnd;
+	
 	protected World world;
 	Vector2 direction = new Vector2();
+	protected int incomingDamage =0;
+	protected double angle;
 	
-	protected boolean active = true;
+	protected boolean deathFlag = false; //did the mob die to tower damage??
+	
+	protected boolean active = true;	//has mob reached the end of its path??
 	
 	public Mob(Vector2 position, World world){
 		this.position = position;
@@ -32,7 +37,7 @@ public class Mob {
 		
 		this.bounds.width = SIZE;
 		this.bounds.height = SIZE;
-		double angle = Math.atan2(end.y - position.y, end.x- position.x);
+		angle = Math.atan2(end.y - position.y, end.x- position.x);
 		direction.x = (float) Math.cos(angle);
 		direction.y = (float) Math.sin(angle);
 		
@@ -43,12 +48,18 @@ public class Mob {
 	}
 	
 	public void mobDeath(){
-		//world.mobList.remove(this);
-		//world.getPlayer(target).getCurrency() += currency;
-		//world.getPlayer(target).getPoints() += points;
-	}
+		world.getPlayer(target).addCurrency(currency);
+		world.getPlayer(target).addPoints(points);
+		System.out.println("Player1 Currency: "+world.getPlayer(target).currency + " Points: "+ world.getPlayer(target).getPoints());
+		}
 	
 	public void update(float delta){
+		if(health<=0)
+			deathFlag = true;
+		if(health>0){
+			deathFlag = false;
+		}
+		
 		
 		if(position.equals(end)){
 			//TODO: do effect
@@ -56,22 +67,23 @@ public class Mob {
 			active = false;
 		}
 		else{
+			angle = Math.atan2(end.y - position.y, end.x- position.x);
+			direction.x = (float) Math.cos(angle);
+			direction.y = (float) Math.sin(angle);
 			Vector2 temp1 = new Vector2(end.x-2, end.y-2);
 			Vector2 temp2 = new Vector2(end.x+2, end.y+2);
-			//ball.add(ballSpeed * ballDirection.x * deltaTime, ballSpeed * ballDirection.y * deltaTime);
 			position.add(SPEED*direction.x*delta,SPEED*direction.y*delta);
 			if(position.x >= temp1.x && position.x <temp2.x  && position.y >= temp1.y && position.y <temp2.y){
 				position = end;	
 			}
-			
 			if(position.equals(end)){
-				System.out.println("mob has reached end");
+				
+				System.out.println("Broken Mob Health: "+health);
 				active = false;
 				//TODO: do effect
 				//System.out.println("bullet at the end"); 
 				//world.removeBullet(this);
 			}
-			//System.out.println("Mob.position: x: " +position.x+ "y:"+position.y);
 		}
 	}
 	
@@ -117,16 +129,30 @@ public class Mob {
 	public void setCurrency(int currency) {
 		this.currency = currency;
 	}
-	public int getPoint() {
-		return point;
+	public int getPoints() {
+		return points;
 	}
-	public void setPoint(int point) {
-		this.point = point;
+	public void setPoint(int points) {
+		this.points = points;
 	}
 	public int getLevel() {
 		return level;
 	}
 	public void setLevel(int level) {
 		this.level = level;
+	}
+
+	public int getIncomingDamage() {
+		// TODO Auto-generated method stub
+		return incomingDamage;
+	}
+
+	public void setIncomingDamage(int incomingDamage) {
+		this.incomingDamage = incomingDamage;
+	}
+
+	public void setDeathFlag(boolean deathFlag) {
+		this.deathFlag = deathFlag;
+		
 	}
 }

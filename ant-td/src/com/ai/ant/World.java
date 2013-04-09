@@ -18,6 +18,9 @@ public class World {
 	Character wall;
 	Menu menu;
 	
+	Player player1 = new Player();
+	Player player2 = new Player();
+	
 	
 	public Array<Block> getBlocks() {
 		return blocks;
@@ -42,33 +45,69 @@ public class World {
 	public void createWorld() {
 		//temp towers for testing
 		menu = new Menu();
-		for(int i = 100; i < 250; i+=10){
-			Tower bt0 = new BasicTower(new Vector2(i, 160),this);
-			placeTower(bt0);
-		}
-		Tower bt0 = new BasicTower(new Vector2(200, 100),this);
+//		for(int i = 100; i < 250; i+=20){
+//			Tower bt0 = new BasicTower(new Vector2(i, 160),this, 1);
+//			placeTower(bt0);
+//		}
+		
+		
+		Tower bt0 = new BasicTower(new Vector2(200, 100),this,1);
 		placeTower(bt0);
-		Tower bt1 = new BasicTower(new Vector2(200, 125),this);
+		Tower bt1 = new BasicTower(new Vector2(200, 125),this,1);
 		placeTower(bt1);		
-		Tower bt2 = new BasicTower(new Vector2(200, 150),this);
+		Tower bt2 = new BasicTower(new Vector2(200, 150),this,1);
 		placeTower(bt2);
-		Tower bt3 = new BasicTower(new Vector2(200, 175),this);
+		Tower bt3 = new BasicTower(new Vector2(200, 175),this,1);
 		placeTower(bt3);
-		Tower bt4 = new BasicTower(new Vector2(200, 200),this);
+		Tower bt4 = new BasicTower(new Vector2(200, 200),this,1);
 		placeTower(bt4);
+		Tower bt5 = new BasicTower(new Vector2(205, 100),this,1);
+		placeTower(bt5);
+		Tower bt6 = new BasicTower(new Vector2(205, 125),this,1);
+		placeTower(bt6);		
+		Tower bt7 = new BasicTower(new Vector2(205, 150),this,1);
+		placeTower(bt7);
+		Tower bt8 = new BasicTower(new Vector2(205, 175),this,1);
+		placeTower(bt8);
+		Tower bt9 = new BasicTower(new Vector2(205, 200),this,1);
+		placeTower(bt9);
 
-		spawnTower st1 = new spawnTower(new Vector2(100,10), this);
+		SplashTower sp1 = new SplashTower(new Vector2(150, 180),this,1);
+		placeTower(sp1);
+		SplashTower sp2 = new SplashTower(new Vector2(110, 130),this,1);
+		placeTower(sp2);
+//		SplashTower sp3 = new SplashTower(new Vector2(150, 160),this,1);
+//		placeTower(sp3);
+//		SplashTower sp4 = new SplashTower(new Vector2(150, 140),this,1);
+//		placeTower(sp4);
+	
+		
+		
+		spawnTower st1 = new spawnTower(new Vector2(100,10), this,0,1,1);
 		placeTower(st1);
-		spawnTower st2 = new spawnTower(new Vector2(125,20), this);
+		spawnTower st2 = new spawnTower(new Vector2(102,10), this,0,1,1);
 		placeTower(st2);
-		spawnTower st3 = new spawnTower(new Vector2(125,225), this);
+		spawnTower st3 = new spawnTower(new Vector2(104,10), this,0,1,1);
 		placeTower(st3);
-		spawnTower st4 = new spawnTower(new Vector2(150,40), this);
+		spawnTower st4 = new spawnTower(new Vector2(106,10), this,0,1,1);
 		placeTower(st4);
-		spawnTower st5 = new spawnTower(new Vector2(175,50), this);
+		spawnTower st5 = new spawnTower(new Vector2(108,10), this,0,1,1);
 		placeTower(st5);
-		spawnTower st6 = new spawnTower(new Vector2(250,50), this);
+		spawnTower st6 = new spawnTower(new Vector2(110,10), this,0,1,1);
 		placeTower(st6);
+		
+		spawnTower st7 = new spawnTower(new Vector2(180,20), this,0,2,1);
+		placeTower(st7);
+		spawnTower st8 = new spawnTower(new Vector2(182,20), this,0,2,1);
+		placeTower(st8);
+		spawnTower st9 = new spawnTower(new Vector2(184,20), this,0,2,1);
+		placeTower(st9);
+		spawnTower st10 = new spawnTower(new Vector2(186,20), this,0,2,1);
+		placeTower(st10);
+		spawnTower st11 = new spawnTower(new Vector2(188,20), this,0,2,1);
+		placeTower(st11);
+		spawnTower st12 = new spawnTower(new Vector2(190,20), this,0,2,1);
+		placeTower(st12);
 		
 		
 		
@@ -81,6 +120,14 @@ public class World {
 		
 		character = new Character(new Vector2(25,25));
 		wall = new Character(new Vector2(25, 15));
+	}
+	
+	public Player getPlayer(int target){
+		if(target ==1){
+			return player1;
+		}
+		else 
+			return player2;
 	}
 	
 	public void placeMob(Mob mob){

@@ -29,11 +29,11 @@ public class Player {
 		}
 	}
 	
-	public void addPoints(Mob mob){
-		points += mob.getPoint();
+	public void addPoints(int points){
+		this.points += points;
 	}
-	public void addCurrency(Mob mob){
-		currency += mob.getCurrency();
+	public void addCurrency(int cur){
+		currency += cur;
 	}
 	
 	/*

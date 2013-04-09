@@ -19,14 +19,18 @@ public abstract class Tower {
 	protected Mob currentTarget;
 	protected World world;
 	protected ArrayList<Mob> targetList;
-
+	protected int owner;
+	protected int splashRange;
+	
+	
 	protected boolean active;
 	protected long firedTime;
 	protected long activeTime;
 	protected long delay;
 
-	public Tower(Vector2 position, World world) {
+	public Tower(Vector2 position, World world, int owner) {
 		this.world = world;
+		this.owner = owner;
 		this.position = position;
 		this.bounds.width = SIZE;
 		this.bounds.height = SIZE;
@@ -59,54 +63,45 @@ public abstract class Tower {
 
 	public void getTarget() {
 		currentTarget = null;
-			double r;
-			for (Mob pmob : world.mobList) {
+		double r;
+		for (Mob pmob : world.mobList) {
+			if((pmob.getHealth() - pmob.getIncomingDamage()) > 0){
 				double aSqu = (pmob.position.x - position.x)* (pmob.position.x - position.x);
 				double bSqu = (pmob.position.y - position.y)* (pmob.position.y - position.y);
 				r = Math.sqrt(aSqu + bSqu);// r = squrt(a^2 + b^2)
-				pmob.distanceToEnd = (float) r; // TODO: make this what its supposed
-												// to be.
-				// System.out.println(r +"<"+range);
+				pmob.distanceToEnd = (float) r; 
 				if (r < range) { // if the mob is in range
-					// System.out.println("im here");
-					targetList.add(pmob); // add it to the list of mobs I'm
-											// interested in
-				}
-			}
-	
-			// update currentTarget based on distanceToEnd. which is the path
-			// remaining using A* for a given mob.
-			for (Mob pmob : targetList) {
-				if (currentTarget != null) {
-					if (pmob.distanceToEnd < currentTarget.distanceToEnd) {
+					if(pmob.deathFlag){}//mob is dead don't evaluate it again
+					else if (currentTarget != null) {
+						if (pmob.distanceToEnd < currentTarget.distanceToEnd) {
+							currentTarget = pmob;
+						}
+					} 
+					else {
 						currentTarget = pmob;
 					}
-				} else {
-					currentTarget = pmob;
 				}
 			}
-			targetList.clear();
+		}
 	}
 
 	public void fire() {
 		checkIsReady();
-		if (active) {
-			shoot();
-			isFired();
-		}
 		if (currentTarget != null) {
 			if (active) { // tower can fire again.
-				shoot();
-				isFired();
+				shoot();	//spawns a bullet
+				isFired();  //sets active to false
 			}
-		} else {
+		} 
+		else {
 			getTarget();
 		}
 	}
-
+	
 	public void isFired() {
 		if (active == false) {
-		} else {
+		} 
+		else {
 			active = false;
 			firedTime = System.currentTimeMillis();
 			activeTime = firedTime + delay;
@@ -188,4 +183,9 @@ public abstract class Tower {
 	public void setCost(int cost) {
 		this.cost = cost;
 	}
+	
+	public int getDamage(){
+		return damage;
+	}
+	
 }

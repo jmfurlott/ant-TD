@@ -8,13 +8,17 @@ public class Bullet {
 	protected Vector2 end;
 	protected Rectangle bounds = new Rectangle();
 	static final float SIZE = 1f;
-	public static final float SPEED = 100.0f; //bullet speed~
+	public static final float SPEED = 200.0f; //bullet speed~
 	protected World world;
 	protected int speed;
 	Vector2 direction = new Vector2();
 	boolean active = true;
+	Mob target = null;
+	Tower tower = null;
 	
-	public Bullet(Vector2 position, Vector2 end, World world){
+	public Bullet(Vector2 position, Vector2 end, World world,Mob target, Tower tower){
+		this.target = target;
+		this.tower = tower;
 		this.world = world;
 		this.position = position;
 		this.end = end;
@@ -31,11 +35,8 @@ public class Bullet {
 	}
 	
 	public void update(float delta){
-		
-		
 		if(position.equals(end)){
-			//TODO: do effect
-			//System.out.println("bullet at the end");
+			System.out.println("bullet at the end1");
 			active = false;
 		}
 		else{
@@ -45,14 +46,35 @@ public class Bullet {
 			if(position.x >= temp1.x && position.x <temp2.x  && position.y >= temp1.y && position.y <temp2.y){
 				position = end;	
 			}
-			
 			if(position.equals(end)){
-				active = false;
-				//TODO: do effect
-				//System.out.println("bullet at the end"); 
-				//world.removeBullet(this);
+				if(!(tower instanceof SplashTower)) 
+					singleDamage();
+				else
+					splashDamage();
 			}
-			//System.out.println("Bullet.position: x: " +position.x+ "y:"+position.y);
 		}
 	}
+	
+	public void singleDamage(){
+		active = false;
+		if(target!=null){
+			target.setHealth(target.getHealth() - tower.getDamage());
+			target.setIncomingDamage(target.getIncomingDamage()-tower.getDamage());
+		}
+	}
+	
+	public void splashDamage(){
+		target.setIncomingDamage(target.getIncomingDamage()-tower.getDamage());
+		active = false;
+		for (Mob pmob : world.mobList) {
+			if(tower.currentTarget!=null){
+				double aSqu = (pmob.position.x - tower.currentTarget.position.x)* (pmob.position.x - tower.currentTarget.position.x);
+				double bSqu = (pmob.position.y - tower.currentTarget.position.y)* (pmob.position.y - tower.currentTarget.position.y);
+				double r = Math.sqrt(aSqu + bSqu);
+				if (r < tower.splashRange) {
+					pmob.setHealth(pmob.getHealth()-tower.damage);
+				}
+			}
+		}
+	}	
 }
