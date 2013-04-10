@@ -20,7 +20,11 @@ public abstract class Tower {
 	protected ArrayList<Mob> targetList;
 	protected int owner;
 	protected int splashRange;
+	
 	protected double slowAmount;
+	protected long slowTime;
+	protected long conversionDelay;
+	
 	protected int type;
 
 	protected boolean active;

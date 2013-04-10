@@ -61,6 +61,9 @@ public class Bullet {
 		if(target!=null){
 			if(target.target == 1){
 				target.target = 0;
+				target.convertedFlag =true;
+				target.convertStartTime = System.currentTimeMillis();
+				target.convertEndTime = target.convertStartTime + tower.conversionDelay;
 			}
 			target.setIncomingDamage(target.getIncomingDamage()-tower.getDamage());
 		}
@@ -98,9 +101,11 @@ public class Bullet {
 					if (r < tower.splashRange) {
 						pmob.setHealth(pmob.getHealth()-tower.damage);
 						if(pmob.speedScale == 1){//TODO:&& !pmob.isStuned)
-							if(tower.slowAmount>0)
+							if(tower.slowAmount>0){
 								pmob.setSlowStartTime(System.currentTimeMillis());
+								pmob.slowEndTime = pmob.slowStartTime + tower.slowTime;
 								pmob.speedScale -= tower.slowAmount;
+							}
 						}
 					}
 				}

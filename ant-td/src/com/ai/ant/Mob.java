@@ -18,8 +18,13 @@ public class Mob {
 	protected int level; 	//currency/points rewarded scale based on level
 	protected static final float SPEED = 10f; 	//normal speed value
 	protected float speedScale = 1;   //modified when slowed
-	protected float slowStartTime;
+	
+	protected long slowStartTime;
 	protected long slowEndTime;
+	protected long convertStartTime;
+	protected long convertEndTime;
+	protected boolean convertedFlag;
+	
 	
 	Vector2 direction = new Vector2();
 	protected int incomingDamage = 0; //used in targeting system
@@ -38,7 +43,7 @@ public class Mob {
 			end = new Vector2(200,300);
 		}
 		else{ //friendly
-			end = new Vector2(250,300);
+			end = new Vector2(400,10);
 		}
 		angle = Math.atan2(end.y - position.y, end.x- position.x);
 		direction.x = (float) Math.cos(angle);
@@ -59,21 +64,29 @@ public class Mob {
 		world.mobList.remove(this);
 	}
 	
-	public void setSlowStartTime(float slowStartTime){
+	public void setSlowStartTime(long slowStartTime){
 		this.slowStartTime = slowStartTime;
 	}
 	
 	public void update(float delta){
 		if(active){
-			slowEndTime = System.currentTimeMillis();			
-			if(speedScale<1 && slowEndTime > slowStartTime){
+		 			
+			if(speedScale<1 && System.currentTimeMillis()>slowEndTime){
+				slowStartTime =0;
+				slowEndTime =0;
 				speedScale = 1;
+			}
+			if(convertedFlag == true){
+				if(System.currentTimeMillis() > convertEndTime){
+					convertedFlag = false;
+					target=1;
+				}
 			}
 			if(target==1){
 				end = new Vector2(200,300);
 			}
 			else
-				end = new Vector2(250,300);
+				end = new Vector2(400,10);
 			
 			if(health<=0){
 				deathFlag = true;

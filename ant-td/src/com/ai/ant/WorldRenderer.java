@@ -77,7 +77,7 @@ public class WorldRenderer {
 		loadCharacter();	
 		drawMenu();
 		batch.end();
-		//drawDebug();
+		drawDebug();
 	}
 	
 	public void setSize(int w, int h) {
