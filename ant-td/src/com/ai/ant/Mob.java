@@ -42,7 +42,7 @@ public class Mob {
 		this.bounds.width = SIZE;
 		this.bounds.height = SIZE;
 		if(target==1){ //enemy
-			end = new Vector2(138,238);
+			end = new Vector2(126,254); //hits end goal
 		}
 		else{ //friendly
 			end = new Vector2(400,10);
@@ -59,7 +59,7 @@ public class Mob {
 	public void mobDeath(){
 		world.getPlayer(target).addCurrency(currency);
 		world.getPlayer(target).addPoints(points);
-//		System.out.println("Player1 Currency: "+world.getPlayer(target).currency + " Points: "+ world.getPlayer(target).getPoints());
+		System.out.println("Player1 Currency: "+world.getPlayer(target).currency + " Points: "+ world.getPlayer(target).getPoints());
 	}
 	
 	public void removeMob(){
@@ -87,48 +87,51 @@ public class Mob {
 		Vector2 mapPoint = mapPoint();
 		int mobX = (int)mapPoint.x;
 		int mobY = (int)mapPoint.y;		
-		System.out.println("mapPoint: "+mobX+","+mobY);
+//		System.out.println("mapPoint: "+mobX+","+mobY);
 		
 		
 		int pathX = 0;
 		int pathY = 0;
 		int value = 50;	
+	
 		
 		if(!(mobX==0||mobY==0||mobY==21||mobX==21)){
 			if( world.grid[mobX+1][mobY]!=-1 &&  world.grid[mobX+1][mobY] <=value){ 
 				pathX = mobX+1;
 				pathY = mobY;
 				value = world.grid[mobX+1][mobY];
-				System.out.println("path1: "+pathX+","+pathY + "value: "+value);
+//				System.out.println("path1: "+pathX+","+pathY + "value: "+value);
 			}
 			if(world.grid[mobX][mobY-1]!=-1 && world.grid[mobX][mobY-1] <=value){
 				pathX = mobX;
 				pathY = mobY-1;
 				value = world.grid[mobX][mobY-1];
-				System.out.println("path2: "+pathX+","+pathY+ "value: "+value);
+//				System.out.println("path2: "+pathX+","+pathY+ "value: "+value);
 			}
 			if(world.grid[mobX][mobY+1]!=-1 && world.grid[mobX][mobY+1] <=value){
 				pathX = mobX;
 				pathY = mobY+1;
 				value = world.grid[mobX][mobY+1];
-				System.out.println("path3: "+pathX+","+pathY+ "value: "+value);
+//				System.out.println("path3: "+pathX+","+pathY+ "value: "+value);
 			}
-			if(world.grid[mobX-1][mobY] < 1 && world.grid[mobX-1][mobY] <=value){
+			if(world.grid[mobX-1][mobY]!= -1 && world.grid[mobX-1][mobY] <=value){
 				pathX = mobX-1;
 				pathY = mobY;
 				value = world.grid[mobX-1][mobY];
-				System.out.println("path4: "+pathX+","+pathY+ "value: "+value);
+//				System.out.println("path4: "+pathX+","+pathY+ "value: "+value);
 			}
-			System.out.println(world.toString());
+			path = getPointVector(new Vector2(pathX,pathY));
 		}
 		else{
-			System.out.println("im here");
+			path = getPointVector(new Vector2(0,10)); 
 		}
-		path = getPointVector(new Vector2(pathX,pathY));
+		
+		
 	}
 	
 	public void update(float delta){
 		if(active){
+//			System.out.println("pos: "+ position.x+","+position.y);
 		 	setPath();		
 			if(speedScale<1 && System.currentTimeMillis()>slowEndTime){
 				slowStartTime =0;
@@ -142,7 +145,7 @@ public class Mob {
 				}
 			}
 			if(target==1){
-				end = new Vector2(138,238);
+				end = new Vector2(126,254);
 			}
 			else
 				end = new Vector2(581,238);

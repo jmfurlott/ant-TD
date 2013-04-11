@@ -175,5 +175,7 @@ public class WorldController {
 			Gdx.app.log("quit", "Trying to quit");
 			g.setScreen(new EndGameScreen());
 		}
+		
+		System.out.println(world.toString()); 
 	}
 }

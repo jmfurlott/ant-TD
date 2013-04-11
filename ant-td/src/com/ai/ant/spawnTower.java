@@ -11,7 +11,7 @@ public class SpawnTower extends Tower{
 		maxLevel = 3;
 		this.mobLevel = mobLevel;
 		this.mobTarget = mobTarget;
-		delay = 5000;
+		delay = 20000;
 		type = 6;
 	}
 
