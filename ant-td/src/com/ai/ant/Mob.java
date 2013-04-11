@@ -121,6 +121,36 @@ public class Mob {
 					value = world.grid[mobX-1][mobY];
 	//				System.out.println("path4: "+pathX+","+pathY+ "value: "+value);
 				}
+				
+				
+				
+				
+				
+//				if(world.grid[mobX-1][mobY-1]!= -1 && world.grid[mobX-1][mobY-1] <=value){
+//					pathX = mobX-1;
+//					pathY = mobY-1;
+//					value = world.grid[mobX-1][mobY-1];
+//	//				System.out.println("path4: "+pathX+","+pathY+ "value: "+value);
+//				}
+//				if(world.grid[mobX-1][mobY+1]!= -1 && world.grid[mobX-1][mobY+1] <=value){
+//					pathX = mobX-1;
+//					pathY = mobY+1;
+//					value = world.grid[mobX-1][mobY+1];
+//	//				System.out.println("path4: "+pathX+","+pathY+ "value: "+value);
+//				}
+//				if(world.grid[mobX+1][mobY+1]!= -1 && world.grid[mobX+1][mobY+1] <=value){
+//					pathX = mobX+1;
+//					pathY = mobY+1;
+//					value = world.grid[mobX+1][mobY+1];
+//	//				System.out.println("path4: "+pathX+","+pathY+ "value: "+value);
+//				}
+//				if(world.grid[mobX+1][mobY-1]!= -1 && world.grid[mobX+1][mobY-1] <=value){
+//					pathX = mobX+1;
+//					pathY = mobY-1;
+//					value = world.grid[mobX+1][mobY-1];
+//	//				System.out.println("path4: "+pathX+","+pathY+ "value: "+value);
+//				}
+				
 				path = getPointVector(new Vector2(pathX,pathY));
 			}
 			else{
