@@ -11,7 +11,7 @@ public class SpawnTower extends Tower{
 		maxLevel = 3;
 		this.mobLevel = mobLevel;
 		this.mobTarget = mobTarget;
-		delay = 20000;
+		delay = 1000;
 		type = 6;
 	}
 
@@ -38,7 +38,7 @@ public class SpawnTower extends Tower{
 	}
 	
 	void shoot(){
-		BasicMob bMob = new BasicMob(new Vector2(this.position.x,this.position.y),mobTarget,mobLevel,world);
+		BasicMob bMob = new BasicMob(new Vector2(this.position.x+13,this.position.y-10),mobTarget,mobLevel,world);
 		world.mobList.add(bMob);
 	}
 }

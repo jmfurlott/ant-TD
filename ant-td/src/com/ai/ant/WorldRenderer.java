@@ -99,7 +99,7 @@ public class WorldRenderer {
 		basicTower = new Texture(Gdx.files.internal("stunFreezeHill.png")); //TODO
 		basicBullet = new Texture(Gdx.files.internal("basicBullet.png"));	
 		
-		splashTower = new Texture(Gdx.files.internal("splashTower.png")); //TODO
+		splashTower = new Texture(Gdx.files.internal("splash_tower.png")); //TODO
 		splashBullet = new Texture(Gdx.files.internal("splashBullet.png"));//TODO
 		
 		slowTower = new Texture(Gdx.files.internal("stunFreezeHill.png")); //TODO

@@ -140,7 +140,7 @@ public class World {
 	
 	public void placeTower(int x,int y,Tower tower){
 		System.out.println(x+","+y);
-		if(x<0 || y<0 || x>17 || y>20){
+		if(x<=0 || y<0 || x>=17 || y>20){
 			System.out.println("DO NOTHING");
 		}
 		else{
