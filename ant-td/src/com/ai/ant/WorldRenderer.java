@@ -52,7 +52,7 @@ public class WorldRenderer {
 	private Texture conversionTower, conversionBullet;
 	private Texture waterPuddle, mudPuddle;
 	
-
+	private Texture wall;
 	private Texture menuBackground;
 	private Texture quitButton;
 	
@@ -77,7 +77,7 @@ public class WorldRenderer {
 		loadCharacter();	
 		drawMenu();
 		batch.end();
-		drawDebug();
+		//drawDebug();
 	}
 	
 	public void setSize(int w, int h) {
@@ -117,6 +117,7 @@ public class WorldRenderer {
 		//TODO put correct images in for each tower
 
 		//menu and background
+		wall = new Texture(Gdx.files.internal("wall.png"));
 		grass = new Texture(Gdx.files.internal("grassTexture.png"));
 		menuBackground= new Texture(Gdx.files.internal("woodMenuBackground.png"));
 		quitButton= new Texture(Gdx.files.internal("quit.png"));	
@@ -141,16 +142,18 @@ public class WorldRenderer {
 	
 	public void drawTowers() {
 		for(Tower tower : world.getTowers()) {
-			if(tower instanceof BasicTower)
-				batch.draw(basicTower, tower.getPosition().x, tower.getPosition().y, Tower.SIZE*25 , Tower.SIZE*25);
+			if(tower instanceof BasicTower)//TODO FIX THESE IMAGES
+				batch.draw(basicTower, tower.getPosition().x+2, tower.getPosition().y-15, Tower.SIZE*26 , Tower.SIZE*20);
 			else if(tower instanceof SpawnTower)
-				batch.draw(spawnTower, tower.getPosition().x, tower.getPosition().y, Tower.SIZE*25 , Tower.SIZE*25);
+				batch.draw(basicBullet, tower.getPosition().x+2, tower.getPosition().y-15, Tower.SIZE*26 , Tower.SIZE*20);
 			else if(tower instanceof SplashTower)
-				batch.draw(splashTower, tower.getPosition().x, tower.getPosition().y, Tower.SIZE*25 , Tower.SIZE*25);
+				batch.draw(splashTower, tower.getPosition().x+2, tower.getPosition().y-15, Tower.SIZE*26 , Tower.SIZE*20);
 			else if(tower instanceof SlowTower)
-				batch.draw(slowTower, tower.getPosition().x, tower.getPosition().y, Tower.SIZE*25 , Tower.SIZE*25);
+				batch.draw(slowTower, tower.getPosition().x+2, tower.getPosition().y-15, Tower.SIZE*26 , Tower.SIZE*20);
 			else if(tower instanceof ConversionTower)
-				batch.draw(conversionTower, tower.getPosition().x, tower.getPosition().y, Tower.SIZE*25 , Tower.SIZE*25);
+				batch.draw(conversionTower, tower.getPosition().x+2, tower.getPosition().y-15, Tower.SIZE*26 , Tower.SIZE*20);
+			else if(tower instanceof Wall)
+				batch.draw(wall, tower.getPosition().x+2, tower.getPosition().y-15, Tower.SIZE*26 , Tower.SIZE*20);
 		
 		}
 	}
@@ -164,7 +167,7 @@ public class WorldRenderer {
 			}
 			else{
 				if(mob instanceof BasicMob){
-					batch.draw(soldierAnt, mob.getPosition().x, mob.getPosition().y, Mob.SIZE*20, Mob.SIZE*20);
+					batch.draw(soldierAnt, mob.getPosition().x, mob.getPosition().y, Mob.SIZE*20, Mob.SIZE*15);
 				}
 			}
 		}
@@ -176,8 +179,6 @@ public class WorldRenderer {
 		}
 	}
 	
-	
-	
 	public void drawBullets() {
 		ArrayList<Bullet> temp = new ArrayList<Bullet>();
 		for(Bullet bullet: world.getBullets()){
@@ -186,14 +187,13 @@ public class WorldRenderer {
 			}
 			else{/*TODO: fix images for bullets*/
 				if(bullet.tower instanceof BasicTower)
-					batch.draw(basicBullet, bullet.getPosition().x+10, bullet.getPosition().y+10, Bullet.SIZE*5, Bullet.SIZE*5);
+					batch.draw(basicBullet, bullet.getPosition().x, bullet.getPosition().y, Bullet.SIZE*5, Bullet.SIZE*5);
 				else if(bullet.tower instanceof SplashTower)
-					batch.draw(basicBullet, bullet.getPosition().x+10, bullet.getPosition().y+10, Bullet.SIZE*5, Bullet.SIZE*5);
+					batch.draw(basicBullet, bullet.getPosition().x, bullet.getPosition().y, Bullet.SIZE*5, Bullet.SIZE*5);
 				else if(bullet.tower instanceof SlowTower)
-					batch.draw(basicBullet, bullet.getPosition().x+10, bullet.getPosition().y+10, Bullet.SIZE*5, Bullet.SIZE*5);
+					batch.draw(basicBullet, bullet.getPosition().x, bullet.getPosition().y, Bullet.SIZE*5, Bullet.SIZE*5);
 				else if(bullet.tower instanceof ConversionTower)
-					batch.draw(basicBullet, bullet.getPosition().x+10, bullet.getPosition().y+10, Bullet.SIZE*5, Bullet.SIZE*5);
-			
+					batch.draw(basicBullet, bullet.getPosition().x, bullet.getPosition().y, Bullet.SIZE*5, Bullet.SIZE*5);
 			}
 		}
 		for(Bullet bullet: temp){
@@ -204,9 +204,6 @@ public class WorldRenderer {
 	
 	public void drawMenu() {
 		batch.draw(menuBackground, -38,0);
-		
-		//batch.draw(basicTower, 48, 25, 25, 25);
-		
 		Menu menu = world.getMenu();
 		for(Button button : menu.getButtons()) {
 			batch.draw(towerMapTexture.get(button.getTowerType()), button.getPosition().x*(640/50), button.getPosition().y*(480/50)-10, 30, 30);
@@ -232,7 +229,6 @@ public class WorldRenderer {
 			debugRenderer.rect(x1, y1, rect.width, rect.height);
 		}
 	
-	
 		Character character = world.getCharacter();
 		Rectangle rect = character.getBounds();
 		float x1 = character.getPosition().x + rect.x;
@@ -250,10 +246,6 @@ public class WorldRenderer {
 		debugRenderer.end();
 
 	}
-	
-	
-	
-	
 	//configure hashmap to know which textures to map to
 	
 	/*

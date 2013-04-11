@@ -1,5 +1,6 @@
 package com.ai.ant;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -7,6 +8,7 @@ public class Mob {
 	protected World world;
 	protected Vector2 position;
 	Vector2 end;
+	Vector2 path;
 	protected double distanceToEnd;
 	
 	protected Rectangle bounds = new Rectangle();
@@ -16,7 +18,7 @@ public class Mob {
 	protected int currency; //coin given based on level 1 of mob upon destruction
 	protected int points; 	//points given based on level 1 of mob upon destruction
 	protected int level; 	//currency/points rewarded scale based on level
-	protected static final float SPEED = 10f; 	//normal speed value
+	protected static final float SPEED = 15f; 	//normal speed value
 	protected float speedScale = 1;   //modified when slowed
 	
 	protected long slowStartTime;
@@ -40,7 +42,7 @@ public class Mob {
 		this.bounds.width = SIZE;
 		this.bounds.height = SIZE;
 		if(target==1){ //enemy
-			end = new Vector2(200,300);
+			end = new Vector2(138,238);
 		}
 		else{ //friendly
 			end = new Vector2(400,10);
@@ -57,7 +59,7 @@ public class Mob {
 	public void mobDeath(){
 		world.getPlayer(target).addCurrency(currency);
 		world.getPlayer(target).addPoints(points);
-		System.out.println("Player1 Currency: "+world.getPlayer(target).currency + " Points: "+ world.getPlayer(target).getPoints());
+//		System.out.println("Player1 Currency: "+world.getPlayer(target).currency + " Points: "+ world.getPlayer(target).getPoints());
 	}
 	
 	public void removeMob(){
@@ -68,9 +70,66 @@ public class Mob {
 		this.slowStartTime = slowStartTime;
 	}
 	
+	public  Vector2 mapPoint(){
+		return new Vector2((position.x/26) -5,((480-position.y)/20)-1);
+	}
+	
+	public Vector2 getPointVector(Vector2 mapPoint){
+//		float midX = mapPoint.x + (bounds.width/2);
+//		float midY = mapPoint.y + (bounds.height/2);		
+		
+//		System.out.println("bounds: "+bounds.width+","+bounds.height);
+		
+		return new Vector2(127+(mapPoint.x*26),454-(mapPoint.y*20));
+	}
+	
+	public void setPath(){
+		Vector2 mapPoint = mapPoint();
+		int mobX = (int)mapPoint.x;
+		int mobY = (int)mapPoint.y;		
+		System.out.println("mapPoint: "+mobX+","+mobY);
+		
+		
+		int pathX = 0;
+		int pathY = 0;
+		int value = 50;	
+		
+		if(!(mobX==0||mobY==0||mobY==21||mobX==21)){
+			if( world.grid[mobX+1][mobY]!=-1 &&  world.grid[mobX+1][mobY] <=value){ 
+				pathX = mobX+1;
+				pathY = mobY;
+				value = world.grid[mobX+1][mobY];
+				System.out.println("path1: "+pathX+","+pathY + "value: "+value);
+			}
+			if(world.grid[mobX][mobY-1]!=-1 && world.grid[mobX][mobY-1] <=value){
+				pathX = mobX;
+				pathY = mobY-1;
+				value = world.grid[mobX][mobY-1];
+				System.out.println("path2: "+pathX+","+pathY+ "value: "+value);
+			}
+			if(world.grid[mobX][mobY+1]!=-1 && world.grid[mobX][mobY+1] <=value){
+				pathX = mobX;
+				pathY = mobY+1;
+				value = world.grid[mobX][mobY+1];
+				System.out.println("path3: "+pathX+","+pathY+ "value: "+value);
+			}
+			if(world.grid[mobX-1][mobY] < 1 && world.grid[mobX-1][mobY] <=value){
+				pathX = mobX-1;
+				pathY = mobY;
+				value = world.grid[mobX-1][mobY];
+				System.out.println("path4: "+pathX+","+pathY+ "value: "+value);
+			}
+			System.out.println(world.toString());
+		}
+		else{
+			System.out.println("im here");
+		}
+		path = getPointVector(new Vector2(pathX,pathY));
+	}
+	
 	public void update(float delta){
 		if(active){
-		 			
+		 	setPath();		
 			if(speedScale<1 && System.currentTimeMillis()>slowEndTime){
 				slowStartTime =0;
 				slowEndTime =0;
@@ -83,20 +142,20 @@ public class Mob {
 				}
 			}
 			if(target==1){
-				end = new Vector2(200,300);
+				end = new Vector2(138,238);
 			}
 			else
-				end = new Vector2(400,10);
+				end = new Vector2(581,238);
 			
 			if(health<=0){
 				deathFlag = true;
 				active=false;
 			}
 			else{
-				double aSqu = (end.x - position.x)* (end.x - position.x);
-				double bSqu = (end.y - position.y)* (end.y - position.y);
+				double aSqu = (path.x - position.x)* (path.x - position.x);
+				double bSqu = (path.y - position.y)* (path.y - position.y);
 				distanceToEnd = aSqu + bSqu;
-				angle = Math.atan2(end.y - position.y, end.x- position.x);
+				angle = Math.atan2(path.y - position.y, path.x- position.x);
 				direction.x = (float) Math.cos(angle);
 				direction.y = (float) Math.sin(angle);
 				Vector2 temp1 = new Vector2(end.x-2, end.y-2);

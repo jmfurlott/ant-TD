@@ -14,6 +14,10 @@ import com.badlogic.gdx.math.Vector2;
 public class WorldController {
 	// all input control is here
 
+	//grid.boxSize = 20x24
+	
+	
+	
 	enum Keys {
 		LEFT, RIGHT, UP, DOWN, A, SPACE
 	}
@@ -26,18 +30,11 @@ public class WorldController {
 	int selection;
 	int side; // 0 means left side clickable, 1 means right side clickable
 	Game g;
+	int type;
 
 	ArrayList<Bullet> tempBullet = new ArrayList<Bullet>();
 
 	Button clicked;
-	static Map<Keys, Boolean> keys = new HashMap<WorldController.Keys, Boolean>();
-	static {
-		keys.put(Keys.LEFT, false);
-		keys.put(Keys.RIGHT, false);
-		keys.put(Keys.UP, false);
-		keys.put(Keys.DOWN, false);
-		keys.put(Keys.A, false);
-	};
 
 	public WorldController(World world, WorldRenderer renderer, Game g) {
 		this.world = world;
@@ -50,55 +47,6 @@ public class WorldController {
 		this.g = g;
 	}
 
-	// pressed controls
-	public void leftPressed() {
-		keys.get(keys.put(Keys.LEFT, true));
-	}
-
-	public void rightPressed() {
-		keys.get(keys.put(Keys.RIGHT, true));
-	}
-
-	public void upPressed() {
-		keys.get(keys.put(Keys.UP, true));
-	}
-
-	public void downPressed() {
-		keys.get(keys.put(Keys.DOWN, true));
-	}
-
-	public void aPressed() {
-		keys.get(keys.put(Keys.A, true));
-	}
-
-	public void spacePressed() {
-		keys.get(keys.put(Keys.SPACE, true));
-	}
-
-	// released controls
-	public void leftReleased() {
-		keys.get(keys.put(Keys.LEFT, false));
-	}
-
-	public void rightReleased() {
-		keys.get(keys.put(Keys.RIGHT, false));
-	}
-
-	public void upReleased() {
-		keys.get(keys.put(Keys.UP, false));
-	}
-
-	public void downReleased() {
-		keys.get(keys.put(Keys.DOWN, false));
-	}
-
-	public void aReleased() {
-		keys.get(keys.put(Keys.A, false));
-	}
-
-	public void spaceReleased() {
-		keys.get(keys.put(Keys.SPACE, false));
-	}
 
 	public void update(float delta) {
 		processInput();
@@ -106,10 +54,7 @@ public class WorldController {
 
 		ArrayList<Bullet> temp = new ArrayList<Bullet>();
 		temp = world.bulletList;
-
-		//spawning new mobs in the collision method breaks the scoring /targeting system
-		//~mike
-		negotiateCollision();
+		
 		for (Bullet bullet : temp) {
 			bullet.update(delta);
 		}
@@ -121,255 +66,32 @@ public class WorldController {
 			mob.update(delta);
 		}
 	}
-
 	public void processInput() {
-
-		// Screen debugging
-		// if (keys.get(Keys.SPACE))
-		// {
-		// Gdx.app.log("intro", "space has been entered");
-		// }
-
-		// horizontal first
-		if (keys.get(Keys.LEFT)) {
-
-			// testing collision
-			if (!checkForCollision(character.getBounds(), wall.getBounds(),
-					false, true)) {
-				character.setState(State.WALKING);
-				character.getVelocity().x = -Character.SPEED;
-			}
-		}
-		if (keys.get(Keys.RIGHT)) {
-			character.setState(State.WALKING);
-			character.getVelocity().x = Character.SPEED;
-		}
-
-		if ((keys.get(Keys.LEFT) && keys.get(Keys.RIGHT))
-				|| (!keys.get(Keys.LEFT) && !(keys.get(Keys.RIGHT)))) {
-			character.setState(State.IDLE);
-			character.getAcceleration().x = 0;
-			character.getVelocity().x = 0;
-
-		}
-
-		// vertical next
-		if (keys.get(Keys.UP)) {
-			character.setState(State.WALKING);
-			character.getVelocity().y = Character.SPEED;
-		}
-		if (keys.get(Keys.DOWN)) {
-			character.setState(State.WALKING);
-			character.getVelocity().y = -Character.SPEED;
-		}
-		if ((keys.get(Keys.UP) && keys.get(Keys.DOWN))
-				|| (!keys.get(Keys.UP) && !(keys.get(Keys.DOWN)))) {
-			character.setState(State.IDLE);
-			character.getAcceleration().y = 0;
-			character.getVelocity().y = 0;
-		}
-
-		// path finding based on pressing A - just some testing
-		// going to have the current figure go to some specified point
-		boolean madeFlag = false;
-		if (keys.get(Keys.A)) {
-			Gdx.app.log("input", "Key A has been pressed");
-
-			// define the position I want to reach
-			Vector2 goal = new Vector2(48, 48);
-
-			// step size...how fast it can move
-			float STEPSIZE = 0.0001f;
-
-			character.setState(State.WALKING);
-
-			while (!madeFlag) {
-				// begin steps to getting to the location
-				// need to calculate how far away we are away from
-				float currentX = character.getPosition().x;
-				float currentY = character.getPosition().y;
-
-				Gdx.app.log("input", "Currentx: " + currentX + " Currenty: "
-						+ currentY);
-
-				float diffX = Math.abs(goal.x - currentX);
-				float diffY = Math.abs(currentY - goal.y);
-
-				if (diffX > 0.5f && diffY > 0.5f) {
-
-					if (currentX < goal.x) {
-						character.getPosition().x = character.getPosition().x
-								+ STEPSIZE;
-					} else {
-						character.getPosition().x = character.getPosition().x
-								- STEPSIZE;
-					}
-
-					if (currentY < goal.y) {
-						character.getPosition().y = character.getPosition().y
-								- STEPSIZE;
-					} else {
-						character.getPosition().y = character.getPosition().y
-								+ STEPSIZE;
-					}
-
-				} else {
-					madeFlag = true;
-				}
-
-			}
-
-		}
-
-		// mouse/touch
 		
 		if (Gdx.input.isTouched()) {
-			Vector2 click = calculatePosition(Gdx.input.getX(),
-					Gdx.input.getY());
-
+			Vector2 debug = calculatePosition2();
+			System.out.println("Pix:"+Gdx.input.getX()+","+Gdx.input.getY()+" Debug: "+debug.x+","+debug.y);
+			Vector2 click = calculatePosition(Gdx.input.getX(),	Gdx.input.getY());
+			
 			if (click.x < 9 && side == 0) {
-				// menu stuff
-				Gdx.app.log("input", "Menu click");
-
 				clicked = menu.selectButton(click);
 				if (clicked != null) {
-					Gdx.app.log("input", "Found a button");
+					//Gdx.app.log("input", "Found a button");
 					selection = 1;
 					side = 1;
-					//this is a single threaded processes thead.sleep just breaks the code
-					//~mike
-//					try {
-//						Thread.sleep(500);
-//					} catch (InterruptedException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-
 				} else if (clicked == null) {
-					Gdx.app.log("input", "Didn't find anything");
-
+					//Gdx.app.log("input", "Didn't find anything");
 				}
 			} else if (click.x > 9 && selection == 1 && side == 1) {
-				// debugging don't actually want to create a new button
-				// menu.buttons.add(new Button(click, 1, 1));
-
-				//Why is this here??
-				//~mike
-//				Tower tower = new BasicTower(new Vector2(Gdx.input.getX(),
-//						480 - Gdx.input.getY()), world,1);
-//				world.placeTower(tower);
-
 				addTowerToMap(clicked);
-				
 				clicked = null;
-				
-				// MAKE NEW TOWER OF CERTAIN TYPE
-				// plotNewTower(int value) and add it to the arraylist of towers
-
-				Gdx.app.log("input", "Made new button");
+				//Gdx.app.log("input", "Made new button");
 				selection = 0;
 				side = 0;
-				
-				//this is a single threaded processes thead.sleep just breaks the code
-				//~mike
-//				try {
-//					Thread.sleep(500);
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-
-			} else {
-				// Gdx.app.log("input", "Touched at X: " + Gdx.input.getX() +
-				// " Y: " + Gdx.input.getY());
-				// Gdx.app.log("input", "ppux: " + renderer.getScreenWidth() +
-				// " ppuy: " + renderer.getScreenHeight());
-				// Vector3 touchPosition = new Vector3();
-				// touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-				character.setState(State.WALKING);
-				float ppuX = renderer.getScreenWidth();
-				float ppuY = renderer.getScreenHeight();
-				float cameraWidth = renderer.getCameraWidth();
-				float cameraHeight = renderer.getCameraHeight();
-
-				/*
-				 * Notes: in order to find what position you are on the map when
-				 * you click down look at the character.getPosition()..lines If
-				 * the 50x50 map gets changed around this will break so be
-				 * careful. I have it being rounded to the closest square so
-				 * that we can remain within uniform units -> this will help
-				 * with all that path finding
-				 */
-
-				// Gdx.app.log("input", "charNewPosX: " + Math.round(
-				// 50*Gdx.input.getX()/(ppuX*cameraWidth)) + " charNewPosY: " +
-				// Math.round(50*Gdx.input.getY()/(ppuY*cameraHeight)));
-				character.getPosition().y = 50 - Math.round(50
-						* Gdx.input.getY() / (ppuY * cameraHeight) - 0.5f);
-				character.getPosition().x = (int) Math.round(50
-						* Gdx.input.getX() / (ppuX * cameraWidth) - 0.5f);
-
 			}
 		}
 	}
-
-	public void negotiateCollision() {
-		int bs = 10; // boundary size (radius?) of square surrounding tower
-		for (int i = 0; i < world.mobList.size(); i++) {
-			Mob temp = world.mobList.get(i);
-			Vector2 tempPos = temp.getPosition();
-			for (int k = 0; k < world.towerList.size(); k++) {
-				Tower tempTower = world.towerList.get(k);
-				if (tempTower.damage > 0) {
-					Vector2 tempTowerPos = tempTower.getPosition();
-					if ((tempPos.x > (tempTowerPos.x - bs))
-							&& (tempPos.y > (tempTowerPos.y - bs))
-							&& (tempPos.x < (tempTowerPos.x + bs))
-							&& (tempPos.y < (tempTowerPos.y + bs))) {
-						//Gdx.app.log("Collision", "Collided!!!");
-						Vector2 newPos = tempPos.add(new Vector2(bs, 0));
-						world.mobList.get(i).position = newPos;
-						break;
-						// i--;//rerun to see if new position messes with any
-						// towers - CAUSED ARRAY INDEX ERROR
-					}
-				}
-			}
-		}
-	}
-
-	public boolean checkForCollision(Rectangle r1, Rectangle r2, boolean up,
-			boolean left) {
-
-		// let r1 always be your current figure
-		// let r2 be the object nearby
-		// up and left are the cardinal positions...ONE and ONLY ONE can be
-		// true.
-		// if left = true, check left. if false check right rest would be null
-		// etc
-
-		Intersector intersector = new Intersector();
-		Rectangle temp = r1;
-
-		if (up == true) {
-			temp.y = temp.y + 1.0f;
-		} else if (up == false) {
-			temp.y = temp.y - 1.0f;
-		} else if (left == true) {
-			temp.x = temp.x - 1.0f;
-		} else if (left == false) {
-			temp.x = temp.x + 1.0f;
-		} else {
-			return false; // error and do nothing
-		}
-
-		boolean allowed = intersector.intersectRectangles(temp, r2);
-
-		Gdx.app.log("Collision", "movement allowed: " + allowed);
-		return allowed;
-
-	}
-
+	
 	public Vector2 calculatePosition(int xPixel, int yPixel) {
 		Vector2 position = new Vector2();
 
@@ -378,33 +100,48 @@ public class WorldController {
 		float cameraWidth = renderer.getCameraWidth();
 		float cameraHeight = renderer.getCameraHeight();
 
-		int posX = (int) Math.round(50 * Gdx.input.getX()
-				/ (ppuX * cameraWidth) - 0.5f);
-		int posY = 50 - Math.round(50 * Gdx.input.getY()
-				/ (ppuY * cameraHeight) - 0.5f);
-
+		int posX = (int) Math.round(50 * Gdx.input.getX()/ (ppuX * cameraWidth) - 0.5f);
+		int posY = 50 - Math.round(50 * Gdx.input.getY()/ (ppuY * cameraHeight) - 0.5f);
 		position.set(posX, posY);
-
-		Gdx.app.log("input", "x saved: " + posX + " y saved: " + posY);
-
 		return position;
 
 	}
-
+	
+	public Vector2 calculatePosition2() {
+		Vector2 position = new Vector2(((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
+		return position;
+	}
+	
+	public Vector2 mapPlacePosition(){
+		Vector2 temp = calculatePosition2();
+//		System.out.println("mouse: "+Gdx.input.getX()+","+Gdx.input.getY());
+		//Vector2 mapPlacePosition = new Vector2(127+(temp.x*26),444-(temp.y*20));
+		
+		Vector2 mapPlacePosition = new Vector2(127+(temp.x*26),454-(temp.y*20));
+//		System.out.println("mapPlace: "+mapPlacePosition.x+","+mapPlacePosition.y);
+		return mapPlacePosition;
+	}
 	
 	public void addTowerToMap(Button clicked) {
-		//when the rest of the towers are functioning
-		//just add the rest of the if loops for the appropriate towers
-		int type = clicked.getTowerType();		
+		int type = clicked.getTowerType();	
+		Vector2 temp = calculatePosition2();
+		Vector2 temp1 = mapPlacePosition();
+		
+		System.out.println("mouse: "+Gdx.input.getX()+","+Gdx.input.getY());
+//		System.out.println("temp1: "+ temp1.x+","+temp1.y);
+//		System.out.println("temp: "+ temp.x+","+temp.y);
 		if(type == 1) {
-			System.out.println("placing BasicTower");
-			Tower tower = new BasicTower(new Vector2(Gdx.input.getX(), 480 - Gdx.input.getY()), world,1);
-			world.placeTower(tower);
+			world.resetGrid();
+			//Tower tower = new BasicTower(temp1, world,1);
+			Tower tower = new Wall(temp1,world,1);
+			world.placeTower((int)temp.x,(int)temp.y,tower);
+			System.out.println(world.toString());
 		} 
 		else if (type == 2) {
-			System.out.println("placing SlowTower");
-			Tower tower = new SlowTower(new Vector2(Gdx.input.getX(), 480 - Gdx.input.getY()), world, 1);
-			world.placeTower(tower);
+			//System.out.println("placing SlowTower");
+			world.resetGrid();
+			Tower tower = new SlowTower(temp1, world, 1);
+			world.placeTower((int)temp.x,(int)temp.y,tower);
 		}
 //		else if (type == 3) {
 //			System.out.println("placing StunTower");
@@ -412,19 +149,22 @@ public class WorldController {
 //			world.placeTower(tower);
 //		}
 		else if (type == 4) {
-			System.out.println("placing SplashTower");
-			Tower tower = new SplashTower(new Vector2(Gdx.input.getX(), 480 - Gdx.input.getY()), world, 1);
-			world.placeTower(tower);
+			//System.out.println("placing SplashTower");
+			world.resetGrid();
+			Tower tower = new SplashTower(temp1,world, 1);
+			world.placeTower((int)temp.x,(int)temp.y,tower);
 		}
 		else if (type == 5) {
-		System.out.println("placing ConversionTower");
-			Tower tower = new ConversionTower(new Vector2(Gdx.input.getX(), 480 - Gdx.input.getY()), world, 1);
-			world.placeTower(tower);
+		//System.out.println("placing ConversionTower");
+			world.resetGrid();
+			Tower tower = new ConversionTower(temp1, world, 1);
+			world.placeTower((int)temp.x,(int)temp.y,tower);
 		}
 		else if (type == 6) {
-			System.out.println("placing SpawnTower");
-			Tower tower = new SpawnTower(new Vector2(Gdx.input.getX(), 480 - Gdx.input.getY()), world, 0, 1, 1);
-			world.placeTower(tower);
+			//System.out.println("placing SpawnTower");
+			world.resetGrid();
+			Tower tower = new SpawnTower(temp1, world, 0, 1, 1);
+			world.placeTower((int)temp.x,(int)temp.y,tower);
 		} 
 //		else if (type == 7) {
 //		System.out.println("placing BasicTower");
@@ -436,5 +176,4 @@ public class WorldController {
 			g.setScreen(new EndGameScreen());
 		}
 	}
-	
 }

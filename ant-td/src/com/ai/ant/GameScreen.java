@@ -70,45 +70,13 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		if(keycode == Keys.LEFT) {
-			controller.leftPressed();
-		}
-		if(keycode == Keys.RIGHT) {
-			controller.rightPressed();
-		}
-		if(keycode == Keys.UP) {
-			controller.upPressed();
-		}
-		if(keycode == Keys.DOWN) {
-			controller.downPressed();
-		}
-		if(keycode == Keys.A) {
-			controller.aPressed();
-		}
-		
-		
+
 		return true;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
-		
-		if(keycode == Keys.RIGHT) {
-			controller.rightReleased();
-		}
-		if(keycode == Keys.LEFT) {
-			controller.leftReleased();
-		}
-		if(keycode == Keys.UP) {
-			controller.upReleased();
-		}
-		if(keycode == Keys.DOWN) {
-			controller.downReleased();
-		}
-		if(keycode == Keys.A) {
-			controller.aReleased();
-		}
-		
+
 		return true;
 	}
 

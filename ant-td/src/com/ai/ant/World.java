@@ -1,10 +1,14 @@
 package com.ai.ant;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
+import java.util.Stack;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.sun.xml.internal.bind.v2.runtime.Coordinator;
 
 public class World {
 
@@ -13,6 +17,10 @@ public class World {
 	ArrayList<Mob> mobList = new ArrayList<Mob>();
 	ArrayList<Tower> towerList = new ArrayList<Tower>();
 	ArrayList<Bullet> bulletList = new ArrayList<Bullet>();
+	int x = 21;
+	int y = 21;
+	int[][] grid = new int[x][y];
+	
 	//would define any other sprite here!!!!
 	//all ants
 	Character character; 
@@ -43,45 +51,26 @@ public class World {
 		createWorld();
 	}
 	
+	public int getLocation(int x, int y){
+		return grid[x][y];
+	}
+	
 	public void createWorld() {
 		//temp towers for testing
 		menu = new Menu();
-//		for(int i = 100; i < 250; i+=20){
-//			Tower bt0 = new BasicTower(new Vector2(i, 160),this, 1);
-//			placeTower(bt0);
-//		}
-//		float Xmax = 300;
-//		float Xmin = 200;
-//		float Ymax = 200;
-//		float Ymin = 150;
-//		for(int i = 0;i <5;i++){
-//			float rand1 = Xmin + (float)(Math.random()*(Xmax-Xmin));
-//			float rand2 = Ymin + (float)(Math.random()*(Ymax-Ymin));
-//			Tower st1 = new SlowTower(new Vector2(rand1,rand2), this, 1);
-//			placeTower(st1);
-//		}
-//		
-//		Xmax = 400;
-//		Xmin = 100;
-//		Ymax = 100;
-//		Ymin = 10;
-//		for(int i = 0;i <20;i++){
-//			float rand1 = Xmin + (float)(Math.random()*(Xmax-Xmin));
-//			float rand2 = Ymin + (float)(Math.random()*(Ymax-Ymin));
-//			SpawnTower st1 = new SpawnTower(new Vector2(rand1,rand2), this,0,1,1);
-//			//spawnTower st2 = new spawnTower(new Vector2(rand1,rand2), this,1,1,0);
-//			placeTower(st1);
-//			//placeTower(st2);
-//		}
-//	
-		
 		for(int i = 0; i < 50; i++) {
 			for(int j = 0; j < 50; j++) {
 				blocks.add(new Block(new Vector2(i,j))); //blocks everything for now
-				
 			}
 		}
-		
+		for (int i = 0; i < x; i++) {
+			for (int j = 0; j < y; j++) {
+				grid[i][j] = -2;
+			}
+		}
+		grid[0][10] = 0;
+		initWalls();
+		fillGrid();
 		character = new Character(new Vector2(25,25));
 		wall = new Character(new Vector2(25, 15));
 	}
@@ -98,9 +87,102 @@ public class World {
 		mobList.add(mob);
 	}
 	
+	public void initWalls(){
+		for (int i = 0; i < x;i++) {
+			for (int j = 0; j < y; j++) {
+				if((i==0 && !(j>7 && j <13))|| (j==0 &&i<17) || (i==17&& !(j>7 && j <13)) ||(j==20&&i<17)){
+				//if(i==0&&j==0){
+					grid[i][j] =-1;
+					Vector2 mapPlacePosition = new Vector2(127+(i*26),454-(j*20));
+					Tower wall = new Wall(mapPlacePosition, this, 0);
+					towerList.add(wall);
+				}
+			}
+		}
+	}
 	
-	public void placeTower(Tower tower){
-		towerList.add(tower);
+	public void fillGrid(){
+		Queue<Coordinate> stack = new LinkedList<Coordinate>();
+		stack.offer(new Coordinate(0, 10,0));
+		Coordinate eval = new Coordinate(0,0,0);
+		boolean zeroChecked=false;
+		while(!stack.isEmpty()){
+			eval = stack.poll();
+			if(!((eval.x<0 || eval.x>19) || (eval.y<0 || eval.y>19)) &&(grid[eval.x][eval.y]==-2 ||(!zeroChecked&&eval.value==0))){
+				zeroChecked = true;
+				grid[eval.x][eval.y]=eval.value;
+				ArrayList<Coordinate> neighbor = getNeighbor(eval);
+				for (Coordinate valid : neighbor) {
+								stack.add(valid);
+				}
+			}
+		}
+	}
+	
+	public void resetGrid(){
+		for (int i = 0; i < x; i++) {
+			for (int j = 0; j < y; j++) {
+				if(grid[i][j] >0 || grid[i][j]==-3){
+					grid[i][j]=-2;
+				}
+			}
+		}
+	}
+	
+	public ArrayList<Coordinate> getNeighbor(Coordinate eval){
+		ArrayList<Coordinate>  list= new ArrayList<Coordinate>();
+			list.add(new Coordinate(eval.x, eval.y+1,eval.value+1));
+			list.add(new Coordinate(eval.x, eval.y-1,eval.value+1));
+			list.add(new Coordinate(eval.x+1, eval.y,eval.value+1));
+			list.add(new Coordinate(eval.x-1, eval.y,eval.value+1));
+		return list;
+	}
+	
+	public void placeTower(int x,int y,Tower tower){
+		System.out.println(x+","+y);
+		if(x<0 || y<0 || x>17 || y>20){
+			System.out.println("DO NOTHING");
+		}
+		else{
+			if(grid[x][y] == -1){
+				System.out.println("DO NOTHING");
+			}
+			else if(!checkBlocking(x,y)){
+				towerList.add(tower);
+				grid[x][y]= -1;
+				fillGrid();
+			}
+		}
+	}
+	
+	public boolean checkBlocking(int x,int y){
+		resetGrid();
+		grid[x][y] = -3;
+		fillGrid();
+		if(grid[18][10]==-2){
+			grid[x][y] = -2;
+			resetGrid();
+			fillGrid();
+			return true;
+		}
+		grid[x][y] = -2;
+		resetGrid();
+		return false;
+	}
+	
+	public String toString(){
+		String t ="";
+		for (int i = 0; i < x; i++) {
+			for (int j = 0; j < y; j++) {
+				if(grid[i][j]<10 && grid[i][j]>=0){
+					t +=" "+ grid[i][j]+" ";
+				}
+				else
+					t += grid[i][j]+" ";
+			}
+			t+="\n";
+		}
+		return t;
 	}
 	
 	

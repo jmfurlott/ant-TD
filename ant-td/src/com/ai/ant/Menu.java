@@ -10,7 +10,6 @@ public class Menu {
 	
 	public Menu() {
 		//make new buttons
-
 		buttons = new ArrayList<Button>();
 		
 		buttons.add(new Button(new Vector2(2,48), 2.0f, 2.0f, 0));
