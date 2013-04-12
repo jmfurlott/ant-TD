@@ -42,8 +42,7 @@ public class WorldRenderer {
 	private Texture queenAnt;
 	private Texture soldierAnt;
 	private Texture grass;
-	private Texture motherShip;
-	
+
 	//towers bullets
 	private Texture spawnTower;
 	private Texture basicTower, basicBullet;
@@ -74,7 +73,6 @@ public class WorldRenderer {
 		drawBlocks();
 		drawTowers();
 		drawBullets();
-		//loadMotherShip();
 		drawMobs();
 		loadCharacter();	
 		drawMenu();
@@ -120,15 +118,10 @@ public class WorldRenderer {
 
 		//menu and background
 		wall = new Texture(Gdx.files.internal("wall.png"));
-		motherShip = new Texture(Gdx.files.internal("motherShipMound.png"));
 		grass = new Texture(Gdx.files.internal("grassTexture.png"));
 		menuBackground= new Texture(Gdx.files.internal("woodMenuBackground.png"));
 		quitButton= new Texture(Gdx.files.internal("quit.png"));	
 		
-	}
-	
-	public void loadMotherShip(){
-		batch.draw(motherShip, 500,150,200 ,200);
 	}
 	
 	
