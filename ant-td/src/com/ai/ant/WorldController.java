@@ -75,10 +75,17 @@ public class WorldController {
 			
 			if (click.x < 9 && side == 0) {
 				clicked = menu.selectButton(click);
+
+				
 				if (clicked != null) {
 					//Gdx.app.log("input", "Found a button");
 					selection = 1;
 					side = 1;
+					if(clicked.getTowerType() == 0) {
+						addTowerToMap(clicked);
+						//seems like I am adding a new tower but 
+						//just the quit button on first press
+					}
 				} else if (clicked == null) {
 					//Gdx.app.log("input", "Didn't find anything");
 				}
