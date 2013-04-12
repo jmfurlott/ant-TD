@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -56,6 +57,9 @@ public class WorldRenderer {
 	private Texture menuBackground;
 	private Texture quitButton;
 	
+	Player player;
+	BitmapFont font;
+	
 	Map<Integer, Texture> towerMapTexture = new HashMap<Integer, Texture>();
 	
 	public WorldRenderer(World world) {
@@ -64,8 +68,10 @@ public class WorldRenderer {
 		this.cam.position.set(25, 25, 0);
 		this.cam.update();
 		batch = new SpriteBatch();
+		font = new BitmapFont();
 		loadTextures();
 		buildTextureMap();
+		
 	}
 	
 	public void render() {
@@ -76,6 +82,7 @@ public class WorldRenderer {
 		drawMobs();
 		//loadCharacter();	
 		drawMenu();
+		drawPlayer();
 		batch.end();
 		//drawDebug();
 	}
@@ -217,6 +224,29 @@ public class WorldRenderer {
 		for(Button button : menu.getButtons()) {
 			batch.draw(towerMapTexture.get(button.getTowerType()), button.getPosition().x*(640/50), button.getPosition().y*(480/50)-10, 30, 30);
 		}
+		
+		
+		/*
+		   0. null
+		   1. Normal Tower- simply attacks ants
+		   2. Slow Tower - movement speed debuff
+		   3. Stun Tower - prevents all movement, or other actions
+		   4. Splash Tower-
+		   5. Conversion Tower- converts to attack opponent
+		   6. Spawn Tower - mob factory
+		   7. waterPuddle
+		 */
+		
+		//seven font commands right here
+		font.setScale(.9f);
+		font.draw(batch, "Basic", 5, 82);
+		font.draw(batch, "Slow", 5, 120);
+		font.draw(batch, "Stun", 5, 155);
+		font.draw(batch, "Splash", 5, 190);
+		font.draw(batch, "Conv", 5, 230);
+		font.draw(batch, "Erase", 5, 300);
+
+		
 	}
 	
 	
@@ -278,6 +308,22 @@ public class WorldRenderer {
 		towerMapTexture.put(5, conversionTower); //no class for this yet
 		towerMapTexture.put(6, spawnTower);
 		towerMapTexture.put(7, waterPuddle); //no class for this yet 
+		
+		
+	}
+	
+	public void drawPlayer() {
+		//to get the information for player stats and draw them to the screen
+		player = world.getPlayer(1);
+		
+		//Gdx.app.log("player", "currency of player: " + player.currency);
+		font.setScale(1.0f);
+		font.draw(batch, "Currency:", 10, 460);
+		font.draw(batch, "$" + player.getCurrency(), 15, 435);
+		font.draw(batch, "Health: ", 10, 410);
+		font.draw(batch, "" + player.getHealth(), 15, 385);
+		font.draw(batch, "Score: ", 10, 360);
+		font.draw(batch, "" + player.getPoints(), 15, 335);
 		
 		
 	}

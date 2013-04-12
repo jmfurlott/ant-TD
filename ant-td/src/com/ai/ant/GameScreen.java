@@ -71,12 +71,54 @@ public class GameScreen implements Screen, InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 
+		if(keycode == Keys.NUM_1) {
+			controller.onePressed();
+		}
+		if(keycode == Keys.NUM_2) {
+			controller.twoPressed();
+		}
+		if(keycode == Keys.NUM_3) {
+			controller.threePressed();
+		}
+		if(keycode == Keys.NUM_4) {
+			controller.fourPressed();
+		}
+		if(keycode == Keys.NUM_5) {
+			controller.fivePressed();
+		}
+		if(keycode == Keys.NUM_6) {
+			controller.sixPressed();
+		}
+		if(keycode == Keys.NUM_7) {
+			controller.sevenPressed();
+		}
 		return true;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
 
+		if(keycode == Keys.NUM_1) {
+			controller.oneReleased();
+		}
+		if(keycode == Keys.NUM_2) {
+			controller.twoReleased();
+		}
+		if(keycode == Keys.NUM_3) {
+			controller.threeReleased();
+		}
+		if(keycode == Keys.NUM_4) {
+			controller.fourReleased();
+		}
+		if(keycode == Keys.NUM_5) {
+			controller.fiveReleased();
+		}
+		if(keycode == Keys.NUM_6) {
+			controller.sixReleased();
+		}
+		if(keycode == Keys.NUM_7) {
+			controller.sevenReleased();
+		}
 		return true;
 	}
 

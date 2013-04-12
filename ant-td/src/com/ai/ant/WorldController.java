@@ -19,7 +19,13 @@ public class WorldController {
 	
 	
 	enum Keys {
-		LEFT, RIGHT, UP, DOWN, A, SPACE
+		LEFT, RIGHT, UP, DOWN, A, SPACE, NUM_1, NUM_2, NUM_3, NUM_4, NUM_5,
+		NUM_6, NUM_7
+	}
+	
+	static Map<Keys, Boolean> keys = new HashMap<WorldController.Keys, Boolean>();
+	static {
+		keys.put(Keys.LEFT, false);
 	}
 
 	private World world;
@@ -97,6 +103,10 @@ public class WorldController {
 				side = 0;
 			}
 		}
+		
+		
+		
+		
 	}
 	
 	public Vector2 calculatePosition(int xPixel, int yPixel) {
@@ -184,4 +194,92 @@ public class WorldController {
 		
 		System.out.println(world.toString()); 
 	}
+	
+	
+	
+	//---------------------------------------------HOT KEYS
+	
+	
+	public void onePressed() {
+		keys.get(keys.put(Keys.NUM_1, true));
+		selection = 1;
+		side = 1;
+		clicked = menu.selectButtonFromType(1);
+	}
+	
+	public void oneReleased() {
+		keys.get(keys.put(Keys.NUM_1, false));
+	}
+	
+	public void twoPressed() {
+		keys.get(keys.put(Keys.NUM_2, true));
+		selection = 1;
+		side = 1;
+		clicked = menu.selectButtonFromType(2);
+	}
+	
+	public void twoReleased() {
+		keys.get(keys.put(Keys.NUM_2, false));
+
+	}
+	
+	public void threePressed() {
+		//keys.get(keys.put(Keys.NUM_3, true));
+		//not ready
+		selection = 1;
+		side = 1;
+		clicked = menu.selectButtonFromType(3);
+	}
+	
+	public void threeReleased() {
+		keys.get(keys.put(Keys.NUM_3, false));
+	}
+	
+	public void fourPressed() {
+		keys.get(keys.put(Keys.NUM_4, true));
+		selection = 1;
+		side = 1;
+		clicked = menu.selectButtonFromType(4);
+	}
+	
+	public void fourReleased() {
+		keys.get(keys.put(Keys.NUM_4, false));
+	}
+	
+	public void fivePressed() {
+		keys.get(keys.put(Keys.NUM_5, true));
+		selection = 1;
+		side = 1;
+		clicked = menu.selectButtonFromType(5);
+	}
+	
+	public void fiveReleased() {
+		keys.get(keys.put(Keys.NUM_5, false));
+	}
+	
+	public void sixPressed() {
+		keys.get(keys.put(Keys.NUM_6, true));
+		selection = 1;
+		side = 1;
+		clicked = menu.selectButtonFromType(6);
+	}
+	
+	public void sixReleased() {
+		keys.get(keys.put(Keys.NUM_6, false));
+	}
+	
+	public void sevenPressed() {
+		keys.get(keys.put(Keys.NUM_7, true));
+		selection = 1;
+		side = 1;
+		clicked = menu.selectButtonFromType(7);
+	}
+	
+	public void sevenReleased() {
+		keys.get(keys.put(Keys.NUM_7, false));
+	}
+	
+
+	
+	
 }
