@@ -6,13 +6,14 @@ public class SpawnTower extends Tower{
 	private final int maxLevel;
 	private int mobLevel;
 	private int mobTarget;
-	public SpawnTower(Vector2 position, World world, int owner, int mobLevel,int mobTarget) {
-		super(position, world, owner);
+	public SpawnTower(Vector2 position, World world, int owner, int mobLevel,int mobTarget, int x, int y) {
+		super(position, world, owner,x,y);
 		maxLevel = 3;
 		this.mobLevel = mobLevel;
 		this.mobTarget = mobTarget;
-		delay = 1000;
+		delay = 15000;
 		type = 6;
+		active = false;
 	}
 
 	void levelUp() {

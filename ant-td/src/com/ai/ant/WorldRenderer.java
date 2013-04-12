@@ -42,6 +42,7 @@ public class WorldRenderer {
 	private Texture queenAnt;
 	private Texture soldierAnt;
 	private Texture grass;
+	private Texture motherShip;
 	
 	//towers bullets
 	private Texture spawnTower;
@@ -73,6 +74,7 @@ public class WorldRenderer {
 		drawBlocks();
 		drawTowers();
 		drawBullets();
+		//loadMotherShip();
 		drawMobs();
 		loadCharacter();	
 		drawMenu();
@@ -118,11 +120,17 @@ public class WorldRenderer {
 
 		//menu and background
 		wall = new Texture(Gdx.files.internal("wall.png"));
+		motherShip = new Texture(Gdx.files.internal("motherShipMound.png"));
 		grass = new Texture(Gdx.files.internal("grassTexture.png"));
 		menuBackground= new Texture(Gdx.files.internal("woodMenuBackground.png"));
 		quitButton= new Texture(Gdx.files.internal("quit.png"));	
 		
 	}
+	
+	public void loadMotherShip(){
+		batch.draw(motherShip, 500,150,200 ,200);
+	}
+	
 	
 	public void loadCharacter() {
 		Character character = world.getCharacter();
@@ -141,20 +149,28 @@ public class WorldRenderer {
 	}
 	
 	public void drawTowers() {
+		ArrayList<Tower> temp = new ArrayList<Tower>();
 		for(Tower tower : world.getTowers()) {
-			if(tower instanceof BasicTower)//TODO FIX THESE IMAGES
-				batch.draw(basicTower, tower.getPosition().x+2, tower.getPosition().y-15, Tower.SIZE*26 , Tower.SIZE*20);
-			else if(tower instanceof SpawnTower)
-				batch.draw(basicBullet, tower.getPosition().x+2, tower.getPosition().y-15, Tower.SIZE*26 , Tower.SIZE*20);
-			else if(tower instanceof SplashTower)
-				batch.draw(splashTower, tower.getPosition().x+2, tower.getPosition().y-15, Tower.SIZE*26 , Tower.SIZE*20);
-			else if(tower instanceof SlowTower)
-				batch.draw(slowTower, tower.getPosition().x+2, tower.getPosition().y-15, Tower.SIZE*26 , Tower.SIZE*20);
-			else if(tower instanceof ConversionTower)
-				batch.draw(conversionTower, tower.getPosition().x+2, tower.getPosition().y-15, Tower.SIZE*26 , Tower.SIZE*20);
-			else if(tower instanceof Wall)
-				batch.draw(wall, tower.getPosition().x+2, tower.getPosition().y-15, Tower.SIZE*26 , Tower.SIZE*20);
-		
+			if(tower.remove==true){
+				temp.add(tower);
+			}
+			else{
+				if(tower instanceof BasicTower)//TODO FIX THESE IMAGES
+					batch.draw(basicTower, tower.getPosition().x+2, tower.getPosition().y-15, Tower.SIZE*26 , Tower.SIZE*20);
+				else if(tower instanceof SpawnTower)
+					batch.draw(basicBullet, tower.getPosition().x+2, tower.getPosition().y-15, Tower.SIZE*26 , Tower.SIZE*20);
+				else if(tower instanceof SplashTower)
+					batch.draw(splashTower, tower.getPosition().x+2, tower.getPosition().y-15, Tower.SIZE*26 , Tower.SIZE*20);
+				else if(tower instanceof SlowTower)
+					batch.draw(slowTower, tower.getPosition().x+2, tower.getPosition().y-15, Tower.SIZE*26 , Tower.SIZE*20);
+				else if(tower instanceof ConversionTower)
+					batch.draw(conversionTower, tower.getPosition().x+2, tower.getPosition().y-15, Tower.SIZE*26 , Tower.SIZE*20);
+				else if(tower instanceof Wall)
+					batch.draw(wall, tower.getPosition().x+2, tower.getPosition().y-15, Tower.SIZE*26 , Tower.SIZE*20);
+			}
+		}	
+		for (Tower tower : temp) {
+			tower.remove();
 		}
 	}
 	

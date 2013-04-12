@@ -136,7 +136,10 @@ public class Mob {
 		if(active){
 //			System.out.println(world.toString());
 //			System.out.println("pos: "+ position.x+","+position.y);
-		 	setPath();		
+		 	setPath();
+		 	double aSqu1 = (end.x - position.x)* (end.x - position.x);
+			double bSqu1 = (end.y - position.y)* (end.y - position.y);
+			distanceToEnd = aSqu1 + bSqu1;
 			if(speedScale<1 && System.currentTimeMillis()>slowEndTime){
 				slowStartTime =0;
 				slowEndTime =0;
@@ -161,7 +164,7 @@ public class Mob {
 			else{
 				double aSqu = (path.x - position.x)* (path.x - position.x);
 				double bSqu = (path.y - position.y)* (path.y - position.y);
-				distanceToEnd = aSqu + bSqu;
+			
 				angle = Math.atan2(path.y - position.y, path.x- position.x);
 				direction.x = (float) Math.cos(angle);
 				direction.y = (float) Math.sin(angle);
@@ -234,7 +237,6 @@ public class Mob {
 	}
 
 	public int getIncomingDamage() {
-		// TODO Auto-generated method stub
 		return incomingDamage;
 	}
 

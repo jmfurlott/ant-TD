@@ -6,6 +6,9 @@ import com.badlogic.gdx.math.Vector2;
 
 public abstract class Tower {
 
+	protected boolean remove = false;
+	protected int mapCoordX;
+	protected int mapCoordY;
 	protected Vector2 position;
 	protected Rectangle bounds = new Rectangle();
 	protected int range;
@@ -32,7 +35,7 @@ public abstract class Tower {
 	protected long activeTime;
 	protected long delay;
 
-	public Tower(Vector2 position, World world, int owner) {
+	public Tower(Vector2 position, World world, int owner,int mapCoordX,int mapCoordY) {
 		this.world = world;
 		this.owner = owner;
 		this.position = position;
@@ -45,6 +48,9 @@ public abstract class Tower {
 		activeTime = 0;
 		active = true;
 		delay = 1000;
+		this.mapCoordX = mapCoordX;
+		this.mapCoordY = mapCoordY;
+		cost = 5;
 	}
 
 	// making this abstract to gain control of damage scaling across each type
@@ -70,7 +76,7 @@ public abstract class Tower {
 			if(pmob.target==owner){
 				if((pmob.getHealth() - pmob.getIncomingDamage()) > 0){
 					double distanceFromTowerMag = (pmob.position.x - position.x)* (pmob.position.x - position.x) + (pmob.position.y - position.y)* (pmob.position.y - position.y);
-					if (distanceFromTowerMag < (range*range)) { // if the mob is in range
+					if (distanceFromTowerMag < range*range) { // if the mob is in range
 						if(pmob.deathFlag){}//mob is dead don't evaluate it again
 						else if (currentTarget != null) {
 							if (pmob.distanceToEnd < currentTarget.distanceToEnd) {
@@ -109,6 +115,10 @@ public abstract class Tower {
 		}
 	}
 
+	public void remove(){
+		world.towerList.remove(this);
+	}
+	
 	public void checkIsReady() {
 		if (active == false) {
 			if (System.currentTimeMillis() > activeTime) {

@@ -4,8 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public class ConversionTower extends Tower{
 	private final int maxLevel;
-	public ConversionTower(Vector2 position, World world, int owner) {
-		super(position, world, owner);
+	public ConversionTower(Vector2 position, World world, int owner, int x, int y) {
+		super(position, world, owner,x,y);
 		maxLevel = 3;
 		damage = 10000000;
 		level = 1;

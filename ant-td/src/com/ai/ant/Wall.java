@@ -4,8 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Wall extends Tower{
 	private final int maxLevel;
-	public Wall(Vector2 position, World world, int owner) {
-		super(position, world, owner);
+	public Wall(Vector2 position, World world, int owner, int x, int y) {
+		super(position, world, owner,x,y);
 		//effect = new ArrayList<Effect>(); basicTower has no effects
 		//effect.add(); 
 		maxLevel = 3;

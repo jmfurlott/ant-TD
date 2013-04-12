@@ -5,8 +5,8 @@ public class SlowTower extends Tower {
 	private final int maxLevel;
 	
 	
-	public SlowTower(Vector2 position, World world, int owner) {
-		super(position, world, owner);
+	public SlowTower(Vector2 position, World world, int owner, int x, int y) {
+		super(position, world, owner,x,y);
 		slowTime = 1000;
 		slowAmount = .50;
 		maxLevel = 3; 

@@ -6,6 +6,7 @@ import java.util.Queue;
 import java.util.Random;
 import java.util.Stack;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.sun.xml.internal.bind.v2.runtime.Coordinator;
@@ -69,10 +70,23 @@ public class World {
 			}
 		}
 		grid[0][10] = 0;
-		initWalls();
-		fillGrid();
+		
+		
 		character = new Character(new Vector2(25,25));
 		wall = new Character(new Vector2(25, 15));
+		
+//		int maxX = 590;
+//		int minX = 590;
+//		int maxY = 450;
+//		int minY = 300;//150
+//		for (int i = 0; i < 20; i++) {
+//			int randX = minX + (int)(Math.random() * ((maxX - minX) + 1));
+//			int randY = minY + (int)(Math.random() * ((maxY - minY) + 1));
+//			SpawnTower st = new SpawnTower(new Vector2(randX, randY),this,0,1,1,((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
+//			placeSpawnTower(st);
+//		}
+		initWalls();
+		fillGrid();
 	}
 	
 	public Player getPlayer(int target){
@@ -94,7 +108,7 @@ public class World {
 				//if(i==0&&j==0){
 					grid[i][j] =-1;
 					Vector2 mapPlacePosition = new Vector2(127+(i*26),454-(j*20));
-					Tower wall = new Wall(mapPlacePosition, this, 0);
+					Tower wall = new Wall(mapPlacePosition, this, 0,i,j);
 					towerList.add(wall);
 				}
 			}
@@ -138,14 +152,38 @@ public class World {
 		return list;
 	}
 	
+	public void towerSell(Tower tower){
+		if(tower.owner == 1){
+			player1.addCurrency(tower.cost -3);
+//			System.out.println("towerSold");
+		}
+	}
+	
+	public void removeTower(int x,int y){
+		for (Tower tower : towerList) {
+			if(tower instanceof Wall){}
+			else{
+				if(tower.mapCoordX == x && tower.mapCoordY == y){
+					towerSell(tower);
+//					System.out.println("towerPos: "+tower.mapCoordX+","+tower.mapCoordY);
+//					System.out.println("guess: "+x+","+y);
+					tower.remove = true;
+					resetGrid();
+					grid[x][y] = -2;
+					fillGrid();
+				}
+			}
+		}
+	}
+	
 	public void placeTower(int x,int y,Tower tower){
-		System.out.println(x+","+y);
+//		System.out.println(x+","+y);
 		if(x<=0 || y<0 || x>=17 || y>20){
-			System.out.println("DO NOTHING");
+//			System.out.println("DO NOTHING");
 		}
 		else{
 			if(grid[x][y] == -1){
-				System.out.println("DO NOTHING");
+//				System.out.println("DO NOTHING");
 			}
 			else if(!checkBlocking(x,y)){
 				towerList.add(tower);
@@ -153,6 +191,10 @@ public class World {
 				fillGrid();
 			}
 		}
+	}
+	
+	public void placeSpawnTower(Tower tower){
+		towerList.add(tower);
 	}
 	
 	public boolean checkBlocking(int x,int y){
@@ -174,11 +216,11 @@ public class World {
 		String t ="";
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < y; j++) {
-				if(grid[i][j]<10 && grid[i][j]>=0){
-					t +=" "+ grid[i][j]+" ";
+				if(grid[j][i]<10 && grid[j][i]>=0){
+					t +=" "+ grid[j][i]+" ";
 				}
 				else
-					t += grid[i][j]+" ";
+					t += grid[j][i]+" ";
 			}
 			t+="\n";
 		}

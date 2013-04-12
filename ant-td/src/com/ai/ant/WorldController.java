@@ -132,15 +132,15 @@ public class WorldController {
 //		System.out.println("temp: "+ temp.x+","+temp.y);
 		if(type == 1) {
 			world.resetGrid();
-			//Tower tower = new BasicTower(temp1, world,1);
-			Tower tower = new Wall(temp1,world,1);
+			Tower tower = new BasicTower(temp1, world,1,((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
+			//Tower tower = new Wall(temp1,world,1);
 			world.placeTower((int)temp.x,(int)temp.y,tower);
 			System.out.println(world.toString());
 		} 
 		else if (type == 2) {
 			//System.out.println("placing SlowTower");
 			world.resetGrid();
-			Tower tower = new SlowTower(temp1, world, 1);
+			Tower tower = new SlowTower(temp1, world, 1,((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
 			world.placeTower((int)temp.x,(int)temp.y,tower);
 		}
 //		else if (type == 3) {
@@ -151,26 +151,25 @@ public class WorldController {
 		else if (type == 4) {
 			//System.out.println("placing SplashTower");
 			world.resetGrid();
-			Tower tower = new SplashTower(temp1,world, 1);
+			Tower tower = new SplashTower(temp1,world, 1,((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
 			world.placeTower((int)temp.x,(int)temp.y,tower);
 		}
 		else if (type == 5) {
 		//System.out.println("placing ConversionTower");
 			world.resetGrid();
-			Tower tower = new ConversionTower(temp1, world, 1);
+			Tower tower = new ConversionTower(temp1, world, 1,((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
 			world.placeTower((int)temp.x,(int)temp.y,tower);
 		}
 		else if (type == 6) {
 			//System.out.println("placing SpawnTower");
 			world.resetGrid();
-			Tower tower = new SpawnTower(temp1, world, 0, 1, 1);
+			Tower tower = new SpawnTower(temp1, world, 0, 1, 1,((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
 			world.placeTower((int)temp.x,(int)temp.y,tower);
 		} 
-//		else if (type == 7) {
-//		System.out.println("placing BasicTower");
-//			Tower tower = new WaterPuddle(new Vector2(Gdx.input.getX(), 480 - Gdx.input.getY()), world, 1);
-//			world.placeTower(tower);
-//		}		
+		else if (type == 7) {
+			System.out.println("Sell");
+			world.removeTower(((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
+		}		
 		else if (type == 0){
 			Gdx.app.log("quit", "Trying to quit");
 			g.setScreen(new EndGameScreen());
