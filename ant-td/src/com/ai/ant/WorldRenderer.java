@@ -74,7 +74,7 @@ public class WorldRenderer {
 		drawTowers();
 		drawBullets();
 		drawMobs();
-		loadCharacter();	
+		//loadCharacter();	
 		drawMenu();
 		batch.end();
 		//drawDebug();
