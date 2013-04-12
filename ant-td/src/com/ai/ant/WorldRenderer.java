@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -56,6 +57,9 @@ public class WorldRenderer {
 	private Texture menuBackground;
 	private Texture quitButton;
 	
+	Player player;
+	BitmapFont font;
+	
 	Map<Integer, Texture> towerMapTexture = new HashMap<Integer, Texture>();
 	
 	public WorldRenderer(World world) {
@@ -64,8 +68,10 @@ public class WorldRenderer {
 		this.cam.position.set(25, 25, 0);
 		this.cam.update();
 		batch = new SpriteBatch();
+		font = new BitmapFont();
 		loadTextures();
 		buildTextureMap();
+		
 	}
 	
 	public void render() {
@@ -76,6 +82,7 @@ public class WorldRenderer {
 		drawMobs();
 		loadCharacter();	
 		drawMenu();
+		drawPlayer();
 		batch.end();
 		//drawDebug();
 	}
@@ -278,6 +285,20 @@ public class WorldRenderer {
 		towerMapTexture.put(5, conversionTower); //no class for this yet
 		towerMapTexture.put(6, spawnTower);
 		towerMapTexture.put(7, waterPuddle); //no class for this yet 
+		
+		
+	}
+	
+	public void drawPlayer() {
+		//to get the information for player stats and draw them to the screen
+		player = world.getPlayer(1);
+		//Gdx.app.log("player", "currency of player: " + player.currency);
+		font.draw(batch, "Currency:", 10, 400);
+		font.draw(batch, "$" + player.getCurrency(), 15, 375);
+		font.draw(batch, "Health: ", 10, 350);
+		font.draw(batch, "" + player.getHealth(), 15, 325);
+		font.draw(batch, "Score: ", 10, 300);
+		font.draw(batch, "" + player.getPoints(), 15, 275);
 		
 		
 	}
