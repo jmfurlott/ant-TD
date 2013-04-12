@@ -19,7 +19,12 @@ public class WorldController {
 	
 	
 	enum Keys {
-		LEFT, RIGHT, UP, DOWN, A, SPACE
+		LEFT, RIGHT, UP, DOWN, A, SPACE, ONE
+	}
+	
+	static Map<Keys, Boolean> keys = new HashMap<WorldController.Keys, Boolean>();
+	static {
+		keys.put(Keys.LEFT, false);
 	}
 
 	private World world;
@@ -97,6 +102,10 @@ public class WorldController {
 				side = 0;
 			}
 		}
+		
+		
+		
+		
 	}
 	
 	public Vector2 calculatePosition(int xPixel, int yPixel) {
@@ -184,4 +193,22 @@ public class WorldController {
 		
 		System.out.println(world.toString()); 
 	}
+	
+	
+	
+	//---------------------------------------------HOT KEYS
+	
+	public void leftPressed() {
+		keys.get(keys.put(Keys.LEFT, true));
+		selection = 1;
+		side = 1;
+		clicked = menu.selectButtonFromType(2);
+	}
+	public void leftReleased() {
+		keys.get(keys.put(Keys.LEFT, false));
+
+	}
+	
+	
+	
 }

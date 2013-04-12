@@ -41,6 +41,19 @@ public class Menu {
 		
 	}
 	
+	public Button selectButtonFromType(int type) {
+		Button selection = null;
+		
+		for(int i = 0; i < buttons.size(); i++) {
+			if(type == buttons.get(i).getTowerType()) {
+				selection = buttons.get(i);
+				break;
+			}
+		}
+		
+		return selection;
+	}
+	
 	public Menu getMenu() {
 		return this;
 	}
