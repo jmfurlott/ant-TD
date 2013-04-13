@@ -21,6 +21,7 @@ public class World {
 	int x = 21;
 	int y = 21;
 	int[][] grid = new int[x][y];
+	int[][] gridConverted = new int[x][y];
 	
 	//would define any other sprite here!!!!
 	//all ants
@@ -67,26 +68,32 @@ public class World {
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < y; j++) {
 				grid[i][j] = -2;
+				gridConverted[i][j]=-2;
 			}
 		}
 		grid[0][10] = 0;
-		
+		gridConverted[17][10] = 0;
 		
 		character = new Character(new Vector2(25,25));
 		wall = new Character(new Vector2(25, 15));
 		
-//		int maxX = 590;
-//		int minX = 590;
-//		int maxY = 450;
-//		int minY = 300;//150
-//		for (int i = 0; i < 20; i++) {
-//			int randX = minX + (int)(Math.random() * ((maxX - minX) + 1));
-//			int randY = minY + (int)(Math.random() * ((maxY - minY) + 1));
-//			SpawnTower st = new SpawnTower(new Vector2(randX, randY),this,0,1,1,((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
-//			placeSpawnTower(st);
-//		}
+		initTestAnts();
 		initWalls();
-		fillGrid();
+		fillGrid();  //grid to player1
+		fillGrid2(); //grid to the AI player
+	}
+	
+	public void initTestAnts(){
+		int maxX = 590;
+		int minX = 590;
+		int maxY = 450;
+		int minY = 300;//150
+		for (int i = 0; i < 5; i++) {
+			int randX = minX + (int)(Math.random() * ((maxX - minX) + 1));
+			int randY = minY + (int)(Math.random() * ((maxY - minY) + 1));
+			SpawnTower st = new SpawnTower(new Vector2(randX, randY),this,0,1,1,((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
+			placeSpawnTower(st);
+		}
 	}
 	
 	public Player getPlayer(int target){
@@ -105,8 +112,8 @@ public class World {
 		for (int i = 0; i < x;i++) {
 			for (int j = 0; j < y; j++) {
 				if((i==0 && !(j>7 && j <13))|| (j==0 &&i<17) || (i==17&& !(j>7 && j <13)) ||(j==20&&i<17)){
-				//if(i==0&&j==0){
 					grid[i][j] =-1;
+					gridConverted[i][j] = -1;
 					Vector2 mapPlacePosition = new Vector2(127+(i*26),454-(j*20));
 					Tower wall = new Wall(mapPlacePosition, this, 0,i,j);
 					towerList.add(wall);
@@ -116,18 +123,36 @@ public class World {
 	}
 	
 	public void fillGrid(){
-		Queue<Coordinate> stack = new LinkedList<Coordinate>();
-		stack.offer(new Coordinate(0, 10,0));
+		Queue<Coordinate> q = new LinkedList<Coordinate>();
+		q.offer(new Coordinate(0, 10,0));
 		Coordinate eval = new Coordinate(0,0,0);
 		boolean zeroChecked=false;
-		while(!stack.isEmpty()){
-			eval = stack.poll();
+		while(!q.isEmpty()){
+			eval = q.poll();
 			if(!((eval.x<0 || eval.x>19) || (eval.y<0 || eval.y>19)) &&(grid[eval.x][eval.y]==-2 ||(!zeroChecked&&eval.value==0))){
 				zeroChecked = true;
 				grid[eval.x][eval.y]=eval.value;
 				ArrayList<Coordinate> neighbor = getNeighbor(eval);
 				for (Coordinate valid : neighbor) {
-								stack.add(valid);
+					q.add(valid);
+				}
+			}
+		}
+	}
+	
+	public void fillGrid2(){
+		Queue<Coordinate> q = new LinkedList<Coordinate>();
+		q.offer(new Coordinate(17, 10,0));
+		Coordinate eval = new Coordinate(0,0,0);
+		boolean zeroChecked2=false;
+		while(!q.isEmpty()){
+			eval = q.poll();
+			if(!((eval.x<0 || eval.x>19) || (eval.y<0 || eval.y>19)) &&(gridConverted[eval.x][eval.y]==-2 ||(!zeroChecked2 && eval.value==0))){
+				zeroChecked2 = true;
+				gridConverted[eval.x][eval.y]=eval.value;
+				ArrayList<Coordinate> neighbor = getNeighbor(eval);
+				for (Coordinate valid : neighbor) {
+					q.add(valid);
 				}
 			}
 		}
@@ -138,6 +163,7 @@ public class World {
 			for (int j = 0; j < y; j++) {
 				if(grid[i][j] >0 || grid[i][j]==-3){
 					grid[i][j]=-2;
+					gridConverted[i][j]=-2;
 				}
 			}
 		}
@@ -170,7 +196,9 @@ public class World {
 					tower.remove = true;
 					resetGrid();
 					grid[x][y] = -2;
+					gridConverted[x][y]=-2;
 					fillGrid();
+					fillGrid2();
 				}
 			}
 		}
@@ -181,14 +209,20 @@ public class World {
 		if(x<=0 || y<0 || x>=17 || y>20){
 //			System.out.println("DO NOTHING");
 		}
+		else if(getPlayer(tower.owner).getCurrency()-tower.cost < 0 ){
+			System.out.println("not enough coin");
+		}
 		else{
 			if(grid[x][y] == -1){
 //				System.out.println("DO NOTHING");
 			}
 			else if(!checkBlocking(x,y)){
+				getPlayer(tower.owner).addCurrency((-tower.cost));
 				towerList.add(tower);
 				grid[x][y]= -1;
+				gridConverted[x][y]=-1;
 				fillGrid();
+				fillGrid2();
 			}
 		}
 	}
@@ -197,7 +231,7 @@ public class World {
 		towerList.add(tower);
 	}
 	
-	public boolean checkBlocking(int x,int y){
+	public boolean checkBlocking(int x,int y){ //only need to check one grid for this.
 		resetGrid();
 		grid[x][y] = -3;
 		fillGrid();
@@ -205,6 +239,7 @@ public class World {
 			grid[x][y] = -2;
 			resetGrid();
 			fillGrid();
+			fillGrid2();
 			return true;
 		}
 		grid[x][y] = -2;
@@ -216,11 +251,11 @@ public class World {
 		String t ="";
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < y; j++) {
-				if(grid[j][i]<10 && grid[j][i]>=0){
-					t +=" "+ grid[j][i]+" ";
+				if(gridConverted[j][i]<10 && gridConverted[j][i]>=0){
+					t +=" "+ gridConverted[j][i]+" ";
 				}
 				else
-					t += grid[j][i]+" ";
+					t += gridConverted[j][i]+" ";
 			}
 			t+="\n";
 		}

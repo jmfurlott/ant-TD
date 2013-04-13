@@ -158,7 +158,7 @@ public class WorldRenderer {
 				if(tower instanceof BasicTower)//TODO FIX THESE IMAGES
 					batch.draw(basicTower, tower.getPosition().x+2, tower.getPosition().y-15, Tower.SIZE*26 , Tower.SIZE*20);
 				else if(tower instanceof SpawnTower)
-					batch.draw(basicBullet, tower.getPosition().x+2, tower.getPosition().y-15, Tower.SIZE*26 , Tower.SIZE*20);
+					batch.draw(spawnTower, tower.getPosition().x+2, tower.getPosition().y-15, Tower.SIZE*26 , Tower.SIZE*20);
 				else if(tower instanceof SplashTower)
 					batch.draw(splashTower, tower.getPosition().x+2, tower.getPosition().y-15, Tower.SIZE*26 , Tower.SIZE*20);
 				else if(tower instanceof SlowTower)
@@ -327,8 +327,6 @@ public class WorldRenderer {
 		
 		
 	}
-	
-	
 	
 	public WorldRenderer getRenderer() {
 		return this;

@@ -14,9 +14,7 @@ import com.badlogic.gdx.math.Vector2;
 public class WorldController {
 	// all input control is here
 
-	//grid.boxSize = 20x24
-	
-	
+	//grid.boxSize = 20x24..	
 	
 	enum Keys {
 		LEFT, RIGHT, UP, DOWN, A, SPACE, NUM_1, NUM_2, NUM_3, NUM_4, NUM_5,
@@ -72,17 +70,14 @@ public class WorldController {
 			mob.update(delta);
 		}
 	}
+
 	public void processInput() {
-		
 		if (Gdx.input.isTouched()) {
 			Vector2 debug = calculatePosition2();
 			System.out.println("Pix:"+Gdx.input.getX()+","+Gdx.input.getY()+" Debug: "+debug.x+","+debug.y);
 			Vector2 click = calculatePosition(Gdx.input.getX(),	Gdx.input.getY());
-			
 			if (click.x < 9 && side == 0) {
 				clicked = menu.selectButton(click);
-
-				
 				if (clicked != null) {
 					//Gdx.app.log("input", "Found a button");
 					selection = 1;
@@ -103,10 +98,6 @@ public class WorldController {
 				side = 0;
 			}
 		}
-		
-		
-		
-		
 	}
 	
 	public Vector2 calculatePosition(int xPixel, int yPixel) {
@@ -132,8 +123,6 @@ public class WorldController {
 	public Vector2 mapPlacePosition(){
 		Vector2 temp = calculatePosition2();
 //		System.out.println("mouse: "+Gdx.input.getX()+","+Gdx.input.getY());
-		//Vector2 mapPlacePosition = new Vector2(127+(temp.x*26),444-(temp.y*20));
-		
 		Vector2 mapPlacePosition = new Vector2(127+(temp.x*26),454-(temp.y*20));
 //		System.out.println("mapPlace: "+mapPlacePosition.x+","+mapPlacePosition.y);
 		return mapPlacePosition;
@@ -149,8 +138,8 @@ public class WorldController {
 //		System.out.println("temp: "+ temp.x+","+temp.y);
 		if(type == 1) {
 			world.resetGrid();
-			Tower tower = new BasicTower(temp1, world,1,((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
-			//Tower tower = new Wall(temp1,world,1);
+//			Tower tower = new BasicTower(temp1, world,1,((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
+			Tower tower = new Wall(temp1,world,1,((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
 			world.placeTower((int)temp.x,(int)temp.y,tower);
 			System.out.println(world.toString());
 		} 
@@ -162,6 +151,7 @@ public class WorldController {
 		}
 //		else if (type == 3) {
 //			System.out.println("placing StunTower");
+//			world.resetGrid();
 //			Tower tower = new StunTower(new Vector2(Gdx.input.getX(), 480 - Gdx.input.getY()), world, 1);
 //			world.placeTower(tower);
 //		}
@@ -180,11 +170,14 @@ public class WorldController {
 		else if (type == 6) {
 			//System.out.println("placing SpawnTower");
 			world.resetGrid();
-			Tower tower = new SpawnTower(temp1, world, 0, 1, 1,((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
+			//friendly spawn
+			Tower tower = new SpawnTower(temp1, world, 1, 1, 0,((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
+			//enemy spawn
+//			Tower tower = new SpawnTower(temp1, world, 0, 1, 1,((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
 			world.placeTower((int)temp.x,(int)temp.y,tower);
 		} 
 		else if (type == 7) {
-			System.out.println("Sell");
+			//System.out.println("Sell");
 			world.removeTower(((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
 		}		
 		else if (type == 0){

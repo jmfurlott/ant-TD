@@ -12,7 +12,7 @@ public class Player {
 	public Player(){
 		towersAvailable  = new ArrayList<Tower>();
 		health = 20;
-		currency = 100;
+		currency = 1000;
 		points = 0;		
 	}
 	

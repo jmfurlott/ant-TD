@@ -61,7 +61,7 @@ public class Bullet {
 		if(target!=null){
 			if(target.target == 1){
 				target.target = 0;
-				target.convertedFlag =true;
+				target.convertedFlag = true;
 				target.convertStartTime = System.currentTimeMillis();
 				target.convertEndTime = target.convertStartTime + tower.conversionDelay;
 			}
