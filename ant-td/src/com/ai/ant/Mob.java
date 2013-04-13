@@ -68,6 +68,10 @@ public class Mob {
 		world.mobList.remove(this);
 	}
 	
+	public void mobReachedEnd(){
+		world.getPlayer(target).health--;
+	}
+	
 	public void setSlowStartTime(long slowStartTime){
 		this.slowStartTime = slowStartTime;
 	}
