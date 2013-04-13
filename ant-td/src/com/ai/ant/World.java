@@ -226,10 +226,14 @@ public class World {
 	public void placeTower(int x,int y,Tower tower){
 //		System.out.println(x+","+y);
 		if(x<=0 || y<0 || x>=17 || y>20){
+			fillGrid();
+			fillGrid2();
 //			System.out.println("DO NOTHING");
 		}
 		else if(getPlayer(tower.owner).getCurrency()-tower.cost < 0 ){
 			System.out.println("not enough coin");
+			fillGrid();
+			fillGrid2();
 		}
 		else{
 			if(grid[x][y] == -1){

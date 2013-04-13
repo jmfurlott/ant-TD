@@ -149,29 +149,38 @@ public class Mob {
 //				}
 				}
 				if(target == 0){//conversion tower pathing~
-					if( world.gridConverted[mobX+1][mobY]!=-1 &&  world.gridConverted[mobX+1][mobY] <=value){ 
-						pathX = mobX+1;
-						pathY = mobY;
-						value= world.gridConverted[mobX+1][mobY];
-//						System.out.println("path1: "+pathX+","+pathY + "value: "+value);
+					if(world.gridConverted[mobX+1][mobY] == -1 &&
+					   world.gridConverted[mobX-1][mobY] == -1 &&
+					   world.gridConverted[mobX][mobY+1] == -1 &&
+					   world.gridConverted[mobX][mobY-1] == -1){
+						path = new Vector2(1,10);
 					}
-					if(world.gridConverted[mobX][mobY-1]!=-1 && world.gridConverted[mobX][mobY-1] <=value){
-						pathX = mobX;
-						pathY = mobY-1;
-						value= world.gridConverted[mobX][mobY-1];
-//						System.out.println("path2: "+pathX+","+pathY+ "value: "+value);
-					}
-					if(world.gridConverted[mobX][mobY+1]!=-1 && world.gridConverted[mobX][mobY+1] <=value){
-						pathX = mobX;
-						pathY = mobY+1;
-						value= world.gridConverted[mobX][mobY+1];
-//						System.out.println("path3: "+pathX+","+pathY+ "value: "+value);
-					}
-					if(world.gridConverted[mobX-1][mobY]!= -1 && world.gridConverted[mobX-1][mobY] <=value){
-						pathX = mobX-1;
-						pathY = mobY;
-						value= world.gridConverted[mobX-1][mobY];
-//						System.out.println("path4: "+pathX+","+pathY+ "value: "+value);
+					else{
+					
+						if( world.gridConverted[mobX+1][mobY]!=-1 &&  world.gridConverted[mobX+1][mobY] <=value){ 
+							pathX = mobX+1;
+							pathY = mobY;
+							value= world.gridConverted[mobX+1][mobY];
+	//						System.out.println("path1: "+pathX+","+pathY + "value: "+value);
+						}
+						if(world.gridConverted[mobX][mobY-1]!=-1 && world.gridConverted[mobX][mobY-1] <=value){
+							pathX = mobX;
+							pathY = mobY-1;
+							value= world.gridConverted[mobX][mobY-1];
+	//						System.out.println("path2: "+pathX+","+pathY+ "value: "+value);
+						}
+						if(world.gridConverted[mobX][mobY+1]!=-1 && world.gridConverted[mobX][mobY+1] <=value){
+							pathX = mobX;
+							pathY = mobY+1;
+							value= world.gridConverted[mobX][mobY+1];
+	//						System.out.println("path3: "+pathX+","+pathY+ "value: "+value);
+						}
+						if(world.gridConverted[mobX-1][mobY]!= -1 && world.gridConverted[mobX-1][mobY] <=value){
+							pathX = mobX-1;
+							pathY = mobY;
+							value= world.gridConverted[mobX-1][mobY];
+	//						System.out.println("path4: "+pathX+","+pathY+ "value: "+value);
+						}
 					}
 				}
 				path = getPointVector(new Vector2(pathX,pathY));
