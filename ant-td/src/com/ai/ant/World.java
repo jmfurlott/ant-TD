@@ -88,7 +88,7 @@ public class World {
 		int minX = 590;
 		int maxY = 450;
 		int minY = 300;//150
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < 10; i++) {
 			int randX = minX + (int)(Math.random() * ((maxX - minX) + 1));
 			int randY = minY + (int)(Math.random() * ((maxY - minY) + 1));
 			SpawnTower st = new SpawnTower(new Vector2(randX, randY),this,0,1,1,((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
@@ -186,22 +186,41 @@ public class World {
 	}
 	
 	public void removeTower(int x,int y){
-		for (Tower tower : towerList) {
-			if(tower instanceof Wall){}
-			else{
-				if(tower.mapCoordX == x && tower.mapCoordY == y){
-					towerSell(tower);
-//					System.out.println("towerPos: "+tower.mapCoordX+","+tower.mapCoordY);
-//					System.out.println("guess: "+x+","+y);
-					tower.remove = true;
-					resetGrid();
-					grid[x][y] = -2;
-					gridConverted[x][y]=-2;
-					fillGrid();
-					fillGrid2();
+		Tower removeTower = selectTower(x, y);
+		if(removeTower!=null){
+			towerSell(removeTower);
+	//		System.out.println("towerPos: "+tower.mapCoordX+","+tower.mapCoordY);
+	//		System.out.println("guess: "+x+","+y);
+			removeTower.remove = true;
+			resetGrid();
+			grid[x][y] = -2;
+			gridConverted[x][y]=-2;
+			fillGrid();
+			fillGrid2();
+		}
+	}
+	
+	public void levelUpTower(int x, int y){
+		Tower levelTower = selectTower(x, y);
+		if(levelTower!=null){
+			levelTower.levelUp();
+		}
+	}
+	
+	public Tower selectTower(int x, int y){
+		if(grid[x][y]==-1){
+			Tower returnTower = null;
+			for (Tower tower : towerList) {
+				if(tower instanceof Wall){}
+				else{
+					if(tower.mapCoordX == x && tower.mapCoordY == y){
+						returnTower = tower;
+					}
 				}
 			}
+			return returnTower;
 		}
+		return null;
 	}
 	
 	public void placeTower(int x,int y,Tower tower){

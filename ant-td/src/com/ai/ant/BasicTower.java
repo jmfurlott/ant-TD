@@ -17,12 +17,18 @@ public class BasicTower extends Tower{
 	}
 
 	void levelUp() {
-		if(level == maxLevel){}
+		if(level == maxLevel){
+			
+		}
+		else if(world.getPlayer(owner).getCurrency()-cost <0){
+			
+		}
 		else{
+			world.getPlayer(owner).addCurrency(-(cost));
 			level++;
-			damage += 1;
-			range += 5;
-			fireRate += .25;
+			damage += 1000; ///TODO: 
+			range += 25;
+			delay -=250;
 		}
 	}
 	

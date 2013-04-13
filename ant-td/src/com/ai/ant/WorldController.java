@@ -144,8 +144,8 @@ public class WorldController {
 //		System.out.println("temp: "+ temp.x+","+temp.y);
 		if(type == 1) {
 			world.resetGrid();
-//			Tower tower = new BasicTower(temp1, world,1,((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
-			Tower tower = new Wall(temp1,world,1,((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
+			Tower tower = new BasicTower(temp1, world,1,((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
+//			Tower tower = new Wall(temp1,world,1,((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
 			world.placeTower((int)temp.x,(int)temp.y,tower);
 			System.out.println(world.toString());
 		} 
@@ -184,7 +184,8 @@ public class WorldController {
 		} 
 		else if (type == 7) {
 			//System.out.println("Sell");
-			world.removeTower(((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
+			//world.removeTower(((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
+			world.levelUpTower(((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
 		}		
 		else if (type == 0){
 			Gdx.app.log("quit", "Trying to quit");
