@@ -191,6 +191,9 @@ public class WorldRenderer {
 			if(mob.deathFlag){
 				mob.mobDeath();
 			}
+			else{
+				mob.mobReachedEnd();
+			}
 			mob.removeMob();
 		}
 	}
