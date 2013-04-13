@@ -6,6 +6,8 @@ public class SpawnTower extends Tower{
 	private final int maxLevel;
 	private int mobLevel;
 	private int mobTarget;
+	private int timer = 0;
+	private int timerLength = 1000/(level+1);
 	public SpawnTower(Vector2 position, World world, int owner, int mobLevel,int mobTarget, int x, int y) {
 		super(position, world, owner,x,y);
 		maxLevel = 3;
@@ -31,11 +33,23 @@ public class SpawnTower extends Tower{
 	}
 	@Override
 	public void fire(){
-		checkIsReady();
-		if(active){
-			shoot();
-			isFired();
+		
+		if(timer == 0){
+			checkIsReady();
+			if(active){
+				shoot();
+				isFired();
+			}
+			timer++;
+			
 		}
+		else if(timer == timerLength){
+			timer = 0;
+		}
+		else{
+			timer++;
+		}
+		
 	}
 	
 	void shoot(){
