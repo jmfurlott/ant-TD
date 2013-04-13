@@ -182,7 +182,13 @@ public class WorldController {
 		}		
 		else if (type == 0){
 			Gdx.app.log("quit", "Trying to quit");
-			g.setScreen(new EndGameScreen());
+			int score;
+			int level;
+			score = world.getPlayer(1).points;
+			level = 12; //TODO will have to update
+						//Level = game time/constant;
+			
+			g.setScreen(new EndGameScreen(score, level));
 		}
 		
 		System.out.println(world.toString()); 

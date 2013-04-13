@@ -11,15 +11,18 @@ public class EndGameScreen implements Screen {
 	private EndGameScreen endScreen;
 	private EndGameScreenRenderer renderer;
 	private int height, width;
+	private int score;
+	private int level;
 	
-	public EndGameScreen()
+	public EndGameScreen(int score, int level)
 	{
-		
+		this.score = score;
+		this.level = level;
 	}
 	
 	public void createWorld()
 	{
-		Gdx.app.log("intro", "inside the createWorld method");
+		Gdx.app.log("intro", "Inside the createEndGameScreen method");
 		logo = new Character(new Vector2(25,25));
 	}
 	
@@ -32,8 +35,6 @@ public class EndGameScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(1.0f, 1.0f, 1.0f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		
-		//for when we have sprites
 		
 		renderer.render();		
 	}
@@ -51,7 +52,7 @@ public class EndGameScreen implements Screen {
 
 		
 		//endScreen = new EndGameScreen();
-		renderer = new EndGameScreenRenderer();
+		renderer = new EndGameScreenRenderer(score, level);
 		
 		//Gdx.input.setInputProcessor(this);
 		

@@ -106,7 +106,7 @@ public class WorldRenderer {
 		basicTower = new Texture(Gdx.files.internal("stunFreezeHill.png")); //TODO
 		basicBullet = new Texture(Gdx.files.internal("basicBullet.png"));	
 		
-		splashTower = new Texture(Gdx.files.internal("splash_tower.png")); //TODO
+		splashTower = new Texture(Gdx.files.internal("splash_tower.png"));
 		splashBullet = new Texture(Gdx.files.internal("splashBullet.png"));//TODO
 		
 		slowTower = new Texture(Gdx.files.internal("stunFreezeHill.png")); //TODO
@@ -245,6 +245,7 @@ public class WorldRenderer {
 		font.draw(batch, "Splash", 5, 190);
 		font.draw(batch, "Conv", 5, 230);
 		font.draw(batch, "Erase", 5, 300);
+		font.draw(batch, "Spawn", 5, 265);
 
 		
 	}
@@ -305,7 +306,7 @@ public class WorldRenderer {
 		towerMapTexture.put(2, slowTower); //no class made for this yet
 		towerMapTexture.put(3, stunTower); //no class for this yet
 		towerMapTexture.put(4, splashTower);  
-		towerMapTexture.put(5, conversionTower); //no class for this yet
+		towerMapTexture.put(5, conversionTower);
 		towerMapTexture.put(6, spawnTower);
 		towerMapTexture.put(7, waterPuddle); //no class for this yet 
 		
