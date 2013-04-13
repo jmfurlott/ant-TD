@@ -56,6 +56,12 @@ public class WorldController {
 		processInput();
 		character.update(delta);
 
+		if(world.getPlayer(1).getHealth() <= 0) {
+			g.setScreen(new EndGameScreen(world.getPlayer(1).getPoints(), 162));
+			//162 is just generic
+		}
+		
+		
 		ArrayList<Bullet> temp = new ArrayList<Bullet>();
 		temp = world.bulletList;
 		
