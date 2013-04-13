@@ -149,12 +149,12 @@ public class WorldController {
 			Tower tower = new SlowTower(temp1, world, 1,((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
 			world.placeTower((int)temp.x,(int)temp.y,tower);
 		}
-//		else if (type == 3) {
-//			System.out.println("placing StunTower");
-//			world.resetGrid();
-//			Tower tower = new StunTower(new Vector2(Gdx.input.getX(), 480 - Gdx.input.getY()), world, 1);
-//			world.placeTower(tower);
-//		}
+		else if (type == 3) {
+			System.out.println("placing StunTower");
+			world.resetGrid();
+			Tower tower = new StunTower(temp1,world,1,((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
+			world.placeTower((int)temp.x,(int)temp.y,tower);
+		}
 		else if (type == 4) {
 			//System.out.println("placing SplashTower");
 			world.resetGrid();

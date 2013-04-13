@@ -88,7 +88,7 @@ public class World {
 		int minX = 590;
 		int maxY = 450;
 		int minY = 300;//150
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 50; i++) {
 			int randX = minX + (int)(Math.random() * ((maxX - minX) + 1));
 			int randY = minY + (int)(Math.random() * ((maxY - minY) + 1));
 			SpawnTower st = new SpawnTower(new Vector2(randX, randY),this,0,1,1,((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);

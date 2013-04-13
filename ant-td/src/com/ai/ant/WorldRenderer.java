@@ -163,6 +163,8 @@ public class WorldRenderer {
 					batch.draw(splashTower, tower.getPosition().x+2, tower.getPosition().y-15, Tower.SIZE*26 , Tower.SIZE*20);
 				else if(tower instanceof SlowTower)
 					batch.draw(slowTower, tower.getPosition().x+2, tower.getPosition().y-15, Tower.SIZE*26 , Tower.SIZE*20);
+				else if(tower instanceof StunTower)
+					batch.draw(stunTower, tower.getPosition().x+2, tower.getPosition().y-15, Tower.SIZE*26 , Tower.SIZE*20);
 				else if(tower instanceof ConversionTower)
 					batch.draw(conversionTower, tower.getPosition().x+2, tower.getPosition().y-15, Tower.SIZE*26 , Tower.SIZE*20);
 				else if(tower instanceof Wall)
@@ -192,7 +194,10 @@ public class WorldRenderer {
 				mob.mobDeath();
 			}
 			else{
-				mob.mobReachedEnd();
+				if(mob.target == 1)
+					mob.mobReachedEnd();
+				else
+					world.getPlayer(1).addPoints(mob.points);
 			}
 			mob.removeMob();
 		}
@@ -212,6 +217,8 @@ public class WorldRenderer {
 				else if(bullet.tower instanceof SlowTower)
 					batch.draw(basicBullet, bullet.getPosition().x, bullet.getPosition().y, Bullet.SIZE*5, Bullet.SIZE*5);
 				else if(bullet.tower instanceof ConversionTower)
+					batch.draw(basicBullet, bullet.getPosition().x, bullet.getPosition().y, Bullet.SIZE*5, Bullet.SIZE*5);
+				else if(bullet.tower instanceof StunTower)
 					batch.draw(basicBullet, bullet.getPosition().x, bullet.getPosition().y, Bullet.SIZE*5, Bullet.SIZE*5);
 			}
 		}

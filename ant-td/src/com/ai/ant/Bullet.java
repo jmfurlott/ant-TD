@@ -52,7 +52,10 @@ public class Bullet {
 			}
 			else if(tower instanceof ConversionTower){
 				conversion();
-			}	
+			}
+			else if(tower instanceof StunTower){
+				slowDamage(); //33%chance to stun
+			}
 		}
 	}
 	
@@ -100,17 +103,28 @@ public class Bullet {
 					double r = Math.sqrt(aSqu + bSqu);					
 					if (r < tower.splashRange) {
 						pmob.setHealth(pmob.getHealth()-tower.damage);
-						if(pmob.speedScale == 1){//TODO:&& !pmob.isStuned)
+						if(pmob.speedScale == 1){
 							if(tower.slowAmount>0){
-								pmob.setSlowStartTime(System.currentTimeMillis());
-								pmob.slowEndTime = pmob.slowStartTime + tower.slowTime;
-								pmob.speedScale -= tower.slowAmount;
+								if(tower instanceof SlowTower){
+									pmob.setSlowStartTime(System.currentTimeMillis());
+									pmob.slowEndTime = pmob.slowStartTime + tower.slowTime;
+									pmob.speedScale -= tower.slowAmount;
+								}
+								else{//StunTower w/ a 33% chance to stun
+									int num = (int)(Math.random()*100);
+									num = num%3;
+									System.out.println(num);
+									if(num == 1){
+										pmob.setSlowStartTime(System.currentTimeMillis());
+										pmob.slowEndTime = pmob.slowStartTime + tower.slowTime;
+										pmob.speedScale -= tower.slowAmount;
+									}
+								}
 							}
 						}
 					}
 				}
 			}
 		}
-	}
-	
+	}	
 }

@@ -81,8 +81,6 @@ public class Mob {
 	}
 	
 	public Vector2 getPointVector(Vector2 mapPoint){
-		
-		
 		return new Vector2(127+(mapPoint.x*26)+9,453-(mapPoint.y*20)-6);
 	}
 	
@@ -98,33 +96,33 @@ public class Mob {
 		Vector2 temp1 = new Vector2(path.x-1, path.y-1);
 		Vector2 temp2 = new Vector2(path.x+1, path.y+1);
 		if(position.x >= temp1.x && position.x <temp2.x  && position.y >= temp1.y && position.y <temp2.y){
-//				System.out.println("true");
 			if(!(mobX==0||mobY==0||mobY==20||mobX==20)){
 				if(target == 1){ //normal pathing >>not under the effect of the conversion tower
+					if(world.grid[mobX-1][mobY]!= -1 && world.grid[mobX-1][mobY] <=value){
+						pathX = mobX-1;
+						pathY = mobY;
+						value = world.grid[mobX-1][mobY];
+//						System.out.println("path1: "+pathX+","+pathY+ "value: "+value);
+					}
 					if( world.grid[mobX+1][mobY]!=-1 &&  world.grid[mobX+1][mobY] <=value){ 
 						pathX = mobX+1;
 						pathY = mobY;
 						value = world.grid[mobX+1][mobY];
-//						System.out.println("path1: "+pathX+","+pathY + "value: "+value);
+//						System.out.println("path2: "+pathX+","+pathY + "value: "+value);
 					}
 					if(world.grid[mobX][mobY-1]!=-1 && world.grid[mobX][mobY-1] <=value){
 						pathX = mobX;
 						pathY = mobY-1;
 						value = world.grid[mobX][mobY-1];
-//						System.out.println("path2: "+pathX+","+pathY+ "value: "+value);
+//						System.out.println("path3: "+pathX+","+pathY+ "value: "+value);
 					}
 					if(world.grid[mobX][mobY+1]!=-1 && world.grid[mobX][mobY+1] <=value){
 						pathX = mobX;
 						pathY = mobY+1;
 						value = world.grid[mobX][mobY+1];
-//						System.out.println("path3: "+pathX+","+pathY+ "value: "+value);
-					}
-					if(world.grid[mobX-1][mobY]!= -1 && world.grid[mobX-1][mobY] <=value){
-						pathX = mobX-1;
-						pathY = mobY;
-						value = world.grid[mobX-1][mobY];
 //						System.out.println("path4: "+pathX+","+pathY+ "value: "+value);
 					}
+
 //				if(world.grid[mobX-1][mobY-1]!= -1 && world.grid[mobX-1][mobY-1] <=value){
 //					pathX = mobX-1;
 //					pathY = mobY-1;
@@ -186,8 +184,8 @@ public class Mob {
 					if(mobY == 20){
 						path = getPointVector(new Vector2(mobX,mobY-2));
 					}
-					if(mobY == 0){
-						path = getPointVector(new Vector2(mobX,mobY+2));
+					if(mobX == 0){
+						path = getPointVector(new Vector2(mobX+2,mobY));
 					}
 				}
 			}
