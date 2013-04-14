@@ -352,6 +352,8 @@ public class WorldRenderer {
 		font.draw(batch, "" + player.getHealth(), 15, 385);
 		font.draw(batch, "Score: ", 10, 360);
 		font.draw(batch, "" + player.getPoints(), 15, 335);
+		player.setLevel((int) player.getPoints()/1000);
+		font.draw(batch, "Level: " + player.getLevel(), 100, 25);
 		
 		
 	}
