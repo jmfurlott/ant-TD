@@ -12,7 +12,8 @@ public class Menu {
 		//make new buttons
 		buttons = new ArrayList<Button>();
 		
-		buttons.add(new Button(new Vector2(2,04), 2.0f, 2.0f, 0));
+		buttons.add(new Button(new Vector2(2,01), 2.0f, 2.0f, 0));
+		buttons.add(new Button(new Vector2(4,04), 2.0f, 2.0f, 8)); //upgrade
 		buttons.add(new Button(new Vector2(4,8), 2.0f, 2.0f, 1));
 		buttons.add(new Button(new Vector2(4,12), 2.0f, 2.0f, 2));
 		buttons.add(new Button(new Vector2(4,16), 2.0f, 2.0f, 3));

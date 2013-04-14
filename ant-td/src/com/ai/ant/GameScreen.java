@@ -92,6 +92,9 @@ public class GameScreen implements Screen, InputProcessor {
 		if(keycode == Keys.NUM_7) {
 			controller.sevenPressed();
 		}
+		if(keycode == Keys.NUM_8) {
+			controller.eightPressed();
+		}
 		return true;
 	}
 
@@ -118,6 +121,9 @@ public class GameScreen implements Screen, InputProcessor {
 		}
 		if(keycode == Keys.NUM_7) {
 			controller.sevenReleased();
+		}
+		if(keycode == Keys.NUM_8) {
+			controller.eightReleased();
 		}
 		return true;
 	}

@@ -51,7 +51,7 @@ public class WorldRenderer {
 	private Texture slowTower, slowBullet;
 	private Texture stunTower, stunBullet;
 	private Texture conversionTower, conversionBullet;
-	private Texture waterPuddle, mudPuddle;
+	private Texture waterPuddle, mudPuddle, money, upgrade;
 	
 	private Texture wall;
 	private Texture menuBackground;
@@ -109,7 +109,7 @@ public class WorldRenderer {
 		//Towers and bullets
 		spawnTower = new Texture(Gdx.files.internal("hill_spawning.png"));
 
-		basicTower = new Texture(Gdx.files.internal("stunFreezeHill.png")); //TODO
+		basicTower = new Texture(Gdx.files.internal("tower.png")); //TODO
 		basicBullet = new Texture(Gdx.files.internal("basicBullet.png"));	
 		
 		splashTower = new Texture(Gdx.files.internal("splash_tower.png"));
@@ -130,6 +130,8 @@ public class WorldRenderer {
 		//TODO put correct images in for each tower
 
 		homeBase = new Texture(Gdx.files.internal("red_castle2.png"));
+		money = new Texture(Gdx.files.internal("money.png"));
+		upgrade = new Texture(Gdx.files.internal("upgrade.png"));
 		
 		//menu and background
 		wall = new Texture(Gdx.files.internal("wall.png"));
@@ -261,6 +263,8 @@ public class WorldRenderer {
 		
 		//seven font commands right here
 		font.setScale(.9f);
+		font.draw(batch, "Level", 2, 55);
+		font.draw(batch, "up", 5, 42);
 		font.draw(batch, "Basic", 5, 82);
 		font.draw(batch, "Slow", 5, 120);
 		font.draw(batch, "Stun", 5, 155);
@@ -330,7 +334,8 @@ public class WorldRenderer {
 		towerMapTexture.put(4, splashTower);  
 		towerMapTexture.put(5, conversionTower);
 		towerMapTexture.put(6, spawnTower);
-		towerMapTexture.put(7, waterPuddle); //no class for this yet 
+		towerMapTexture.put(7, money); //no class for this yet 
+		towerMapTexture.put(8, upgrade); //remove tower should be money sign
 		
 		
 	}
