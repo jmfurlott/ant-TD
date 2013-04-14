@@ -57,7 +57,7 @@ public class WorldController {
 		character.update(delta);
 
 		if(world.getPlayer(1).getHealth() <= 0) {
-			g.setScreen(new EndGameScreen(world.getPlayer(1).getPoints(), 162));
+			g.setScreen(new EndGameScreen(world.getPlayer(1).getPoints(), world.getPlayer(1).getLevel()));
 			//162 is just generic
 		}
 		
@@ -194,7 +194,7 @@ public class WorldController {
 			level = 12; //TODO will have to update
 						//Level = game time/constant;
 			
-			g.setScreen(new EndGameScreen(score, level));
+			g.setScreen(new EndGameScreen(score, world.getPlayer(1).getLevel()));
 		} else if (type == 8) {
 			//upgrade
 			Gdx.app.log("menu", "upgrade");
