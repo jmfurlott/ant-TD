@@ -8,6 +8,7 @@ public class SpawnTower extends Tower{
 	private int mobTarget;
 	private int timer = 0;
 	private int timerLength = 1000/(level+1);
+	private int oldScore = 1;
 	public SpawnTower(Vector2 position, World world, int owner, int mobLevel,int mobTarget, int x, int y) {
 		super(position, world, owner,x,y);
 		maxLevel = 3;
@@ -29,7 +30,16 @@ public class SpawnTower extends Tower{
 	}
 	@Override
 	public void towerAI(){
-			fire();	
+			int currentScore = world.getPlayer(1).points;
+			if(( currentScore % 50 == 0)&&(currentScore!= oldScore)){
+				oldScore = currentScore;
+				level++;
+				timerLength = 1000/level;
+				timer = 0;
+			}
+			if(this.owner != 1){
+				fire();	
+			}
 	}
 	@Override
 	public void fire(){
