@@ -57,6 +57,8 @@ public class WorldRenderer {
 	private Texture menuBackground;
 	private Texture quitButton;
 	
+	private Texture homeBase;
+	
 	Player player;
 	BitmapFont font;
 	
@@ -81,6 +83,10 @@ public class WorldRenderer {
 		drawBullets();
 		drawMobs();
 		//loadCharacter();	
+		
+		//home base
+		batch.draw(homeBase, 90, 210, 75, 75);
+		
 		drawMenu();
 		drawPlayer();
 		batch.end();
@@ -123,6 +129,8 @@ public class WorldRenderer {
 		
 		//TODO put correct images in for each tower
 
+		homeBase = new Texture(Gdx.files.internal("red_castle2.png"));
+		
 		//menu and background
 		wall = new Texture(Gdx.files.internal("wall.png"));
 		grass = new Texture(Gdx.files.internal("grassTexture.png"));
@@ -149,6 +157,10 @@ public class WorldRenderer {
 	}
 	
 	public void drawTowers() {
+		
+		//home base tower
+		
+		
 		ArrayList<Tower> temp = new ArrayList<Tower>();
 		for(Tower tower : world.getTowers()) {
 			if(tower.remove==true){
