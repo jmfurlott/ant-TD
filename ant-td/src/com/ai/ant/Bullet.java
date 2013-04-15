@@ -113,7 +113,6 @@ public class Bullet {
 								else{//StunTower w/ a 33% chance to stun
 									int num = (int)(Math.random()*100);
 									num = num%3;
-									System.out.println(num);
 									if(num == 1){
 										pmob.setSlowStartTime(System.currentTimeMillis());
 										pmob.slowEndTime = pmob.slowStartTime + tower.slowTime;

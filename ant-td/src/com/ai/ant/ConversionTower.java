@@ -7,12 +7,12 @@ public class ConversionTower extends Tower{
 	public ConversionTower(Vector2 position, World world, int owner, int x, int y) {
 		super(position, world, owner,x,y);
 		maxLevel = 3;
-		damage = 10000000;
+		damage = 10000000; //this value for targeting system purposes 
 		level = 1;
 		range = 100; //this is just a temp. value
 		fireRate = 1; //attacks per second
 		type = 5;
-		conversionDelay = 2000;
+		conversionDelay = 10000;
 		delay = 2500;
 	}
 

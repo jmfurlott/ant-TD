@@ -9,7 +9,7 @@ public class StunTower extends Tower {
 		super(position, world, owner,x,y);
 
 		maxLevel = 3; 
-		damage = 1;
+		damage = 3;
 		level = 1;
 		range = 50; //this is just a temp. value
 		splashRange = 50;
@@ -18,15 +18,20 @@ public class StunTower extends Tower {
 		slowTime = 1000; 
 		slowAmount = 1;  //stun
 		delay = 1000; //1 attack per second.
+		cost = 10;
 	}
 
 	void levelUp(){
 		if(level == maxLevel){} //if maxLevel you can't upgrade any more!!
+		else if(world.getPlayer(owner).getCurrency()-cost <0){
+			
+		}
 		else{
+			world.getPlayer(owner).addCurrency(-(cost));
+			cost +=cost;
 			level++;
-			damage += 2;
+			damage += damage;
 			range +=5;
-			fireRate += .25;
 		}
 	}
 	

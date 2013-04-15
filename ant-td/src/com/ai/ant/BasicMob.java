@@ -6,7 +6,7 @@ public class BasicMob extends Mob{
 
 	public BasicMob(Vector2 position, int target, int level, World world) {
 		super(position, world);
-		health = level* 50;
+		health = 50 + level* 50;
 		this.target = target;		//represents which player this mob is attacking, needed for pathing and conversion tower
 		this.level = level; 		//currency/points rewarded scale based on level
 		currency = level * 2; 		//coin given based on level 1 of mob upon destruction

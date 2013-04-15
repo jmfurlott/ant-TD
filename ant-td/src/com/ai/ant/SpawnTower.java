@@ -21,7 +21,11 @@ public class SpawnTower extends Tower{
 
 	void levelUp() {
 		if(level == maxLevel){}
+		else if(world.getPlayer(owner).getCurrency()-cost <0){
+			
+		}
 		else{
+			world.getPlayer(owner).addCurrency(-(cost));
 			level++;
 			damage += 1;
 			range +=5;
@@ -31,15 +35,15 @@ public class SpawnTower extends Tower{
 	@Override
 	public void towerAI(){
 			int currentScore = world.getPlayer(1).points;
-			if(( currentScore % 50 == 0)&&(currentScore!= oldScore)){
+			if(( currentScore % 25 == 0)&&(currentScore!= oldScore)){
 				oldScore = currentScore;
 				level++;
 				timerLength = 1000/level;
 				timer = 0;
 			}
-			if(this.owner != 1){
+			//if(this.owner != 1){
 				fire();	
-			}
+			//}
 	}
 	@Override
 	public void fire(){
@@ -63,7 +67,7 @@ public class SpawnTower extends Tower{
 	}
 	
 	void shoot(){
-		BasicMob bMob = new BasicMob(new Vector2(this.position.x+13,this.position.y-10),mobTarget,mobLevel,world);
+		BasicMob bMob = new BasicMob(new Vector2(this.position.x+13,this.position.y-10),mobTarget,level,world);
 		world.mobList.add(bMob);
 	}
 }
