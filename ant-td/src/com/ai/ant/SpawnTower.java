@@ -1,6 +1,7 @@
 package com.ai.ant;
 
 import com.badlogic.gdx.math.Vector2;
+import java.util.Random;
 
 public class SpawnTower extends Tower{
 	private final int maxLevel;
@@ -67,12 +68,37 @@ public class SpawnTower extends Tower{
 	
 	void shoot(){
 		if(this.owner != 1){
-			BasicMob bMob = new BasicMob(new Vector2(this.position.x+13,this.position.y-10),mobTarget,level,world);
-			world.mobList.add(bMob);
+			fireProportion();
 		}
 		else if(this.owner == 1){//this is player
 			BasicMob bMob = new BasicMob(new Vector2(this.position.x+13,this.position.y-10),mobTarget,level,world);
 			world.mobList.add(bMob);
+		}
+		
+	}
+
+	private void fireProportion() {
+		Random rand = new Random();
+		int i = (int) (rand.nextGaussian()*100 + (world.getPlayer(1).points%1000));//gaussian distribution with mean at current score and standard deviation of 100
+		if(i<200){
+			BasicMob tMob = new BasicMob(new Vector2(this.position.x+13,this.position.y-10),mobTarget,level,world);
+			world.mobList.add(tMob);
+		}
+		else if((i>200)&&(i<400)){
+			RedAnt tMob = new RedAnt(new Vector2(this.position.x+13,this.position.y-10),mobTarget,level,world);
+			world.mobList.add(tMob);
+		}
+		else if((i>400)&&(i<600)){
+			FlyingAnt tMob = new FlyingAnt(new Vector2(this.position.x+13,this.position.y-10),mobTarget,level,world);
+			world.mobList.add(tMob);
+		}
+		else if((i>600)&&(i<800)){
+			CarpenterAnt tMob = new CarpenterAnt(new Vector2(this.position.x+13,this.position.y-10),mobTarget,level,world);
+			world.mobList.add(tMob);
+		}
+		else if(i>800){
+			QueenAnt tMob = new QueenAnt(new Vector2(this.position.x+13,this.position.y-10),mobTarget,level,world);
+			world.mobList.add(tMob);
 		}
 		
 	}
