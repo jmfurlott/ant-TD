@@ -26,9 +26,10 @@ public class BasicTower extends Tower{
 		else{
 			world.getPlayer(owner).addCurrency(-(cost));
 			level++;
-			damage += 1000; ///TODO: 
+			damage += 3; ///TODO: 
 			range += 25;
 			delay -=250;
+			cost +=cost;
 		}
 	}
 	

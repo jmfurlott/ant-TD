@@ -20,7 +20,11 @@ public class SpawnTower extends Tower{
 
 	void levelUp() {
 		if(level == maxLevel){}
+		else if(world.getPlayer(owner).getCurrency()-cost <0){
+			
+		}
 		else{
+			world.getPlayer(owner).addCurrency(-(cost));
 			level++;
 			damage += 1;
 			range +=5;

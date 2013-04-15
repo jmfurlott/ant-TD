@@ -47,10 +47,11 @@ public abstract class Tower {
 		firedTime = 0;
 		activeTime = 0;
 		active = true;
-		delay = 1000;
+		delay = 1500;
 		this.mapCoordX = mapCoordX;
 		this.mapCoordY = mapCoordY;
 		cost = 5;
+		level = 1;
 	}
 
 	// making this abstract to gain control of damage scaling across each type

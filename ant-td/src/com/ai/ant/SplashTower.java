@@ -18,14 +18,20 @@ public class SplashTower extends Tower {
 		splashRange = 20;
 		fireRate = 1; //attacks per second
 		type = 4;
+		delay = 1500;
 	}
 
 	void levelUp(){
 		if(level == maxLevel){} //if maxLevel you can't upgrade any more!!
+		else if(world.getPlayer(owner).getCurrency()-cost <0){
+			
+		}
 		else{
+			world.getPlayer(owner).addCurrency(-(cost));
 			level++;
 			damage += 2;
-			range +=5;
+			range +=25;
+			delay -= 250;
 			fireRate += .25;
 		}
 	}

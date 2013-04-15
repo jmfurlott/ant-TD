@@ -16,15 +16,21 @@ public class SlowTower extends Tower {
 		splashRange = 30;
 		fireRate = 1; //attacks per second
 		type = 2;
+		delay = 1500;
 	}
 
 	void levelUp(){
 		if(level == maxLevel){} //if maxLevel you can't upgrade any more!!
+		else if(world.getPlayer(owner).getCurrency()-cost <0){
+			
+		}
 		else{
+			world.getPlayer(owner).addCurrency(-(cost));
 			level++;
-			damage += 2;
+			damage += 1;
 			range +=5;
 			fireRate += .25;
+			delay -=250;
 		}
 	}
 	
