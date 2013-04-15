@@ -9,11 +9,12 @@ public class BasicTower extends Tower{
 		//effect = new ArrayList<Effect>(); basicTower has no effects
 		//effect.add(); 
 		maxLevel = 3;
-		damage = 3;
+		damage = 15;
 		level = 1;
 		range = 100; //this is just a temp. value
 		fireRate = 1; //attacks per second
 		type = 1;
+		delay = 1000;
 	}
 
 	void levelUp() {
@@ -26,10 +27,10 @@ public class BasicTower extends Tower{
 		else{
 			world.getPlayer(owner).addCurrency(-(cost));
 			level++;
-			damage += 3; ///TODO: 
+			damage += damage; ///TODO: 
 			range += 25;
 			delay -=250;
-			cost +=cost;
+			cost += cost;
 		}
 	}
 	

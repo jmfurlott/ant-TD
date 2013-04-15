@@ -12,7 +12,7 @@ public class SplashTower extends Tower {
 		super(position, world, owner,x,y);
 
 		maxLevel = 3; 
-		damage = 2;
+		damage = 10;
 		level = 1;
 		range = 100; //this is just a temp. value
 		splashRange = 20;
@@ -29,10 +29,11 @@ public class SplashTower extends Tower {
 		else{
 			world.getPlayer(owner).addCurrency(-(cost));
 			level++;
-			damage += 2;
+			damage += damage;
 			range +=25;
 			delay -= 250;
 			fireRate += .25;
+			cost+=cost;
 		}
 	}
 	

@@ -30,7 +30,7 @@ public class StunTower extends Tower {
 			world.getPlayer(owner).addCurrency(-(cost));
 			cost +=cost;
 			level++;
-			damage += 3;
+			damage += damage;
 			range +=5;
 		}
 	}

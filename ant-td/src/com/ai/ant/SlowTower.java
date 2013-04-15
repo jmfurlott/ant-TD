@@ -10,7 +10,7 @@ public class SlowTower extends Tower {
 		slowTime = 1000;
 		slowAmount = .50;
 		maxLevel = 3; 
-		damage = 1;
+		damage = 5;
 		level = 1;
 		range = 100; //this is just a temp. value
 		splashRange = 30;
@@ -27,10 +27,11 @@ public class SlowTower extends Tower {
 		else{
 			world.getPlayer(owner).addCurrency(-(cost));
 			level++;
-			damage += 1;
+			damage += damage; //double its damage
 			range +=5;
 			fireRate += .25;
 			delay -=250;
+			cost+=cost;
 		}
 	}
 	
