@@ -41,9 +41,8 @@ public class SpawnTower extends Tower{
 				timerLength = 1000/level;
 				timer = 0;
 			}
-			//if(this.owner != 1){
-				fire();	
-			//}
+			fire();
+			
 	}
 	@Override
 	public void fire(){
@@ -67,7 +66,14 @@ public class SpawnTower extends Tower{
 	}
 	
 	void shoot(){
-		BasicMob bMob = new BasicMob(new Vector2(this.position.x+13,this.position.y-10),mobTarget,level,world);
-		world.mobList.add(bMob);
+		if(this.owner != 1){
+			BasicMob bMob = new BasicMob(new Vector2(this.position.x+13,this.position.y-10),mobTarget,level,world);
+			world.mobList.add(bMob);
+		}
+		else if(this.owner == 1){//this is player
+			BasicMob bMob = new BasicMob(new Vector2(this.position.x+13,this.position.y-10),mobTarget,level,world);
+			world.mobList.add(bMob);
+		}
+		
 	}
 }
