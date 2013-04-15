@@ -211,7 +211,15 @@ public class WorldRenderer {
 				else if(mob instanceof QueenAnt){
 					batch.draw(queenAnt, mob.getPosition().x, mob.getPosition().y, Mob.SIZE*20, Mob.SIZE*15);
 				}
-				
+				else if(mob instanceof RedAnt){
+					batch.draw(redAnt, mob.getPosition().x, mob.getPosition().y, Mob.SIZE*20, Mob.SIZE*15);
+				}
+				else if(mob instanceof CarpenterAnt){
+					batch.draw(carpenterAnt, mob.getPosition().x, mob.getPosition().y, Mob.SIZE*20, Mob.SIZE*15);
+				}
+				else if(mob instanceof FlyingAnt){
+					batch.draw(flyingAnt, mob.getPosition().x, mob.getPosition().y, Mob.SIZE*20, Mob.SIZE*15);
+				}
 			}
 		}
 		for(Mob mob: temp){
