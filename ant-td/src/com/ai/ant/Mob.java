@@ -205,7 +205,8 @@ public class Mob {
 		if(active){
 //			System.out.println(world.toString());
 //			System.out.println("pos: "+ position.x+","+position.y+" target: "+target);
-		 	setPath();
+			setPath();
+		 	
 		 	double aSqu1 = (end.x - position.x)* (end.x - position.x);
 			double bSqu1 = (end.y - position.y)* (end.y - position.y);
 			distanceToEnd = aSqu1 + bSqu1;
@@ -233,9 +234,15 @@ public class Mob {
 				active=false;
 			}
 			else{
-				angle = Math.atan2(path.y - position.y, path.x- position.x);
+				if(this instanceof FlyingAnt){
+					angle = Math.atan2(end.y - position.y, end.x- position.x);
+				}
+				else{
+					angle = Math.atan2(path.y - position.y, path.x- position.x);
+				}
 				direction.x = (float) Math.cos(angle);
 				direction.y = (float) Math.sin(angle);
+				
 				Vector2 temp1 = new Vector2(end.x-2, end.y-2);
 				Vector2 temp2 = new Vector2(end.x+2, end.y+2);
 				position.add(SPEED*speedScale*direction.x*delta,SPEED*speedScale*direction.y*delta);
