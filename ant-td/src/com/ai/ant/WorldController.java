@@ -18,7 +18,7 @@ public class WorldController {
 	
 	enum Keys {
 		LEFT, RIGHT, UP, DOWN, A, SPACE, NUM_1, NUM_2, NUM_3, NUM_4, NUM_5,
-		NUM_6, NUM_7
+		NUM_6, NUM_7, NUM_8
 	}
 	
 	static Map<Keys, Boolean> keys = new HashMap<WorldController.Keys, Boolean>();
@@ -184,8 +184,7 @@ public class WorldController {
 		} 
 		else if (type == 7) {
 			//System.out.println("Sell");
-			//world.removeTower(((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
-			world.levelUpTower(((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
+			world.removeTower(((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
 		}		
 		else if (type == 0){
 			Gdx.app.log("quit", "Trying to quit");
@@ -196,6 +195,11 @@ public class WorldController {
 						//Level = game time/constant;
 			
 			g.setScreen(new EndGameScreen(score, level));
+		} else if (type == 8) {
+			//upgrade
+			Gdx.app.log("menu", "upgrade");
+			world.levelUpTower(((Gdx.input.getX())/26)-5,((Gdx.input.getY())/20)-1);
+
 		}
 		
 		System.out.println(world.toString()); 
@@ -283,6 +287,17 @@ public class WorldController {
 	
 	public void sevenReleased() {
 		keys.get(keys.put(Keys.NUM_7, false));
+	}
+	
+	public void eightPressed() {
+		keys.get(keys.put(Keys.NUM_8, true));
+		selection = 1;
+		side = 1;
+		clicked = menu.selectButtonFromType(8);
+	}
+	
+	public void eightReleased() {
+		keys.get(keys.put(Keys.NUM_8, false));
 	}
 	
 

@@ -7,13 +7,14 @@ public class Player {
 	protected int health;   //(health decrements when enemy mobs reach player base.)
 	protected int currency; //(towers cost coin of some type)
 	protected int points; 	//(accumulated over time, rewarded upon killing a mob or a player)
-
+	protected int level;
 	
 	public Player(){
 		towersAvailable  = new ArrayList<Tower>();
 		health = 20;
 		currency = 100;
 		points = 0;		
+		level = 1;
 	}
 	
 	public boolean place(Tower tower){
@@ -64,5 +65,12 @@ public class Player {
 	}
 	public void setPoints(int points) {
 		this.points = points;
+	}
+	public int getLevel() {
+		return level;
+	}
+	
+	public void setLevel(int level) {
+		this.level = level;
 	}
 }
