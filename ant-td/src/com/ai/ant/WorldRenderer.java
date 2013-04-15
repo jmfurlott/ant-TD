@@ -42,7 +42,11 @@ public class WorldRenderer {
 	SpriteBatch batch = new SpriteBatch();
 	private Texture queenAnt;
 	private Texture soldierAnt;
+	private Texture redAnt;
+	private Texture carpenterAnt;
+	private Texture flyingAnt;
 	private Texture grass;
+	
 
 	//towers bullets
 	private Texture spawnTower;
@@ -105,6 +109,9 @@ public class WorldRenderer {
 		//ants
 		queenAnt = new Texture(Gdx.files.internal("QueenAnt.png"));
 		soldierAnt = new Texture(Gdx.files.internal("soldierAnt.png"));
+		redAnt = new Texture(Gdx.files.internal("redAnt.png"));
+		carpenterAnt = new Texture(Gdx.files.internal("carpenterAnt.png"));;
+		flyingAnt = new Texture(Gdx.files.internal("flyingAnt.png"));;
 		
 		//Towers and bullets
 		spawnTower = new Texture(Gdx.files.internal("hill_spawning.png"));
@@ -201,6 +208,10 @@ public class WorldRenderer {
 				if(mob instanceof BasicMob){
 					batch.draw(soldierAnt, mob.getPosition().x, mob.getPosition().y, Mob.SIZE*20, Mob.SIZE*15);
 				}
+				else if(mob instanceof QueenAnt){
+					batch.draw(queenAnt, mob.getPosition().x, mob.getPosition().y, Mob.SIZE*20, Mob.SIZE*15);
+				}
+				
 			}
 		}
 		for(Mob mob: temp){
