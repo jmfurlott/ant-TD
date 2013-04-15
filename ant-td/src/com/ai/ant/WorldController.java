@@ -1,3 +1,4 @@
+
 package com.ai.ant;
 
 import java.util.ArrayList;
@@ -84,24 +85,35 @@ public class WorldController {
 			Vector2 click = calculatePosition(Gdx.input.getX(),	Gdx.input.getY());
 			if (click.x < 9 && side == 0) {
 				clicked = menu.selectButton(click);
+				//Gdx.app.log("into", "1");
 				if (clicked != null) {
 					//Gdx.app.log("input", "Found a button");
 					selection = 1;
 					side = 1;
+					//Gdx.app.log("into", "2");
+					
+					renderer.setTowerValue(clicked.getTowerType());
+					
 					if(clicked.getTowerType() == 0) {
 						addTowerToMap(clicked);
 						//seems like I am adding a new tower but 
 						//just the quit button on first press
 					}
+					
+					
 				} else if (clicked == null) {
 					//Gdx.app.log("input", "Didn't find anything");
 				}
 			} else if (click.x > 9 && selection == 1 && side == 1) {
 				addTowerToMap(clicked);
+				//Gdx.app.log("into", "3");
 				clicked = null;
 				//Gdx.app.log("input", "Made new button");
 				selection = 0;
 				side = 0;
+			} else if(click.x < 9 && side == 1) {
+				 side = 0;
+				 selection = 0;
 			}
 		}
 	}
@@ -138,6 +150,8 @@ public class WorldController {
 		int type = clicked.getTowerType();	
 		Vector2 temp = calculatePosition2();
 		Vector2 temp1 = mapPlacePosition();
+		
+		renderer.setTowerValue(0);
 		
 		System.out.println("mouse: "+Gdx.input.getX()+","+Gdx.input.getY());
 //		System.out.println("temp1: "+ temp1.x+","+temp1.y);
@@ -214,6 +228,8 @@ public class WorldController {
 		keys.get(keys.put(Keys.NUM_1, true));
 		selection = 1;
 		side = 1;
+		renderer.setTowerValue(1);
+
 		clicked = menu.selectButtonFromType(1);
 	}
 	
@@ -225,6 +241,8 @@ public class WorldController {
 		keys.get(keys.put(Keys.NUM_2, true));
 		selection = 1;
 		side = 1;
+		renderer.setTowerValue(2);
+
 		clicked = menu.selectButtonFromType(2);
 	}
 	
@@ -238,6 +256,7 @@ public class WorldController {
 		//not ready
 		selection = 1;
 		side = 1;
+		renderer.setTowerValue(3);
 		clicked = menu.selectButtonFromType(3);
 	}
 	
@@ -249,6 +268,8 @@ public class WorldController {
 		keys.get(keys.put(Keys.NUM_4, true));
 		selection = 1;
 		side = 1;
+		renderer.setTowerValue(4);
+
 		clicked = menu.selectButtonFromType(4);
 	}
 	
@@ -260,6 +281,8 @@ public class WorldController {
 		keys.get(keys.put(Keys.NUM_5, true));
 		selection = 1;
 		side = 1;
+		renderer.setTowerValue(5);
+
 		clicked = menu.selectButtonFromType(5);
 	}
 	
@@ -271,6 +294,8 @@ public class WorldController {
 		keys.get(keys.put(Keys.NUM_6, true));
 		selection = 1;
 		side = 1;
+		renderer.setTowerValue(6);
+
 		clicked = menu.selectButtonFromType(6);
 	}
 	
@@ -282,6 +307,8 @@ public class WorldController {
 		keys.get(keys.put(Keys.NUM_7, true));
 		selection = 1;
 		side = 1;
+		renderer.setTowerValue(7);
+
 		clicked = menu.selectButtonFromType(7);
 	}
 	
@@ -293,6 +320,7 @@ public class WorldController {
 		keys.get(keys.put(Keys.NUM_8, true));
 		selection = 1;
 		side = 1;
+		
 		clicked = menu.selectButtonFromType(8);
 	}
 	

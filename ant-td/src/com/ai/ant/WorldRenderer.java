@@ -63,6 +63,9 @@ public class WorldRenderer {
 	
 	private Texture homeBase;
 	
+	int towerValue;
+	Menu menu;
+	
 	Player player;
 	BitmapFont font;
 	
@@ -77,6 +80,8 @@ public class WorldRenderer {
 		font = new BitmapFont();
 		loadTextures();
 		buildTextureMap();
+		towerValue = -1;
+		menu = world.getMenu();
 		
 	}
 	
@@ -90,6 +95,8 @@ public class WorldRenderer {
 		
 		//home base
 		batch.draw(homeBase, 90, 210, 75, 75);
+		setTowerProps(towerValue);
+
 		
 		drawMenu();
 		drawPlayer();
@@ -359,6 +366,7 @@ public class WorldRenderer {
 		
 	}
 	
+	
 	public void drawPlayer() {
 		//to get the information for player stats and draw them to the screen
 		player = world.getPlayer(1);
@@ -372,9 +380,39 @@ public class WorldRenderer {
 		font.draw(batch, "Score: ", 10, 360);
 		font.draw(batch, "" + player.getPoints(), 15, 335);
 		player.setLevel((int) player.getPoints()/1000);
-		font.draw(batch, "Level: " + player.getLevel(), 100, 25);
+		font.draw(batch, "Level: " + player.getLevel(), 200, 25);
 		
 		
+	}
+	
+	public void setTowerProps(int value) {
+		if(value == 1) {		
+			font.draw(batch, "Cost: " + 11111, 100, 25);
+		} else if(value == 2) {
+			font.draw(batch, "Cost: " + 11112, 100, 25);
+
+		} else if(value == 3) {
+			font.draw(batch, "Cost: " + 11113, 100, 25);
+
+		} else if(value == 4) {
+			font.draw(batch, "Cost: " + 11114, 100, 25);
+
+		} else if(value == 5) {
+			font.draw(batch, "Cost: " + 11115, 100, 25);
+
+		} else if(value == 6) {
+			font.draw(batch, "Cost: " + 11116, 100, 25);
+
+		} else if(value == 7) {
+			font.draw(batch, "Cost: " + 11117, 100, 25);
+
+		}
+		
+	}
+	
+	
+	public void setTowerValue(int towerValue) {
+		this.towerValue = towerValue;
 	}
 	
 	public WorldRenderer getRenderer() {
