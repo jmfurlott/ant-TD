@@ -62,6 +62,7 @@ public class WorldRenderer {
 	private Texture quitButton;
 	
 	private Texture homeBase;
+	private Texture enemyBase;
 	
 	int towerValue;
 	int hotkeyValue;
@@ -97,6 +98,8 @@ public class WorldRenderer {
 		
 		//home base
 		batch.draw(homeBase, 90, 210, 75, 75);
+		batch.draw(enemyBase, 575, 210, 75, 75);
+
 		setTowerProps(towerValue);
 		setHotkey(hotkeyValue);
 		
@@ -145,6 +148,7 @@ public class WorldRenderer {
 		mudPuddle = new Texture(Gdx.files.internal("mudPuddle.png"));
 		
 		homeBase = new Texture(Gdx.files.internal("red_castle2.png"));
+		enemyBase = new Texture(Gdx.files.internal("blue_castle.png"));
 		money = new Texture(Gdx.files.internal("money.png"));
 		upgrade = new Texture(Gdx.files.internal("upgrade.png"));
 		
