@@ -64,6 +64,7 @@ public class WorldRenderer {
 	private Texture homeBase;
 	
 	int towerValue;
+	int hotkeyValue;
 	Menu menu;
 	
 	Player player;
@@ -81,6 +82,7 @@ public class WorldRenderer {
 		loadTextures();
 		buildTextureMap();
 		towerValue = -1;
+		hotkeyValue = -1;
 		menu = world.getMenu();
 		
 	}
@@ -96,7 +98,7 @@ public class WorldRenderer {
 		//home base
 		batch.draw(homeBase, 90, 210, 75, 75);
 		setTowerProps(towerValue);
-
+		setHotkey(hotkeyValue);
 		
 		drawMenu();
 		drawPlayer();
@@ -388,24 +390,24 @@ public class WorldRenderer {
 	
 	public void setTowerProps(int value) {
 		if(value == 1) {		
-			font.draw(batch, "Cost: " + 11111, 100, 25);
+			font.draw(batch, "Cost: " + 10, 100, 25);
 		} else if(value == 2) {
-			font.draw(batch, "Cost: " + 11112, 100, 25);
+			font.draw(batch, "Cost: " + 10, 100, 25);
 
 		} else if(value == 3) {
-			font.draw(batch, "Cost: " + 11113, 100, 25);
+			font.draw(batch, "Cost: " + 10, 100, 25);
 
 		} else if(value == 4) {
-			font.draw(batch, "Cost: " + 11114, 100, 25);
+			font.draw(batch, "Cost: " + 10, 100, 25);
 
 		} else if(value == 5) {
-			font.draw(batch, "Cost: " + 11115, 100, 25);
+			font.draw(batch, "Cost: " + 10, 100, 25);
 
 		} else if(value == 6) {
-			font.draw(batch, "Cost: " + 11116, 100, 25);
+			font.draw(batch, "Cost: " + 10, 100, 25);
 
 		} else if(value == 7) {
-			font.draw(batch, "Cost: " + 11117, 100, 25);
+			font.draw(batch, "Cost: " + 10, 100, 25);
 
 		}
 		
@@ -415,6 +417,39 @@ public class WorldRenderer {
 	public void setTowerValue(int towerValue) {
 		this.towerValue = towerValue;
 	}
+	
+	
+	public void setHotkey(int value) {
+		if(value == 1) {		
+			font.draw(batch, "Hotkey: " + 1, 300, 25);
+		} else if(value == 2) {
+			font.draw(batch, "Hotkey: " + 2, 300, 25);
+
+		} else if(value == 3) {
+			font.draw(batch, "Hotkey: " + 3, 300, 25);
+
+		} else if(value == 4) {
+			font.draw(batch, "Hotkey: " + 4, 300, 25);
+
+		} else if(value == 5) {
+			font.draw(batch, "Hotkey: " + 5, 300, 25);
+
+		} else if(value == 6) {
+			font.draw(batch, "Hotkey: " + 6, 300, 25);
+
+		} else if(value == 7) {
+			font.draw(batch, "Hotkey: " + 7, 300, 25);
+
+		}
+		
+	}
+	
+	
+	public void setHotkeyValue(int hotkeyValue) {
+		this.hotkeyValue = hotkeyValue;
+		//Gdx.app.log("hotkey", "value is: " + hot
+	}
+	
 	
 	public WorldRenderer getRenderer() {
 		return this;

@@ -229,6 +229,8 @@ public class WorldController {
 		selection = 1;
 		side = 1;
 		renderer.setTowerValue(1);
+		renderer.setHotkeyValue(1);
+
 
 		clicked = menu.selectButtonFromType(1);
 	}
@@ -242,7 +244,9 @@ public class WorldController {
 		selection = 1;
 		side = 1;
 		renderer.setTowerValue(2);
+		renderer.setHotkeyValue(2);
 
+		
 		clicked = menu.selectButtonFromType(2);
 	}
 	
@@ -257,6 +261,8 @@ public class WorldController {
 		selection = 1;
 		side = 1;
 		renderer.setTowerValue(3);
+		renderer.setHotkeyValue(3);
+
 		clicked = menu.selectButtonFromType(3);
 	}
 	
@@ -269,6 +275,8 @@ public class WorldController {
 		selection = 1;
 		side = 1;
 		renderer.setTowerValue(4);
+		renderer.setHotkeyValue(4);
+
 
 		clicked = menu.selectButtonFromType(4);
 	}
@@ -282,6 +290,8 @@ public class WorldController {
 		selection = 1;
 		side = 1;
 		renderer.setTowerValue(5);
+		renderer.setHotkeyValue(5);
+
 
 		clicked = menu.selectButtonFromType(5);
 	}
@@ -295,6 +305,8 @@ public class WorldController {
 		selection = 1;
 		side = 1;
 		renderer.setTowerValue(6);
+		renderer.setHotkeyValue(6);
+
 
 		clicked = menu.selectButtonFromType(6);
 	}
@@ -308,6 +320,8 @@ public class WorldController {
 		selection = 1;
 		side = 1;
 		renderer.setTowerValue(7);
+		renderer.setHotkeyValue(7);
+
 
 		clicked = menu.selectButtonFromType(7);
 	}
@@ -322,6 +336,8 @@ public class WorldController {
 		side = 1;
 		
 		clicked = menu.selectButtonFromType(8);
+		renderer.setHotkeyValue(8);
+
 	}
 	
 	public void eightReleased() {
