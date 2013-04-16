@@ -120,6 +120,7 @@ public class WorldRenderer {
 		carpenterAnt = new Texture(Gdx.files.internal("carpenterAnt.png"));;
 		flyingAnt = new Texture(Gdx.files.internal("flyingAnt.png"));;
 		
+		//TODO put correct images in for each tower
 		//Towers and bullets
 		spawnTower = new Texture(Gdx.files.internal("hill_spawning.png"));
 
@@ -127,22 +128,20 @@ public class WorldRenderer {
 		basicBullet = new Texture(Gdx.files.internal("basicBullet.png"));	
 		
 		splashTower = new Texture(Gdx.files.internal("splash_tower.png"));
-		splashBullet = new Texture(Gdx.files.internal("splashBullet.png"));//TODO
+		splashBullet = new Texture(Gdx.files.internal("splashBullet.png"));
 		
 		slowTower = new Texture(Gdx.files.internal("FreezeHill.png"));
-		slowBullet = new Texture(Gdx.files.internal("basicBullet.png"));
+		slowBullet = new Texture(Gdx.files.internal("blue_bullet.png"));
 		
 		stunTower = new Texture(Gdx.files.internal("stunHill.png"));
 		stunBullet = new Texture(Gdx.files.internal("yellowbullet.png"));
 		
 		conversionTower = new Texture(Gdx.files.internal("conversionHill.png"));
-		conversionBullet = new Texture(Gdx.files.internal("basicBullet.png")); //TODO
+		conversionBullet = new Texture(Gdx.files.internal("purple_bullet.png")); //TODO
 		
 		waterPuddle = new Texture(Gdx.files.internal("waterPuddle.png"));
 		mudPuddle = new Texture(Gdx.files.internal("mudPuddle.png"));
 		
-		//TODO put correct images in for each tower
-
 		homeBase = new Texture(Gdx.files.internal("red_castle2.png"));
 		money = new Texture(Gdx.files.internal("money.png"));
 		upgrade = new Texture(Gdx.files.internal("upgrade.png"));
@@ -249,17 +248,17 @@ public class WorldRenderer {
 			if(!bullet.active){
 				temp.add(bullet);
 			}
-			else{/*TODO: fix images for bullets*/
+			else{
 				if(bullet.tower instanceof BasicTower)
 					batch.draw(basicBullet, bullet.getPosition().x, bullet.getPosition().y, Bullet.SIZE*5, Bullet.SIZE*5);
 				else if(bullet.tower instanceof SplashTower)
-					batch.draw(basicBullet, bullet.getPosition().x, bullet.getPosition().y, Bullet.SIZE*5, Bullet.SIZE*5);
+					batch.draw(splashBullet, bullet.getPosition().x, bullet.getPosition().y, Bullet.SIZE*5, Bullet.SIZE*5);
 				else if(bullet.tower instanceof SlowTower)
-					batch.draw(basicBullet, bullet.getPosition().x, bullet.getPosition().y, Bullet.SIZE*5, Bullet.SIZE*5);
+					batch.draw(slowBullet, bullet.getPosition().x, bullet.getPosition().y, Bullet.SIZE*5, Bullet.SIZE*5);
 				else if(bullet.tower instanceof ConversionTower)
-					batch.draw(basicBullet, bullet.getPosition().x, bullet.getPosition().y, Bullet.SIZE*5, Bullet.SIZE*5);
+					batch.draw(conversionBullet, bullet.getPosition().x, bullet.getPosition().y, Bullet.SIZE*5, Bullet.SIZE*5);
 				else if(bullet.tower instanceof StunTower)
-					batch.draw(basicBullet, bullet.getPosition().x, bullet.getPosition().y, Bullet.SIZE*5, Bullet.SIZE*5);
+					batch.draw(stunBullet, bullet.getPosition().x, bullet.getPosition().y, Bullet.SIZE*5, Bullet.SIZE*5);
 			}
 		}
 		for(Bullet bullet: temp){
@@ -275,7 +274,9 @@ public class WorldRenderer {
 			batch.draw(towerMapTexture.get(button.getTowerType()), button.getPosition().x*(640/50), button.getPosition().y*(480/50)-10, 30, 30);
 		}
 		
-		
+		//TODO IS THIS STILL CORRECT
+		//Maybe make 0 upgrade
+		//7 delete
 		/*
 		   0. null
 		   1. Normal Tower- simply attacks ants
