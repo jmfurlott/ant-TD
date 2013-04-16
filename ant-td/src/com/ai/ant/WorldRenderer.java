@@ -123,17 +123,17 @@ public class WorldRenderer {
 		//Towers and bullets
 		spawnTower = new Texture(Gdx.files.internal("hill_spawning.png"));
 
-		basicTower = new Texture(Gdx.files.internal("tower.png")); //TODO
+		basicTower = new Texture(Gdx.files.internal("tower.png"));
 		basicBullet = new Texture(Gdx.files.internal("basicBullet.png"));	
 		
 		splashTower = new Texture(Gdx.files.internal("splash_tower.png"));
 		splashBullet = new Texture(Gdx.files.internal("splashBullet.png"));//TODO
 		
-		slowTower = new Texture(Gdx.files.internal("stunFreezeHill.png")); //TODO
+		slowTower = new Texture(Gdx.files.internal("FreezeHill.png"));
 		slowBullet = new Texture(Gdx.files.internal("basicBullet.png"));
 		
-		stunTower = new Texture(Gdx.files.internal("stunFreezeHill.png")); //TODO
-		stunBullet = new Texture(Gdx.files.internal("basicBullet.png")); //TODO
+		stunTower = new Texture(Gdx.files.internal("stunHill.png"));
+		stunBullet = new Texture(Gdx.files.internal("yellowbullet.png"));
 		
 		conversionTower = new Texture(Gdx.files.internal("conversionHill.png"));
 		conversionBullet = new Texture(Gdx.files.internal("basicBullet.png")); //TODO
